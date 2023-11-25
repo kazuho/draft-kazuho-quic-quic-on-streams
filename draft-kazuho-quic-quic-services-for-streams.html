@@ -1204,7 +1204,7 @@ because HTTP has different bindings for QUIC and TCP, WebTransport defines its
 own bindings for the two variants of HTTP (<span>[<a href="#webtrans-h3" class="cite xref">webtrans-h3</a>]</span>,
 <span>[<a href="#webtrans-h2" class="cite xref">webtrans-h2</a>]</span>).<a href="#section-1-7" class="pilcrow">¶</a></p>
 <p id="section-1-8">In order to eliminate the cost of these duplicated efforts to provide services
-on top of both protocols, this document specfies a polyfill that allows
+on top of both protocols, this document specifies a polyfill that allows
 application protocols built on top of QUIC to run on bi-directional streams such
 as TCP or TLS.<a href="#section-1-8" class="pilcrow">¶</a></p>
 </section>
@@ -1300,7 +1300,7 @@ order.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.2-2">This frame is the first frame being sent by an endpoint. If the first frame
 being received by an endpoint is not a TRANSPORT_PARAMETERS frame, the endpoint
 <span class="bcp14">MUST</span> close the connection with a TBD error.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.2-3">TRANSPORT_PAARMETERS frames are formatted as show in
+<p id="section-4.2-3">TRANSPORT_PARAMETERS frames are formatted as show in
 <a href="#fig-transport-parameters" class="auto internal xref">Figure 1</a>.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 <div id="fig-transport-parameters">
 <figure id="figure-1">

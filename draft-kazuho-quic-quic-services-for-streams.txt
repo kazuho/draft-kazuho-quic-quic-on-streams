@@ -113,7 +113,7 @@ Table of Contents
    ([webtrans-h3], [webtrans-h2]).
 
    In order to eliminate the cost of these duplicated efforts to provide
-   services on top of both protocols, this document specfies a polyfill
+   services on top of both protocols, this document specifies a polyfill
    that allows application protocols built on top of QUIC to run on bi-
    directional streams such as TCP or TLS.
 
@@ -191,7 +191,7 @@ Table of Contents
    TRANSPORT_PARAMETERS frame, the endpoint MUST close the connection
    with a TBD error.
 
-   TRANSPORT_PAARMETERS frames are formatted as show in Figure 1.
+   TRANSPORT_PARAMETERS frames are formatted as show in Figure 1.
 
    TRANSPORT_PARAMETERS Frame {
      Type (i) = 0xTBD,
