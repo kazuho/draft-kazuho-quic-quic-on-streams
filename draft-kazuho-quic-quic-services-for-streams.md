@@ -89,7 +89,6 @@ modifications, as if they were send or received in the application packet number
 space.
 
 * PADDING
-* PING
 * RESET_STREAM
 * STOP_SENDING
 * STREAM (0x0a and 0x0b)
