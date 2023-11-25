@@ -149,6 +149,19 @@ Transport Parameters:
 TBD
 
 
+# Using 0-RTT
+
+TLS 1.3 ({{?RFC8446}}) introduced the concept of early data (also knows as
+0-RTT data).
+
+When using QUIC Services for Streams on top of TLS that supports early data,
+clients MAY use early data when resuming a connection, by reusing certain
+Transport Parameters as defined in {{Section 7.4.1 of RFC9000}}.
+
+Similarly, when accepting early data, the servers MUST send Transport Parameters
+that obey to the restrictions defined in {{Section 7.4.1 of RFC9000}}.
+
+
 # Security Considerations
 
 TODO Security
