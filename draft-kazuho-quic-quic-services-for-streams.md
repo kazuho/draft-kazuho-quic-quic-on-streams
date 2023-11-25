@@ -66,7 +66,7 @@ as TCP or TLS.
 {::boilerplate bcp14-tagged}
 
 
-# The protocol
+# The Protocol
 
 QUIC Services for Streams can be used on any bi-directional byte stream that is
 ordered and reliable.
