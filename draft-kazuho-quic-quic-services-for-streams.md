@@ -66,6 +66,89 @@ as TCP or TLS.
 {::boilerplate bcp14-tagged}
 
 
+# The protocol
+
+QUIC Services for Streams can be used on any bi-directional byte stream that is
+ordered and reliable.
+
+QUIC frames are sent directly on top of the bi-directional byte stream.
+
+The frames are not encrypted. It is the task of the lower layer providing the
+bi-directional byte stream (e.g., TLS) to provide confidentially and integrity.
+
+QUIC packet headers are not used.
+
+For exchanging the Transport Parameters, a new frame called TRANSPORT_PARAMETERS
+frame is defined.
+
+
+# QUIC Frames
+
+In QUIC Services for Streams, the following QUIC frames are used without
+modifications.
+
+* PADDING
+* PING
+* RESET_STREAM
+* STOP_SENDING
+* STREAM (0x0a and 0x0b)
+* MAX_DATA
+* MAX_STREAM_DATA
+* MAX_STREAMS
+* DATA_BLOCKED
+* STREAM_DATA_BLOCKED
+* STREAMS_BLOCKED
+
+Use of other frames defined in ({{RFC9000}}) are prohibited. If an endpoint
+receives one of the prohibited frames, the endpoint MUST close the connection
+with TBD error.
+
+## STREAM Frames
+
+In case of the STREAM frame, only the 0x0a and 0x0b variants (i.e., the ones
+that carry the length but not the offset) are used.
+
+Senders can multiplex streams, but within each stream, data MUST be sent in
+order.
+
+## TRANSPORT_PARAMETERS Frames
+
+In QUIC Services for Streams, Transport Parameters are exchanged as frames.
+
+This frame is the first frame being sent by an endpoint. If the first frame
+being received by an endpoint is not a TRANSPORT_PARAMETERS frame, the endpoint
+MUST close the connection with a TBD error.
+
+TRANSPORT_PAARMETERS frames are formatted as show in
+{{fig-transport-parameters}}.
+
+~~~
+TRANSPORT_PARAMETERS Frame {
+  Type (i) = 0xTBD,
+  Length (i),
+  Transport Parameters (..),
+}
+~~~
+{: #fig-transport-parameters title="TRANSPORT_PARAMETERS Frame Format}
+
+TRANSPORT_PARAMETER frames contain the following fields:
+
+Length:
+
+: A variable-length integer specifying the length of the Transport Parameters
+  field in this TRANSPORT_PARAMETERS frame.
+
+Transport Parameters:
+
+: The Transport Parameters. The encoding of the payload is as defined in
+  {{Section 18 of RFC9000}}.
+
+
+## Extension Frames
+
+TBD
+
+
 # Security Considerations
 
 TODO Security
@@ -73,7 +156,7 @@ TODO Security
 
 # IANA Considerations
 
-This document has no IANA actions.
+TODO
 
 
 --- back
