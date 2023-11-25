@@ -1,6 +1,6 @@
 ---
 title: "QUIC Services for Streams"
-docname: draft-kazuho-quic-quic-services-for-streams
+docname: draft-kazuho-quic-quic-services-for-streams-latest
 category: std
 wg: QUIC
 ipr: trust200902
