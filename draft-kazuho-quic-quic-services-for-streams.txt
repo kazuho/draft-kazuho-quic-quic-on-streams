@@ -151,8 +151,6 @@ Table of Contents
 
    *  PADDING
 
-   *  PING
-
    *  RESET_STREAM
 
    *  STOP_SENDING
