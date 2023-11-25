@@ -146,7 +146,8 @@ Table of Contents
 4.  QUIC Frames
 
    In QUIC Services for Streams, the following QUIC frames are used
-   without modifications.
+   without modifications, as if they were send or received in the
+   application packet number space.
 
    *  PADDING
 
