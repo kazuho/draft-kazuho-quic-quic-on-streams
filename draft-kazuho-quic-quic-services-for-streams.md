@@ -85,7 +85,8 @@ frame is defined.
 # QUIC Frames
 
 In QUIC Services for Streams, the following QUIC frames are used without
-modifications.
+modifications, as if they were send or received in the application packet number
+space.
 
 * PADDING
 * PING
