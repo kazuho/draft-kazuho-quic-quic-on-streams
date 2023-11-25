@@ -11,7 +11,7 @@ This is the working area for the individual Internet-Draft, "QUIC Services for S
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/kazuho/quic-services-for-streams/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/kazuho/draft-kazuho-quic-quic-services-for-streams/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
