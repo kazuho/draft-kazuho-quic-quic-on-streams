@@ -25,7 +25,8 @@ Discussion Venues
    https://mailarchive.ietf.org/arch/browse/quic/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/kazuho/quic-services-for-streams.
+   https://github.com/kazuho/draft-kazuho-quic-quic-services-for-
+   streams.
 
 Status of This Memo
 
