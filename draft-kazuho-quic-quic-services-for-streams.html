@@ -1209,10 +1209,12 @@ versions of HTTP.<a href="#section-1-6" class="pilcrow">¶</a></p>
 because HTTP has different bindings for QUIC and TCP, WebTransport defines its
 own bindings for the two variants of HTTP (<span>[<a href="#webtrans-h3" class="cite xref">webtrans-h3</a>]</span>,
 <span>[<a href="#webtrans-h2" class="cite xref">webtrans-h2</a>]</span>).<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8">In order to eliminate the cost of these duplicated efforts to provide services
-on top of both protocols, this document specifies a polyfill that allows
-application protocols built on top of QUIC to run on bi-directional streams such
-as TCP or TLS.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-8">In order to reduce or eliminate the cost of these duplicated efforts to provide
+services on top of both protocols, this document specifies a polyfill that
+allows application protocols built on top of QUIC to run on bi-directional
+streams such as TCP or TLS.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-9">The polyfill being specified provides a compatibility layer for providing set of
+the operations (i.e., API) required by QUIC, as specified in Section <a href="https://rfc-editor.org/rfc/rfc9000#section-2.4" class="relref">2.4</a> and Section <a href="https://rfc-editor.org/rfc/rfc9000#section-5.3" class="relref">5.3</a> of <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
