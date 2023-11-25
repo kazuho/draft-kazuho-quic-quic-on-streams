@@ -100,7 +100,7 @@ space.
 * STREAMS_BLOCKED
 * CONNECTION_CLOSE
 
-Use of other frames defined in ({{RFC9000}}) are prohibited. If an endpoint
+Use of other frames defined in {{RFC9000}} is prohibited. If an endpoint
 receives one of the prohibited frames, the endpoint MUST close the connection
 with TBD error.
 
