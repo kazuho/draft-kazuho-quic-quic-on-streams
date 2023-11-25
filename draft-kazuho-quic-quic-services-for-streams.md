@@ -55,10 +55,14 @@ because HTTP has different bindings for QUIC and TCP, WebTransport defines its
 own bindings for the two variants of HTTP ({{?webtrans-h3=I-D.ietf-webtrans-http3}},
 {{?webtrans-h2=I-D.ietf-webtrans-http2}}).
 
-In order to eliminate the cost of these duplicated efforts to provide services
-on top of both protocols, this document specifies a polyfill that allows
-application protocols built on top of QUIC to run on bi-directional streams such
-as TCP or TLS.
+In order to reduce or eliminate the cost of these duplicated efforts to provide
+services on top of both protocols, this document specifies a polyfill that
+allows application protocols built on top of QUIC to run on bi-directional
+streams such as TCP or TLS.
+
+The polyfill being specified provides a compatibility layer for providing set of
+the operations (i.e., API) required by QUIC, as specified in {{Section 2.4 and
+Section 5.3 of RFC9000}}.
 
 
 # Conventions and Definitions
