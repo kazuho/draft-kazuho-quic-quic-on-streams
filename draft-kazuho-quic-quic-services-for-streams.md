@@ -159,7 +159,7 @@ Transport Parameters:
 TBD
 
 
-## Closing the Connection
+# Closing the Connection
 
 As is with QUIC version 1 ({{RFC9000}}), a connection can be closed either by a
 CONNECTION_CLOSE frame or by an idle timeout.
