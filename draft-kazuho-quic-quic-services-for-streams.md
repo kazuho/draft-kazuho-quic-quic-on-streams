@@ -3,6 +3,10 @@ title: "QUIC Services for Streams"
 docname: draft-kazuho-quic-quic-services-for-streams
 category: std
 wg: QUIC
+ipr: trust200902
+keyword: internet-draft
+stand_alone: yes
+pi: [toc, sortrefs, symrefs]
 author:
  -
     fullname: Kazuho Oku
