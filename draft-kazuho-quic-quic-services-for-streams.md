@@ -56,7 +56,7 @@ own bindings for the two variants of HTTP ({{?webtrans-h3=I-D.ietf-webtrans-http
 {{?webtrans-h2=I-D.ietf-webtrans-http2}}).
 
 In order to eliminate the cost of these duplicated efforts to provide services
-on top of both protocols, this document specfies a polyfill that allows
+on top of both protocols, this document specifies a polyfill that allows
 application protocols built on top of QUIC to run on bi-directional streams such
 as TCP or TLS.
 
@@ -119,7 +119,7 @@ This frame is the first frame being sent by an endpoint. If the first frame
 being received by an endpoint is not a TRANSPORT_PARAMETERS frame, the endpoint
 MUST close the connection with a TBD error.
 
-TRANSPORT_PAARMETERS frames are formatted as show in
+TRANSPORT_PARAMETERS frames are formatted as show in
 {{fig-transport-parameters}}.
 
 ~~~
