@@ -67,6 +67,7 @@ Table of Contents
      4.1.  STREAM Frames
      4.2.  TRANSPORT_PARAMETERS Frames
      4.3.  Extension Frames
+     4.4.  Closing the Connection
    5.  Using 0-RTT
    6.  Security Considerations
    7.  IANA Considerations
@@ -223,6 +224,16 @@ Table of Contents
 4.3.  Extension Frames
 
    TBD
+
+4.4.  Closing the Connection
+
+   As is with QUIC version 1 ([RFC9000]), a connection can be closed
+   either by a CONNECTION_CLOSE frame or by an idle timeout.
+
+   Unlike QUIC version 1, there is no draining period; once an endpoint
+   sends or receives the CONNECTION_CLOSE frame or reaches the idle
+   timeout, all the resources allocated for the Service are freed and
+   the underlying stream is closed immediately.
 
 5.  Using 0-RTT
 
