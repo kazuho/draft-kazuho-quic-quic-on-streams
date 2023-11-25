@@ -159,6 +159,17 @@ Transport Parameters:
 TBD
 
 
+## Closing the Connection
+
+As is with QUIC version 1 ({{RFC9000}}), a connection can be closed either by a
+CONNECTION_CLOSE frame or by an idle timeout.
+
+Unlike QUIC version 1, there is no draining period; once an endpoint sends or
+receives the CONNECTION_CLOSE frame or reaches the idle timeout, all the
+resources allocated for the Service are freed and the underlying stream is
+closed immediately.
+
+
 # Using 0-RTT
 
 TLS 1.3 ({{?RFC8446}}) introduced the concept of early data (also knows as
