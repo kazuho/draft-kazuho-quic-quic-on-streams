@@ -236,8 +236,8 @@ Table of Contents
 
 4.3.  QSS_PING Frames
 
-   In QUIC Services for Streams, QSS_PING frames allows endpoints to
-   test peer reachability above the underlying byte stream.
+   In QUIC Services for Streams, QSS_PING frames allow endpoints to test
+   peer reachability above the underlying byte stream.
 
    QSS_PING frames are formatted as shown in Figure 2.
 
