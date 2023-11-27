@@ -135,8 +135,8 @@ being received by an endpoint is not a QSS_TRANSPORT_PARAMETERS frame, the
 endpoint MUST close the connection with an error of type
 TRANSPORT_PARAMETER_ERROR.
 
-QSS_TRANSPORT_PARAMETERS frames are formatted as show in
-{{fig-transport-parameters}}.
+QSS_TRANSPORT_PARAMETERS frames are formatted as shown in
+{{fig-qss-transport-parameters}}.
 
 ~~~
 QSS_TRANSPORT_PARAMETERS Frame {
@@ -145,7 +145,7 @@ QSS_TRANSPORT_PARAMETERS Frame {
   Transport Parameters (..),
 }
 ~~~
-{: #fig-transport-parameters title="QSS_TRANSPORT_PARAMETERS Frame Format}
+{: #fig-qss-transport-parameters title="QSS_TRANSPORT_PARAMETERS Frame Format"}
 
 QSS_TRANSPORT_PARAMETERS frames contain the following fields:
 
