@@ -167,7 +167,7 @@ so that it can be used to disambiguate QUIC Services for Streams from HTTP/1.1
 
 ## QSS_PING Frames
 
-In QUIC Services for Streams, QSS_PING frames allows endpoints to test peer
+In QUIC Services for Streams, QSS_PING frames allow endpoints to test peer
 reachability above the underlying byte stream.
 
 QSS_PING frames are formatted as shown in {{fig-qss-ping}}.
