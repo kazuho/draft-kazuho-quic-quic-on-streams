@@ -165,6 +165,42 @@ so that it can be used to disambiguate QUIC Services for Streams from HTTP/1.1
 ({{?RFC9112}}) and HTTP/2.
 
 
+## QSS_PING Frames
+
+In QUIC Services for Streams, QSS_PING frames allows endpoints to test peer
+reachability above the underlying byte stream.
+
+QSS_PING frames are formatted as shown in {{fig-qss-ping}}.
+
+~~~
+QSS_PING Frame {
+  Type (i) = 0xTBD..0xTBD+1,
+  Sequence Number (i),
+}
+~~~
+{: #fig-qss-ping title="QSS_PING Frame Format"}
+
+Type 0xTBD is used for sending a ping (i.e., request the peer to respond). Type
+0xTBD+1 is used in response.
+
+QSS_PING frames contain the following fields:
+
+Sequence Number:
+
+: A variable-length integer used to identify the ping.
+
+When sending TBD_PING frames of type 0xTBD, endpoints MUST send monotonically
+increasing values in the Sequence Number field, since that allows the endpoints
+to identify to which ping the peer has responded.
+
+When sending TBD_PING frames of type 0xTBD+1 in response, endpoints MUST echo
+the Sequence Number that they have received.
+
+When receiving multiple TBD_PING frames of type 0xTBD before having the chance
+to respond, an endpoint MAY only respond with one TBD_PING frame of type 0xTBD+1
+carrying the largest Sequence Number that the endpoint has received.
+
+
 ## Extension Frames
 
 TBD
