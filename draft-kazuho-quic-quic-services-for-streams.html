@@ -1299,7 +1299,7 @@ space.<a href="#section-4-1" class="pilcrow">¶</a></p>
       </ul>
 <p id="section-4-3">Use of other frames defined in <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> is prohibited. If an endpoint
 receives one of the prohibited frames, the endpoint <span class="bcp14">MUST</span> close the connection
-with TBD error.<a href="#section-4-3" class="pilcrow">¶</a></p>
+with an error of type FRAME_ENCODING_ERROR.<a href="#section-4-3" class="pilcrow">¶</a></p>
 <div id="stream-frames">
 <section id="section-4.1">
         <h3 id="name-stream-frames">
@@ -1325,7 +1325,8 @@ on top of bi-directional streams and the packet boundary is not observable.<a hr
 <p id="section-4.2-1">In QUIC Services for Streams, Transport Parameters are exchanged as frames.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.2-2">This frame is the first frame being sent by an endpoint. If the first frame
 being received by an endpoint is not a QSS_TRANSPORT_PARAMETERS frame, the
-endpoint <span class="bcp14">MUST</span> close the connection with a TBD error.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
+endpoint <span class="bcp14">MUST</span> close the connection with an error of type
+TRANSPORT_PARAMETER_ERROR.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <p id="section-4.2-3">QSS_TRANSPORT_PARAMETERS frames are formatted as show in
 <a href="#fig-transport-parameters" class="auto internal xref">Figure 1</a>.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 <div id="fig-transport-parameters">
