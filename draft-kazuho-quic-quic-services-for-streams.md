@@ -106,7 +106,7 @@ space.
 
 Use of other frames defined in {{RFC9000}} is prohibited. If an endpoint
 receives one of the prohibited frames, the endpoint MUST close the connection
-with TBD error.
+with an error of type FRAME_ENCODING_ERROR.
 
 ## STREAM Frames
 
@@ -131,7 +131,8 @@ In QUIC Services for Streams, Transport Parameters are exchanged as frames.
 
 This frame is the first frame being sent by an endpoint. If the first frame
 being received by an endpoint is not a QSS_TRANSPORT_PARAMETERS frame, the
-endpoint MUST close the connection with a TBD error.
+endpoint MUST close the connection with an error of type
+TRANSPORT_PARAMETER_ERROR.
 
 QSS_TRANSPORT_PARAMETERS frames are formatted as show in
 {{fig-transport-parameters}}.
