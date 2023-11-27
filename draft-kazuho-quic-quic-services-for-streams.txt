@@ -212,7 +212,7 @@ Table of Contents
    QSS_TRANSPORT_PARAMETERS frame, the endpoint MUST close the
    connection with an error of type TRANSPORT_PARAMETER_ERROR.
 
-   QSS_TRANSPORT_PARAMETERS frames are formatted as show in Figure 1.
+   QSS_TRANSPORT_PARAMETERS frames are formatted as shown in Figure 1.
 
    QSS_TRANSPORT_PARAMETERS Frame {
      Type (i) = 0x3f5153300d0a0d0a,
@@ -220,7 +220,7 @@ Table of Contents
      Transport Parameters (..),
    }
 
-                                  Figure 1
+              Figure 1: QSS_TRANSPORT_PARAMETERS Frame Format
 
    QSS_TRANSPORT_PARAMETERS frames contain the following fields:
 
