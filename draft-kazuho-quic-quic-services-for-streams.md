@@ -108,6 +108,7 @@ Use of other frames defined in {{RFC9000}} is prohibited. If an endpoint
 receives one of the prohibited frames, the endpoint MUST close the connection
 with an error of type FRAME_ENCODING_ERROR.
 
+
 ## STREAM Frames
 
 In this specification, only the 0x0a and 0x0b variants of the STREAM frame are
