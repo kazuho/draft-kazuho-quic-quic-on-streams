@@ -168,6 +168,33 @@ so that it can be used to disambiguate QUIC Services for Streams from HTTP/1.1
 TBD
 
 
+# Transport Parameters
+
+In QUIC Services for Streams, use of the following Transport Parameters is
+allowed.
+
+* max_idle_timeout
+* initial_max_data
+* initial_max_stream_data_bidi_local
+* initial_max_stream_data_bidi_remote
+* initial_max_stream_data_uni
+* initial_max_streams_bidi
+* initial_max_streams_uni
+
+The definition of these frames are unchanged.
+
+Use of other Transport Parameters defined in {{RFC9000}} is prohibited. When an
+endpoint receives one of the prohibited Transport Parameters, the endpoint MUST
+close the connection with an error of type TRANSPORT_PARAMETER_ERROR.
+
+Endpoint MUST NOT send Transport Parameters that extend QUIC version 1, unless
+they are specified to be compatible with QUIC Services for Streams.
+
+When receiving Transport Parameters not defined in QUIC version 1, receivers
+MUST ignore them unless they are specified to be usable on QUIC Services for
+Streams.
+
+
 # Closing the Connection
 
 As is with QUIC version 1 ({{RFC9000}}), a connection can be closed either by a
