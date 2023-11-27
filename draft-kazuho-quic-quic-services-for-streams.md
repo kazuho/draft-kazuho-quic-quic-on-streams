@@ -138,7 +138,7 @@ QSS_TRANSPORT_PARAMETERS frames are formatted as show in
 
 ~~~
 QSS_TRANSPORT_PARAMETERS Frame {
-  Type (i) = 0xTBD,
+  Type (i) = 0x3f5153300d0a0d0a,
   Length (i),
   Transport Parameters (..),
 }
@@ -156,6 +156,11 @@ Transport Parameters:
 
 : The Transport Parameters. The encoding of the payload is as defined in
   {{Section 18 of RFC9000}}.
+
+
+The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has been chosen
+so that it can be used to disambiguate QUIC Services for Streams from HTTP/1.1
+({{?RFC9112}}) and HTTP/2.
 
 
 ## Extension Frames
