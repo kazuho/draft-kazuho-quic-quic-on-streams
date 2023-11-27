@@ -82,8 +82,8 @@ bi-directional byte stream (e.g., TLS) to provide confidentially and integrity.
 
 QUIC packet headers are not used.
 
-For exchanging the Transport Parameters, a new frame called TRANSPORT_PARAMETERS
-frame is defined.
+For exchanging the Transport Parameters, a new frame called
+QSS_TRANSPORT_PARAMETERS frame is defined.
 
 
 # QUIC Frames
@@ -125,32 +125,32 @@ Use of the Length field is mandated, because QUIC Services for Streams operates
 on top of bi-directional streams and the packet boundary is not observable.
 
 
-## TRANSPORT_PARAMETERS Frames
+## QSS_TRANSPORT_PARAMETERS Frames
 
 In QUIC Services for Streams, Transport Parameters are exchanged as frames.
 
 This frame is the first frame being sent by an endpoint. If the first frame
-being received by an endpoint is not a TRANSPORT_PARAMETERS frame, the endpoint
-MUST close the connection with a TBD error.
+being received by an endpoint is not a QSS_TRANSPORT_PARAMETERS frame, the
+endpoint MUST close the connection with a TBD error.
 
-TRANSPORT_PARAMETERS frames are formatted as show in
+QSS_TRANSPORT_PARAMETERS frames are formatted as show in
 {{fig-transport-parameters}}.
 
 ~~~
-TRANSPORT_PARAMETERS Frame {
+QSS_TRANSPORT_PARAMETERS Frame {
   Type (i) = 0xTBD,
   Length (i),
   Transport Parameters (..),
 }
 ~~~
-{: #fig-transport-parameters title="TRANSPORT_PARAMETERS Frame Format}
+{: #fig-transport-parameters title="QSS_TRANSPORT_PARAMETERS Frame Format}
 
-TRANSPORT_PARAMETER frames contain the following fields:
+QSS_TRANSPORT_PARAMETERS frames contain the following fields:
 
 Length:
 
 : A variable-length integer specifying the length of the Transport Parameters
-  field in this TRANSPORT_PARAMETERS frame.
+  field in this QSS_TRANSPORT_PARAMETERS frame.
 
 Transport Parameters:
 
