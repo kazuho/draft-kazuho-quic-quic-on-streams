@@ -170,6 +170,12 @@ TBD
 
 # Transport Parameters
 
+QUIC Services for Streams uses a subset of Transport Parameters defined in
+{{RFC9000}}. Also, one new Transport Parameter specific to QUIC Services for
+Streams is defined.
+
+## Permitted and Forbidden Transport Parameters
+
 In QUIC Services for Streams, use of the following Transport Parameters is
 allowed.
 
@@ -193,6 +199,25 @@ they are specified to be compatible with QUIC Services for Streams.
 When receiving Transport Parameters not defined in QUIC version 1, receivers
 MUST ignore them unless they are specified to be usable on QUIC Services for
 Streams.
+
+
+## max_frame_size Transport Parameter
+
+The `max_frame_size` Transport Parameter (0xTBD) is a variable-length integer
+value specifying the maximum size of the QUIC frame that the peer can send, in
+the unit of bytes.
+
+The initial value of the `max_frame_size` Transport Parameter is 16384.
+
+The maximum frame size can only be increased by sending the Transport Parameter.
+It cannot be decreased. When receiving a value below the minimum, receivers MUST
+close the connection with an error of type TRANSPORT_PARAMETER_ERROR.
+
+Endpoints MUST NOT send QUIC frames that exceed the maximum declared by the
+peer.
+
+When receiving QUIC frames that exceed the declared maximum, receivers MUST
+close the connection with an error of type FRAME_ENCODING_ERROR.
 
 
 # Closing the Connection
