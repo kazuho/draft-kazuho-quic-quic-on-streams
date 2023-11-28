@@ -413,9 +413,6 @@ Table of Contents
    As is the case with QUIC version 1, use of extension frames have to
    be negotiated before use; see Section 19.21 of [RFC9000].
 
-   This specification defines the mapping of the Unreliable Datagram
-   Extension.
-
 9.  Version Agility
 
    Unlike QUIC, QUIC on Streams does not define a mechanism for version
