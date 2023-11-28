@@ -136,11 +136,6 @@ on top of bi-directional streams and the packet boundary is not observable.
 
 In QUIC Services for Streams, Transport Parameters are exchanged as frames.
 
-This frame is the first frame being sent by an endpoint. If the first frame
-being received by an endpoint is not a QSS_TRANSPORT_PARAMETERS frame, the
-endpoint MUST close the connection with an error of type
-TRANSPORT_PARAMETER_ERROR.
-
 QSS_TRANSPORT_PARAMETERS frames are formatted as shown in
 {{fig-qss-transport-parameters}}.
 
@@ -165,6 +160,17 @@ Transport Parameters:
 : The Transport Parameters. The encoding of the payload is as defined in
   {{Section 18 of RFC9000}}.
 
+
+The QSS_TRANSPORT_PARAMETERS frame is the first frame being sent by an endpoint.
+Endpoints MUST send the QSS_TRANSPORT_PARAMETERS frame as soon as the underlying
+byte stream becomes available. Note neither endpoint needs to wait for the
+peer's Transport Parameters before sending its own, as Transport Parameters are
+a unilateral declaration of an endpoint's capabilities
+({{Section 7.4 of RFC9000}}).
+
+If the first frame being received by an endpoint is not a
+QSS_TRANSPORT_PARAMETERS frame, the endpoint MUST close the connection with an
+error of type TRANSPORT_PARAMETER_ERROR.
 
 The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has been chosen
 so that it can be used to disambiguate QUIC Services for Streams from HTTP/1.1
