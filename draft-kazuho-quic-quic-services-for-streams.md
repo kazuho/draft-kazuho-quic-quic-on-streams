@@ -118,10 +118,10 @@ Confidentially and Integrity:
 
 TLS over TCP provides all these capabilities.
 
-UNIX sockets is an example that provides only the first two. Congestion control
-is not used because UNIX sockets do not work on top of a shared network.
-Confidentiallity and integrity protection is considered unnecessary when the
-operating system can be trusted.
+UNIX sockets are an example that provides only the first two. Congestion control
+is not employed, as UNIX sockets do not face a shared bottleneck.
+Confidentiality and integrity protection are deemed unnecessary in environments
+where the operating system is trusted.
 
 
 # QUIC Frames
