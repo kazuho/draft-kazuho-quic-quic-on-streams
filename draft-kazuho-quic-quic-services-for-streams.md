@@ -335,6 +335,21 @@ Similarly, when accepting early data, the servers MUST send Transport Parameters
 that obey to the restrictions defined in {{Section 7.4.1 of RFC9000}}.
 
 
+# Version Agility
+
+Unlike QUIC, QUIC Services for Streams does not define a mechanism for version
+negotiation.
+
+In large-scale deployments that require service and protocol version discovery,
+QUIC Services for Streams can and is likely to be used on top of TLS. ALPN
+({{?RFC7301}}) is the preferred mechanism to negotiate between an application
+protocol built on top of this specification and others.
+
+When ALPN is unavailable, first 8 bytes exchanged on the stream (i.e., the type
+field of the QSS_TRANSPORT_PARAMETERS frame in the encoded form) can be used to
+identify if QUIC Services for Streams is in use.
+
+
 # Security Considerations
 
 TODO Security
