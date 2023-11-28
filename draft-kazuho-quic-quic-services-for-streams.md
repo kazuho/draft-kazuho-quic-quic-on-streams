@@ -25,46 +25,45 @@ bi-directional streams such as TLS.
 
 QUIC version 1 {{!QUIC=RFC9000}} is a bi-directional, authenticated
 transport-layer protocol built on top of UDP {{?UDP=RFC768}}. The protocol
-provides multiplexed flow-controlled streams without head-of-line blocking as
-one of its core services, along with low-latency connection establishment and
-efficient loss recovery.
+provides multiplexed flow-controlled streams without head-of-line blocking as a
+core service. It also offers low-latency connection establishment and efficient
+loss recovery.
 
-However, there are downsides with QUIC.
+However, there are downsides to QUIC.
 
-One downside is that QUIC is not as universally accessible as TCP
-{{?TCP=RFC9293}}. This is because QUIC is built on top of UDP, which is
-occasionally blocked by middleboxes.
+One downside is that QUIC, being based on UDP, is not as universally accessible
+as TCP {{?TCP=RFC9293}}, due to occasionally being blocked by middleboxes.
 
-Another downside is that QUIC is computationally expensive compared to TLS
-{{!TLS13=RFC8446}} over TCP. This is partly because QUIC encrypts each packet
-which is smaller than the encryption unit of TLS leading to more overhead, and
-partly because UDP is less optimized in the computing infrastructure.
+Another downside is that QUIC is computationally more expensive compared to TLS
+{{!TLS13=RFC8446}} over TCP. This increased cost is partly because QUIC encrypts
+each packet, which is smaller than the encryption unit of TLS, leading to more
+overhead, and partly because UDP is less optimized within computing
+infrastructures.
 
 Due to these limitations, applications are often served on top of both QUIC and
-TCP, with the former aiming to provide better user-experience, while the latter
- being considered as a backstop for network reachability or to provide
-computational efficiency where necessary.
+TCP. QUIC's use aims to provide a better user experience, while TCP serves as a
+backstop for network reachability or to provide computational efficiency where
+necessary.
 
 One such example is HTTP. HTTP/3 {{?HTTP3=RFC9114}} runs on top of QUIC. HTTP/2
 {{?HTTP2=RFC9113}} runs on top of TCP. Recently, there have been proposals to
 revise HTTP/2 due to security concerns
-({{?h2-stream-limits=I-D.thomson-httpbis-h2-stream-limits}}), which has led
-people to wonder about the cost of maintaining multiple versions of HTTP.
+({{?h2-stream-limits=I-D.thomson-httpbis-h2-stream-limits}}), leading to
+questions about the costs of maintaining multiple HTTP versions.
 
-Another example is WebTransport. WebTransport is a super set of HTTP, but
-because HTTP has different bindings for QUIC and TCP, WebTransport defines its
-own bindings for the two variants of HTTP ({{?webtrans-h3=I-D.ietf-webtrans-http3}},
+Another example is WebTransport, a superset of HTTP. Because HTTP has different
+bindings for QUIC and TCP, WebTransport defines its own extensions for the two
+HTTP variants ({{?webtrans-h3=I-D.ietf-webtrans-http3}},
 {{?webtrans-h2=I-D.ietf-webtrans-http2}}).
 
-In order to reduce or eliminate the cost of these duplicated efforts to provide
+To reduce or eliminate the costs associated with duplicated efforts in providing
 services on top of both transport protocols, this document specifies a polyfill
-that allows application protocols built on top of QUIC to run on transport
-protocols providing single bi-directional, byte-oriented stream such as TCP or
-TLS.
+that allows application protocols built on QUIC to run on transport protocols
+that provide single bi-directional, byte-oriented stream such as TCP or TLS.
 
-The polyfill being specified provides a compatibility layer for providing set of
-the operations (i.e., API) required by QUIC, as specified in {{Section 2.4 and
-Section 5.3 of QUIC}}.
+The specified polyfill provides a compatibility layer for the set of operations
+(i.e., API) required by QUIC, as specified in {{Section 2.4 and Section 5.3 of
+QUIC}}.
 
 
 # Conventions and Definitions
