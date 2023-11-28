@@ -340,8 +340,6 @@ define its mapping for QUIC on Streams, or explicitly allow the use; see
 As is the case with QUIC version 1, use of extension frames have to be
 negotiated before use; see {{Section 19.21 of RFC9000}}.
 
-This specification defines the mapping of the Unreliable Datagram Extension.
-
 
 # Version Agility
 
