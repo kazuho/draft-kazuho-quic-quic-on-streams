@@ -93,26 +93,32 @@ provide the following capabilities:
 
 In-order delivery of bytes in both directions:
 
-: Underlying connection MUST provide byte-oriented bi-directional streams that
+: Underlying connection provides byte-oriented bi-directional streams that
   guarantee in-order delivery; i.e., bytes that were sent in one order become
   available to the receiving side in the same order.
 
 Guaranteed delivery:
 
 : If the underlying byte stream is built on top of a lossy network, the
-  underlying byte stream MUST recover the bytes lost; e.g., by retransmitting
-  them. This requires buffering and reassembly, in order to achieve the first
-  bullet point (in-order delivery).
+  underlying byte stream recovers the bytes lost; e.g., by retransmitting them.
+  This requires buffering and reassembly, in order to achieve the first bullet
+  point (in-order delivery).
+
+Congestion control:
+
+: When used on a shared network, the underlying byte stream is congestion
+  controlled. Implementations of QUIC Services for Streams simply write outgoing
+  frames to the underlying byte stream when that byte stream permits to.
 
 Confidentially and Integrity:
 
 : Unless used upon endpoints between which tampering or monitoring is a
-  non-concern, the underlying byte stream MUST provide confidentially and
-  integrity protection.
+  non-concern, the underlying byte stream provides confidentially and integrity
+  protection.
 
-TLS over TCP provides these three capabilities. UNIX socket is an example that
-provides the first two bullet points but not the confidentiallity and integrity
-protection, which is unnecessary when the operating system can be trusted.
+TLS over TCP provides all these capabilities. UNIX socket is an example that
+provides all but not the confidentiallity and integrity protection, which is
+unnecessary when the operating system can be trusted.
 
 
 # QUIC Frames
