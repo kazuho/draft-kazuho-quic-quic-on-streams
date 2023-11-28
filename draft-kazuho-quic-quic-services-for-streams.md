@@ -340,6 +340,26 @@ define its mapping for QUIC on Streams, or explicitly allow the use; see
 As is the case with QUIC version 1, use of extension frames have to be
 negotiated before use; see {{Section 19.21 of RFC9000}}.
 
+This specification defines the mapping of the Unreliable Datagram Extension.
+
+
+## Unreliable Datagram Extension
+
+Use of the Unreliable Datagram Extension ({{!RFC9221}}) is possible, with the
+following changes.
+
+When using the DATAGRAM frame, senders MUST use only the variant of type 0x31
+(i.e., DATAGRAM frame with the Length field). If an endpoint receives a DATAGRAM
+frame of type 0x30 (i.e., DATAGRAM frame without he Length field), the endpoint
+MUST close the connection with an error of type FRAME_ENCODING_ERROR.
+
+Otherwise, the encoding and the semantics of the DATAGRAM frame as well as the
+`max_datagram_frame_size` Transport Parameter is unchanged. Use of the
+Unreliable Datagram Extension is negotiated using the Transport Parameter.
+
+As discussed in {{Section 5 of RFC9221}}, DATAGRAM frames can be dropped if the
+sending side of the transport is blocked by flow or congestion control.
+
 
 # Version Agility
 
