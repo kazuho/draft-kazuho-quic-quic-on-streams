@@ -112,7 +112,7 @@ Confidentially and Integrity:
 
 TLS over TCP provides these three capabilities. UNIX socket is an example that
 provides the first two bullet points but not the confidentiallity and integrity
-protection, which would be unnecessary when the operating system can be trusted.
+protection, which is unnecessary when the operating system can be trusted.
 
 
 # QUIC Frames
