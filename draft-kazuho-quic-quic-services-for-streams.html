@@ -1209,27 +1209,28 @@ bi-directional streams such as TLS.<a href="#section-abstract-1" class="pilcrow"
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">QUIC version 1 (<span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>) is a bi-directional, authenticated transport-layer
-protocol built on top of UDP (<span>[<a href="#RFC768" class="cite xref">RFC768</a>]</span>). The protocol provides multiplexed
-flow-controlled streams without head-of-line blocking as one of its core
-services, along with low-latency connection establishment and efficient loss
-recovery.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">QUIC version 1 <span>[<a href="#QUIC" class="cite xref">QUIC</a>]</span> is a bi-directional, authenticated
+transport-layer protocol built on top of UDP <span>[<a href="#UDP" class="cite xref">UDP</a>]</span>. The protocol
+provides multiplexed flow-controlled streams without head-of-line blocking as
+one of its core services, along with low-latency connection establishment and
+efficient loss recovery.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">However, there are downsides with QUIC.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">One downside is that QUIC is not as universally accessible as TCP
-(<span>[<a href="#RFC9293" class="cite xref">RFC9293</a>]</span>). This is because QUIC is built on top of UDP, which is
+<span>[<a href="#TCP" class="cite xref">TCP</a>]</span>. This is because QUIC is built on top of UDP, which is
 occasionally blocked by middleboxes.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">Another downside is that QUIC is computationally expensive compared to TLS
-(<span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>) over TCP. This is partly because QUIC encrypts each packet which
-is smaller than the encryption unit of TLS leading to more overhead, and partly
-because UDP is less optimized in the computing infrastructure.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<span>[<a href="#TLS13" class="cite xref">TLS13</a>]</span> over TCP. This is partly because QUIC encrypts each packet
+which is smaller than the encryption unit of TLS leading to more overhead, and
+partly because UDP is less optimized in the computing infrastructure.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Due to these limitations, applications are often served on top of both QUIC and
 TCP, with the former aiming to provide better user-experience, while the latter
  being considered as a backstop for network reachability or to provide
 computational efficiency where necessary.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">One such example is HTTP. HTTP/3 (<span>[<a href="#RFC9114" class="cite xref">RFC9114</a>]</span>) runs on top of QUIC. HTTP/2
-(<span>[<a href="#RFC9113" class="cite xref">RFC9113</a>]</span>) runs on top of TCP. Recently, there have been proposals to revise
-HTTP/2 due to security concerns (<span>[<a href="#h2-stream-limits" class="cite xref">h2-stream-limits</a>]</span>), which has led people wonder about the cost of maintaining multiple
-versions of HTTP.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-6">One such example is HTTP. HTTP/3 <span>[<a href="#HTTP3" class="cite xref">HTTP3</a>]</span> runs on top of QUIC. HTTP/2
+<span>[<a href="#HTTP2" class="cite xref">HTTP2</a>]</span> runs on top of TCP. Recently, there have been proposals to
+revise HTTP/2 due to security concerns
+(<span>[<a href="#h2-stream-limits" class="cite xref">h2-stream-limits</a>]</span>), which has led
+people to wonder about the cost of maintaining multiple versions of HTTP.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">Another example is WebTransport. WebTransport is a super set of HTTP, but
 because HTTP has different bindings for QUIC and TCP, WebTransport defines its
 own bindings for the two variants of HTTP (<span>[<a href="#webtrans-h3" class="cite xref">webtrans-h3</a>]</span>,
@@ -1240,7 +1241,7 @@ that allows application protocols built on top of QUIC to run on transport
 protocols providing single bi-directional, byte-oriented stream such as TCP or
 TLS.<a href="#section-1-8" class="pilcrow">¶</a></p>
 <p id="section-1-9">The polyfill being specified provides a compatibility layer for providing set of
-the operations (i.e., API) required by QUIC, as specified in Section <a href="https://rfc-editor.org/rfc/rfc9000#section-2.4" class="relref">2.4</a> and Section <a href="https://rfc-editor.org/rfc/rfc9000#section-5.3" class="relref">5.3</a> of <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-1-9" class="pilcrow">¶</a></p>
+the operations (i.e., API) required by QUIC, as specified in Section <a href="https://rfc-editor.org/rfc/rfc9000#section-2.4" class="relref">2.4</a> and Section <a href="https://rfc-editor.org/rfc/rfc9000#section-5.3" class="relref">5.3</a> of <span>[<a href="#QUIC" class="cite xref">QUIC</a>]</span>.<a href="#section-1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1357,9 +1358,9 @@ or received in the application packet number space:<a href="#section-4-1" class=
       </ul>
 <p id="section-4-3">The format and the meaning of these frames are unchanged, with the STREAM frames
 being an exception. For the details of the STREAM frames, see <a href="#stream-frames" class="auto internal xref">Section 4.1</a>.<a href="#section-4-3" class="pilcrow">¶</a></p>
-<p id="section-4-4">Use of other frames defined in <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> is prohibited. Namely, ACK frames are
-not used, because the underlying transport guarantees delivery. Use of frames
-that communicate Connection IDs and those related to path migration is
+<p id="section-4-4">Use of other frames defined in QUIC version 1 is prohibited. Namely, ACK frames
+are not used, because the underlying transport guarantees delivery. Use of
+frames that communicate Connection IDs and those related to path migration is
 forbidden.<a href="#section-4-4" class="pilcrow">¶</a></p>
 <p id="section-4-5">If an endpoint receives one of the prohibited frames, the endpoint <span class="bcp14">MUST</span> close
 the connection with an error of type FRAME_ENCODING_ERROR.<a href="#section-4-5" class="pilcrow">¶</a></p>
@@ -1420,7 +1421,7 @@ field in this QS_TRANSPORT_PARAMETERS frame.<a href="#section-4.2-5.2.1" class="
 <dt id="section-4.2-5.3">Transport Parameters:</dt>
           <dd style="margin-left: 1.5em" id="section-4.2-5.4">
             <p id="section-4.2-5.4.1">The Transport Parameters. The encoding of the payload is as defined in
-<span><a href="https://rfc-editor.org/rfc/rfc9000#section-18" class="relref">Section 18</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-4.2-5.4.1" class="pilcrow">¶</a></p>
+<span><a href="https://rfc-editor.org/rfc/rfc9000#section-18" class="relref">Section 18</a> of [<a href="#QUIC" class="cite xref">QUIC</a>]</span>.<a href="#section-4.2-5.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -1429,13 +1430,13 @@ Endpoints <span class="bcp14">MUST</span> send the QS_TRANSPORT_PARAMETERS frame
 transport becomes available. Note neither endpoint needs to wait for the
 peer's Transport Parameters before sending its own, as Transport Parameters are
 a unilateral declaration of an endpoint's capabilities
-(<span><a href="https://rfc-editor.org/rfc/rfc9000#section-7.4" class="relref">Section 7.4</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>).<a href="#section-4.2-6" class="pilcrow">¶</a></p>
+(<span><a href="https://rfc-editor.org/rfc/rfc9000#section-7.4" class="relref">Section 7.4</a> of [<a href="#QUIC" class="cite xref">QUIC</a>]</span>).<a href="#section-4.2-6" class="pilcrow">¶</a></p>
 <p id="section-4.2-7">If the first frame being received by an endpoint is not a
 QS_TRANSPORT_PARAMETERS frame, the endpoint <span class="bcp14">MUST</span> close the connection with an
 error of type TRANSPORT_PARAMETER_ERROR.<a href="#section-4.2-7" class="pilcrow">¶</a></p>
 <p id="section-4.2-8">The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has been chosen
 so that it can be used to disambiguate QUIC on Streams from HTTP/1.1
-(<span>[<a href="#RFC9112" class="cite xref">RFC9112</a>]</span>) and HTTP/2.<a href="#section-4.2-8" class="pilcrow">¶</a></p>
+<span>[<a href="#HTTP1" class="cite xref">HTTP1</a>]</span> and HTTP/2.<a href="#section-4.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="qsping-frames">
@@ -1487,7 +1488,7 @@ carrying the largest Sequence Number that the endpoint has received.<a href="#se
       <h2 id="name-transport-parameters">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-transport-parameters" class="section-name selfRef">Transport Parameters</a>
       </h2>
-<p id="section-5-1">QUIC on Streams uses a subset of Transport Parameters defined in <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.
+<p id="section-5-1">QUIC on Streams uses a subset of Transport Parameters defined in QUIC version 1.
 Also, one new Transport Parameter specific to QUIC on Streams is defined.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="permitted-tps">
 <section id="section-5.1">
@@ -1519,9 +1520,9 @@ Also, one new Transport Parameter specific to QUIC on Streams is defined.<a href
 </li>
         </ul>
 <p id="section-5.1-3">The definition of these Transport Parameters are unchanged.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
-<p id="section-5.1-4">Use of other Transport Parameters defined in <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> is prohibited. When an
-endpoint receives one of the prohibited Transport Parameters, the endpoint <span class="bcp14">MUST</span>
-close the connection with an error of type TRANSPORT_PARAMETER_ERROR.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+<p id="section-5.1-4">Use of other Transport Parameters defined in QUIC version 1 is prohibited. When
+an endpoint receives one of the prohibited Transport Parameters, the endpoint
+<span class="bcp14">MUST</span> close the connection with an error of type TRANSPORT_PARAMETER_ERROR.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 <p id="section-5.1-5">Endpoints <span class="bcp14">MUST NOT</span> send Transport Parameters that extend QUIC version 1, unless
 they are specified to be compatible with QUIC on Streams.<a href="#section-5.1-5" class="pilcrow">¶</a></p>
 <p id="section-5.1-6">When receiving Transport Parameters not defined in QUIC version 1, receivers
@@ -1553,7 +1554,7 @@ close the connection with an error of type FRAME_ENCODING_ERROR.<a href="#sectio
       <h2 id="name-closing-the-connection">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-closing-the-connection" class="section-name selfRef">Closing the Connection</a>
       </h2>
-<p id="section-6-1">As is with QUIC version 1 (<span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>), a connection can be closed either by a
+<p id="section-6-1">As is with QUIC version 1, a connection can be closed either by a
 CONNECTION_CLOSE frame or by an idle timeout.<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">Unlike QUIC version 1, there is no draining period; once an endpoint sends or
 receives the CONNECTION_CLOSE frame or reaches the idle timeout, all the
@@ -1566,13 +1567,12 @@ closed immediately.<a href="#section-6-2" class="pilcrow">¶</a></p>
       <h2 id="name-using-0-rtt">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-using-0-rtt" class="section-name selfRef">Using 0-RTT</a>
       </h2>
-<p id="section-7-1">TLS 1.3 (<span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>) introduced the concept of early data (also knows as
-0-RTT data).<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-1">TLS 1.3 introduced the concept of early data (also knows as 0-RTT data).<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">When using QUIC on Streams on top of TLS that supports early data, clients <span class="bcp14">MAY</span>
 use early data when resuming a connection, by reusing certain Transport
-Parameters as defined in <span><a href="https://rfc-editor.org/rfc/rfc9000#section-7.4.1" class="relref">Section 7.4.1</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-7-2" class="pilcrow">¶</a></p>
+Parameters as defined in <span><a href="https://rfc-editor.org/rfc/rfc9000#section-7.4.1" class="relref">Section 7.4.1</a> of [<a href="#QUIC" class="cite xref">QUIC</a>]</span>.<a href="#section-7-2" class="pilcrow">¶</a></p>
 <p id="section-7-3">Similarly, when accepting early data, the servers <span class="bcp14">MUST</span> send Transport Parameters
-that obey to the restrictions defined in <span><a href="https://rfc-editor.org/rfc/rfc9000#section-7.4.1" class="relref">Section 7.4.1</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-7-3" class="pilcrow">¶</a></p>
+that obey to the restrictions defined in <span><a href="https://rfc-editor.org/rfc/rfc9000#section-7.4.1" class="relref">Section 7.4.1</a> of [<a href="#QUIC" class="cite xref">QUIC</a>]</span>.<a href="#section-7-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="extensions">
@@ -1584,7 +1584,7 @@ that obey to the restrictions defined in <span><a href="https://rfc-editor.org/r
 define its mapping for QUIC on Streams, or explicitly allow the use; see
 <a href="#permitted-tps" class="auto internal xref">Section 5.1</a>.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <p id="section-8-2">As is the case with QUIC version 1, use of extension frames have to be
-negotiated before use; see <span><a href="https://rfc-editor.org/rfc/rfc9000#section-19.21" class="relref">Section 19.21</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-8-2" class="pilcrow">¶</a></p>
+negotiated before use; see <span><a href="https://rfc-editor.org/rfc/rfc9000#section-19.21" class="relref">Section 19.21</a> of [<a href="#QUIC" class="cite xref">QUIC</a>]</span>.<a href="#section-8-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="version-agility">
@@ -1595,9 +1595,9 @@ negotiated before use; see <span><a href="https://rfc-editor.org/rfc/rfc9000#sec
 <p id="section-9-1">Unlike QUIC, QUIC on Streams does not define a mechanism for version
 negotiation.<a href="#section-9-1" class="pilcrow">¶</a></p>
 <p id="section-9-2">In large-scale deployments that require service and protocol version discovery,
-QUIC on Streams can and is likely to be used on top of TLS. ALPN (<span>[<a href="#RFC7301" class="cite xref">RFC7301</a>]</span>)
-is the preferred mechanism to negotiate between an application protocol built on
-top of this specification and others.<a href="#section-9-2" class="pilcrow">¶</a></p>
+QUIC on Streams can and is likely to be used on top of TLS. ALPN
+<span>[<a href="#ALPN" class="cite xref">ALPN</a>]</span> is the preferred mechanism to negotiate between an application
+protocol built on top of this specification and others.<a href="#section-9-2" class="pilcrow">¶</a></p>
 <p id="section-9-3">When ALPN is unavailable, first 8 bytes exchanged on the transport (i.e., the
 type field of the QS_TRANSPORT_PARAMETERS frame in the encoded form) can be used
 to identify if QUIC on Streams is in use.<a href="#section-9-3" class="pilcrow">¶</a></p>
@@ -1608,10 +1608,10 @@ to identify if QUIC on Streams is in use.<a href="#section-9-3" class="pilcrow">
       <h2 id="name-implementation-consideratio">
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-implementation-consideratio" class="section-name selfRef">Implementation Considerations</a>
       </h2>
-<p id="section-10-1">Like HTTP/3 (<span>[<a href="#RFC9114" class="cite xref">RFC9114</a>]</span>) with Extensible Priorities (<span>[<a href="#RFC9218" class="cite xref">RFC9218</a>]</span>),
-application protocols built on top of QUIC might use stream multiplexing in
-conjunction with a mechanism to request or specify the order in which the
-payload of the QUIC streams are to be delivered.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-1">Like HTTP/3 with Extensible Priorities <span>[<a href="#HTTP_PRIORITY" class="cite xref">HTTP_PRIORITY</a>]</span>, application
+protocols built on top of QUIC might use stream multiplexing in conjunction with
+a mechanism to request or specify the order in which the payload of the QUIC
+streams are to be delivered.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <p id="section-10-2">To switch between QUIC streams with different priorities in a timely manner,
 implementations of QUIC on Streams should refrain from building deep buffers
 that contain QUIC frames to be sent in particular order. Rather,
@@ -1650,6 +1650,10 @@ that failures to tune these variables might lead to reduced throughput.<a href="
 <a href="#section-13.1" class="section-number selfRef">13.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="QUIC">[QUIC]</dt>
+        <dd>
+<span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
@@ -1658,13 +1662,9 @@ that failures to tune these variables might lead to reduced throughput.<a href="
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC8446">[RFC8446]</dt>
-        <dd>
-<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9000">[RFC9000]</dt>
+<dt id="TLS13">[TLS13]</dt>
       <dd>
-<span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1675,37 +1675,37 @@ that failures to tune these variables might lead to reduced throughput.<a href="
 <a href="#section-13.2" class="section-number selfRef">13.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="ALPN">[ALPN]</dt>
+        <dd>
+<span class="refAuthor">Friedl, S.</span>, <span class="refAuthor">Popov, A.</span>, <span class="refAuthor">Langley, A.</span>, and <span class="refAuthor">E. Stephan</span>, <span class="refTitle">"Transport Layer Security (TLS) Application-Layer Protocol Negotiation Extension"</span>, <span class="seriesInfo">RFC 7301</span>, <span class="seriesInfo">DOI 10.17487/RFC7301</span>, <time datetime="2014-07" class="refDate">July 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7301">https://www.rfc-editor.org/rfc/rfc7301</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="h2-stream-limits">[h2-stream-limits]</dt>
         <dd>
 <span class="refAuthor">Thomson, M.</span> and <span class="refAuthor">L. Pardue</span>, <span class="refTitle">"Using HTTP/3 Stream Limits in HTTP/2"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-thomson-httpbis-h2-stream-limits-00</span>, <time datetime="2023-11-06" class="refDate">6 November 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-thomson-httpbis-h2-stream-limits-00">https://datatracker.ietf.org/doc/html/draft-thomson-httpbis-h2-stream-limits-00</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC7301">[RFC7301]</dt>
-        <dd>
-<span class="refAuthor">Friedl, S.</span>, <span class="refAuthor">Popov, A.</span>, <span class="refAuthor">Langley, A.</span>, and <span class="refAuthor">E. Stephan</span>, <span class="refTitle">"Transport Layer Security (TLS) Application-Layer Protocol Negotiation Extension"</span>, <span class="seriesInfo">RFC 7301</span>, <span class="seriesInfo">DOI 10.17487/RFC7301</span>, <time datetime="2014-07" class="refDate">July 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7301">https://www.rfc-editor.org/rfc/rfc7301</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC768">[RFC768]</dt>
-        <dd>
-<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"User Datagram Protocol"</span>, <span class="seriesInfo">STD 6</span>, <span class="seriesInfo">RFC 768</span>, <span class="seriesInfo">DOI 10.17487/RFC0768</span>, <time datetime="1980-08" class="refDate">August 1980</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc768">https://www.rfc-editor.org/rfc/rfc768</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9112">[RFC9112]</dt>
+<dt id="HTTP1">[HTTP1]</dt>
         <dd>
 <span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP/1.1"</span>, <span class="seriesInfo">STD 99</span>, <span class="seriesInfo">RFC 9112</span>, <span class="seriesInfo">DOI 10.17487/RFC9112</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9112">https://www.rfc-editor.org/rfc/rfc9112</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC9113">[RFC9113]</dt>
+<dt id="HTTP2">[HTTP2]</dt>
         <dd>
 <span class="refAuthor">Thomson, M., Ed.</span> and <span class="refAuthor">C. Benfield, Ed.</span>, <span class="refTitle">"HTTP/2"</span>, <span class="seriesInfo">RFC 9113</span>, <span class="seriesInfo">DOI 10.17487/RFC9113</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9113">https://www.rfc-editor.org/rfc/rfc9113</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC9114">[RFC9114]</dt>
+<dt id="HTTP3">[HTTP3]</dt>
         <dd>
 <span class="refAuthor">Bishop, M., Ed.</span>, <span class="refTitle">"HTTP/3"</span>, <span class="seriesInfo">RFC 9114</span>, <span class="seriesInfo">DOI 10.17487/RFC9114</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9114">https://www.rfc-editor.org/rfc/rfc9114</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC9218">[RFC9218]</dt>
+<dt id="HTTP_PRIORITY">[HTTP_PRIORITY]</dt>
         <dd>
 <span class="refAuthor">Oku, K.</span> and <span class="refAuthor">L. Pardue</span>, <span class="refTitle">"Extensible Prioritization Scheme for HTTP"</span>, <span class="seriesInfo">RFC 9218</span>, <span class="seriesInfo">DOI 10.17487/RFC9218</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9218">https://www.rfc-editor.org/rfc/rfc9218</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC9293">[RFC9293]</dt>
+<dt id="TCP">[TCP]</dt>
         <dd>
 <span class="refAuthor">Eddy, W., Ed.</span>, <span class="refTitle">"Transmission Control Protocol (TCP)"</span>, <span class="seriesInfo">STD 7</span>, <span class="seriesInfo">RFC 9293</span>, <span class="seriesInfo">DOI 10.17487/RFC9293</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9293">https://www.rfc-editor.org/rfc/rfc9293</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="UDP">[UDP]</dt>
+        <dd>
+<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"User Datagram Protocol"</span>, <span class="seriesInfo">STD 6</span>, <span class="seriesInfo">RFC 768</span>, <span class="seriesInfo">DOI 10.17487/RFC0768</span>, <time datetime="1980-08" class="refDate">August 1980</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc768">https://www.rfc-editor.org/rfc/rfc768</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="webtrans-h2">[webtrans-h2]</dt>
         <dd>
