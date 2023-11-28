@@ -1,6 +1,6 @@
-# QUIC Services for Streams
+# QUIC on Streams
 
-This is the working area for the individual Internet-Draft, "QUIC Services for Streams".
+This is the working area for the individual Internet-Draft, "QUIC on Streams".
 
 * [Editor's Copy](https://kazuho.github.io/draft-kazuho-quic-quic-services-for-streams/#go.draft-kazuho-quic-quic-services-for-streams.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-kazuho-quic-quic-services-for-streams)
