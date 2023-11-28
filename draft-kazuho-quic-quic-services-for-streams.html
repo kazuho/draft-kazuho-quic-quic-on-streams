@@ -1593,11 +1593,11 @@ negotiated before use; see <span><a href="https://rfc-editor.org/rfc/rfc9000#sec
       </h2>
 <p id="section-9-1">Unlike QUIC, QUIC on Streams does not define a mechanism for version
 negotiation.<a href="#section-9-1" class="pilcrow">¶</a></p>
-<p id="section-9-2">In large-scale deployments that require service and protocol version discovery,
-QUIC on Streams can and is likely to be used on top of TLS. The
+<p id="section-9-2">In large-scale deployments requiring service and protocol version discovery,
+QUIC on Streams can and is likely to be implemented over TLS. The
 Application-Layer Protocol Negotiation Extension of TLS <span>[<a href="#ALPN" class="cite xref">ALPN</a>]</span> is the
-preferred mechanism to negotiate between an application protocol built on top of
-this specification and others.<a href="#section-9-2" class="pilcrow">¶</a></p>
+favored mechanism to negotiate between an application protocol based on this
+specification and others.<a href="#section-9-2" class="pilcrow">¶</a></p>
 <p id="section-9-3">When ALPN is unavailable, first 8 bytes exchanged on the transport (i.e., the
 type field of the QS_TRANSPORT_PARAMETERS frame in the encoded form) can be used
 to identify if QUIC on Streams is in use.<a href="#section-9-3" class="pilcrow">¶</a></p>
