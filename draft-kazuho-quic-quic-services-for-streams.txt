@@ -302,16 +302,16 @@ Table of Contents
    Sequence Number:  A variable-length integer used to identify the
       ping.
 
-   When sending TBD_PING frames of type 0xTBD, endpoints MUST send
+   When sending QSS_PING frames of type 0xTBD, endpoints MUST send
    monotonically increasing values in the Sequence Number field, since
    that allows the endpoints to identify to which ping the peer has
    responded.
 
-   When sending TBD_PING frames of type 0xTBD+1 in response, endpoints
+   When sending QSS_PING frames of type 0xTBD+1 in response, endpoints
    MUST echo the Sequence Number that they have received.
 
-   When receiving multiple TBD_PING frames of type 0xTBD before having
-   the chance to respond, an endpoint MAY only respond with one TBD_PING
+   When receiving multiple QSS_PING frames of type 0xTBD before having
+   the chance to respond, an endpoint MAY only respond with one QSS_PING
    frame of type 0xTBD+1 carrying the largest Sequence Number that the
    endpoint has received.
 

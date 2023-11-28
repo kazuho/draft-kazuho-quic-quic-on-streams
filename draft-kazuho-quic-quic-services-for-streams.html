@@ -1453,13 +1453,13 @@ QSS_PING Frame {
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-4.3-7">When sending TBD_PING frames of type 0xTBD, endpoints <span class="bcp14">MUST</span> send monotonically
+<p id="section-4.3-7">When sending QSS_PING frames of type 0xTBD, endpoints <span class="bcp14">MUST</span> send monotonically
 increasing values in the Sequence Number field, since that allows the endpoints
 to identify to which ping the peer has responded.<a href="#section-4.3-7" class="pilcrow">¶</a></p>
-<p id="section-4.3-8">When sending TBD_PING frames of type 0xTBD+1 in response, endpoints <span class="bcp14">MUST</span> echo
+<p id="section-4.3-8">When sending QSS_PING frames of type 0xTBD+1 in response, endpoints <span class="bcp14">MUST</span> echo
 the Sequence Number that they have received.<a href="#section-4.3-8" class="pilcrow">¶</a></p>
-<p id="section-4.3-9">When receiving multiple TBD_PING frames of type 0xTBD before having the chance
-to respond, an endpoint <span class="bcp14">MAY</span> only respond with one TBD_PING frame of type 0xTBD+1
+<p id="section-4.3-9">When receiving multiple QSS_PING frames of type 0xTBD before having the chance
+to respond, an endpoint <span class="bcp14">MAY</span> only respond with one QSS_PING frame of type 0xTBD+1
 carrying the largest Sequence Number that the endpoint has received.<a href="#section-4.3-9" class="pilcrow">¶</a></p>
 </section>
 </div>
