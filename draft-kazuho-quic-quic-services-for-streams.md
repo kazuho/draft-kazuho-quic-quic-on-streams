@@ -56,9 +56,10 @@ own bindings for the two variants of HTTP ({{?webtrans-h3=I-D.ietf-webtrans-http
 {{?webtrans-h2=I-D.ietf-webtrans-http2}}).
 
 In order to reduce or eliminate the cost of these duplicated efforts to provide
-services on top of both protocols, this document specifies a polyfill that
-allows application protocols built on top of QUIC to run on bi-directional
-streams such as TCP or TLS.
+services on top of both transport protocols, this document specifies a polyfill
+that allows application protocols built on top of QUIC to run on transport
+protocols providing single bi-directional, byte-oriented stream such as TCP or
+TLS.
 
 The polyfill being specified provides a compatibility layer for providing set of
 the operations (i.e., API) required by QUIC, as specified in {{Section 2.4 and
@@ -72,13 +73,14 @@ Section 5.3 of RFC9000}}.
 
 # The Protocol
 
-QUIC Services for Streams can be used on any bi-directional byte stream that is
-ordered and reliable; for details, see {{stream-properties}}.
+QUIC Services for Streams can be used on any transport that provides
+bi-directional, byte-oriented stream that is ordered and reliable; for details,
+see {{transport-properties}}.
 
-QUIC frames are sent directly on top of the bi-directional byte stream.
+QUIC frames are sent directly on top of the transport.
 
-The frames are not encrypted. It is the task of the lower layer providing the
-bi-directional byte stream (e.g., TLS) to provide confidentially and integrity.
+The frames are not encrypted. It is the task of the transport (e.g., TLS) to
+provide confidentially and integrity.
 
 QUIC packet headers are not used.
 
@@ -86,35 +88,33 @@ For exchanging the Transport Parameters, a new frame called
 QSS_TRANSPORT_PARAMETERS frame is defined.
 
 
-## Properties of Underlying Streams {#stream-properties}
+## Properties of Underlying Transport {#transport-properties}
 
-QUIC Services for Streams is designed to work on top of underlying streams that
-provide the following capabilities:
+QUIC Services for Streams is designed to work on top of transport layer
+protocols that provide the following capabilities:
 
-In-order delivery of bytes in both directions:
+In-order delivery of bytes in both direction:
 
-: Underlying connection provides byte-oriented bi-directional streams that
-  guarantee in-order delivery; i.e., bytes that were sent in one order become
+: Underlying transport provides a byte-oriented and bi-directional stream that
+  deliver the bytes in order; i.e., bytes that were sent in one order become
   available to the receiving side in the same order.
 
 Guaranteed delivery:
 
-: If the underlying byte stream is built on top of a lossy network, the
-  underlying byte stream recovers the bytes lost; e.g., by retransmitting them.
-  This requires buffering and reassembly, in order to achieve the first bullet
-  point (in-order delivery).
+: If the transport runs on top of a lossy network, that transport recovers the
+  bytes lost; e.g., by retransmitting them. This requires buffering and
+  reassembly, in order to achieve the first bullet point (in-order delivery).
 
 Congestion control:
 
-: When used on a shared network, the underlying byte stream is congestion
-  controlled. Implementations of QUIC Services for Streams simply write outgoing
-  frames to the underlying byte stream when that byte stream permits to.
+: When used on a shared network, the transport is congestion controlled.
+  Implementations of QUIC Services for Streams simply write outgoing frames to
+  the transport when that transport permits to.
 
 Confidentially and Integrity:
 
 : Unless used upon endpoints between which tampering or monitoring is a
-  non-concern, the underlying byte stream provides confidentially and integrity
-  protection.
+  non-concern, the transport provides confidentially and integrity protection.
 
 TLS over TCP provides all these capabilities. UNIX sockets is an example that
 provides only the first two. Congestion control is not used because UNIX sockets
@@ -143,8 +143,8 @@ The format and the meaning of these frames are unchanged, with the STREAM frames
 being an exception. For the details of the STREAM frames, see {{stream-frames}}.
 
 Use of other frames defined in {{RFC9000}} is prohibited. Namely, ACK frames are
-not used, because underlying byte stream provides guaranteed delivery. Use of
-frames that communicate Connection IDs and those related to path migration is
+not used, because the underlying transport guarantees delivery. Use of frames
+that communicate Connection IDs and those related to path migration is
 forbidden.
 
 If an endpoint receives one of the prohibited frames, the endpoint MUST close
@@ -164,13 +164,15 @@ Receivers retain the total amount of bytes being received for each stream, and
 when receiving a STREAM frame, uses that value to determine the offset of the
 newly received STREAM frame.
 
-Unlike QUIC version 1, receives do not need to buffer and reassemble the payload
-of each incoming stream. This is because the sender sends the STREAM frames in
-order and the underlying stream guarantees in-order delivery. The payload being
-received can be passed to the application as they arrive.
+Unlike QUIC version 1, receivers do not need to buffer and reassemble the
+payload of each incoming stream. This is because the sender sends the STREAM
+frames in order and that they will be delivered in-order by the transport. The
+payload being received can be passed to the application as they are read from
+the transport.
 
 Use of the Length field is mandated, because QUIC Services for Streams operates
-on top of bi-directional streams and the packet boundary is not observable.
+on top of byte-oriented transports and thus the packet boundary may not be
+observable.
 
 
 ## QSS_TRANSPORT_PARAMETERS Frames
@@ -204,7 +206,7 @@ Transport Parameters:
 
 The QSS_TRANSPORT_PARAMETERS frame is the first frame being sent by endpoints.
 Endpoints MUST send the QSS_TRANSPORT_PARAMETERS frame as soon as the underlying
-byte stream becomes available. Note neither endpoint needs to wait for the
+transport becomes available. Note neither endpoint needs to wait for the
 peer's Transport Parameters before sending its own, as Transport Parameters are
 a unilateral declaration of an endpoint's capabilities
 ({{Section 7.4 of RFC9000}}).
@@ -221,7 +223,7 @@ so that it can be used to disambiguate QUIC Services for Streams from HTTP/1.1
 ## QSS_PING Frames
 
 In QUIC Services for Streams, QSS_PING frames allow endpoints to test peer
-reachability above the underlying byte stream.
+reachability above the underlying transport.
 
 QSS_PING frames are formatted as shown in {{fig-qss-ping}}.
 
@@ -319,7 +321,7 @@ CONNECTION_CLOSE frame or by an idle timeout.
 
 Unlike QUIC version 1, there is no draining period; once an endpoint sends or
 receives the CONNECTION_CLOSE frame or reaches the idle timeout, all the
-resources allocated for the Service are freed and the underlying stream is
+resources allocated for the Service are freed and the underlying transport is
 closed immediately.
 
 
@@ -346,9 +348,9 @@ QUIC Services for Streams can and is likely to be used on top of TLS. ALPN
 ({{?RFC7301}}) is the preferred mechanism to negotiate between an application
 protocol built on top of this specification and others.
 
-When ALPN is unavailable, first 8 bytes exchanged on the stream (i.e., the type
-field of the QSS_TRANSPORT_PARAMETERS frame in the encoded form) can be used to
-identify if QUIC Services for Streams is in use.
+When ALPN is unavailable, first 8 bytes exchanged on the transport (i.e., the
+type field of the QSS_TRANSPORT_PARAMETERS frame in the encoded form) can be
+used to identify if QUIC Services for Streams is in use.
 
 
 # Implementation Considerations
@@ -365,7 +367,7 @@ endpoints are encouraged to wait for the underlying transport to become
 writable, and each time it becomes writable, write new frames based on the most
 recent prioritization signals.
 
-Implementations might also observe or tune the values of underlying tranport
+Implementations might also observe or tune the values of underlying transports
 related to flow and congestion control, in order to minimize the amount of data
 buffered inside the transport layer without immediately being sent. Note however
 that failures to tune these variables might lead to reduced throughput.
