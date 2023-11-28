@@ -116,9 +116,10 @@ Confidentially and Integrity:
   non-concern, the underlying byte stream provides confidentially and integrity
   protection.
 
-TLS over TCP provides all these capabilities. UNIX socket is an example that
-provides all but not the confidentiallity and integrity protection, which is
-unnecessary when the operating system can be trusted.
+TLS over TCP provides all these capabilities. UNIX sockets is an example that
+provides only the first two. Congestion control is not used because UNIX sockets
+do not work on top of a shared network. Confidentiallity and integrity
+protection is considered unnecessary when the operating system can be trusted.
 
 
 # QUIC Frames
