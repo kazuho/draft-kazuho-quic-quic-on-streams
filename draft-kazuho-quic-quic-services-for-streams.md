@@ -73,7 +73,7 @@ Section 5.3 of RFC9000}}.
 # The Protocol
 
 QUIC Services for Streams can be used on any bi-directional byte stream that is
-ordered and reliable.
+ordered and reliable; for details, see {{stream-properties}}.
 
 QUIC frames are sent directly on top of the bi-directional byte stream.
 
@@ -84,6 +84,35 @@ QUIC packet headers are not used.
 
 For exchanging the Transport Parameters, a new frame called
 QSS_TRANSPORT_PARAMETERS frame is defined.
+
+
+## Properties of Underlying Streams {#stream-properties}
+
+QUIC Services for Streams is designed to work on top of underlying streams that
+provide the following capabilities:
+
+In-order delivery of bytes in both directions:
+
+: Underlying connection MUST provide byte-oriented bi-directional streams that
+  guarantee in-order delivery; i.e., bytes that were sent in one order become
+  available to the receiving side in the same order.
+
+Guaranteed delivery:
+
+: If the underlying byte stream is built on top of a lossy network, the
+  underlying byte stream MUST recover the bytes lost; e.g., by retransmitting
+  them. This requires buffering and reassembly, in order to achieve the first
+  bullet point (in-order delivery).
+
+Confidentially and Integrity:
+
+: Unless used upon endpoints between which tampering or monitoring is a
+  non-concern, the underlying byte stream MUST provide confidentially and
+  integrity protection.
+
+TLS over TCP provides these three capabilities. UNIX socket is an example that
+provides the first two bullet points but not the confidentiallity and integrity
+protection, which would be unnecessary when the operating system can be trusted.
 
 
 # QUIC Frames
