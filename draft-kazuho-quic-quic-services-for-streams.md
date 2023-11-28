@@ -1,5 +1,5 @@
 ---
-title: "QUIC Services for Streams"
+title: "QUIC on Streams"
 docname: draft-kazuho-quic-quic-services-for-streams-latest
 category: std
 wg: QUIC
@@ -73,9 +73,9 @@ Section 5.3 of RFC9000}}.
 
 # The Protocol
 
-QUIC Services for Streams can be used on any transport that provides
-bi-directional, byte-oriented stream that is ordered and reliable; for details,
-see {{transport-properties}}.
+QUIC on Streams can be used on any transport that provides bi-directional,
+byte-oriented stream that is ordered and reliable; for details, see
+{{transport-properties}}.
 
 QUIC frames are sent directly on top of the transport.
 
@@ -85,13 +85,13 @@ provide confidentially and integrity.
 QUIC packet headers are not used.
 
 For exchanging the Transport Parameters, a new frame called
-QSS_TRANSPORT_PARAMETERS frame is defined.
+QS_TRANSPORT_PARAMETERS frame is defined.
 
 
 ## Properties of Underlying Transport {#transport-properties}
 
-QUIC Services for Streams is designed to work on top of transport layer
-protocols that provide the following capabilities:
+QUIC on Streams is designed to work on top of transport layer protocols that
+provide the following capabilities:
 
 In-order delivery of bytes in both direction:
 
@@ -108,8 +108,8 @@ Guaranteed delivery:
 Congestion control:
 
 : When used on a shared network, the transport is congestion controlled.
-  Implementations of QUIC Services for Streams simply write outgoing frames to
-  the transport when that transport permits to.
+  Implementations of QUIC on Streams simply write outgoing frames to the
+  transport when that transport permits to.
 
 Confidentially and Integrity:
 
@@ -124,8 +124,8 @@ protection is considered unnecessary when the operating system can be trusted.
 
 # QUIC Frames
 
-In QUIC Services for Streams, the following QUIC frames can be used, as if they
-were sent or received in the application packet number space:
+In QUIC on Streams, the following QUIC frames can be used, as if they were sent
+or received in the application packet number space:
 
 * PADDING
 * RESET_STREAM
@@ -170,33 +170,33 @@ frames in order and that they will be delivered in-order by the transport. The
 payload being received can be passed to the application as they are read from
 the transport.
 
-Use of the Length field is mandated, because QUIC Services for Streams operates
-on top of byte-oriented transports and thus the packet boundary may not be
+Use of the Length field is mandated, because QUIC on Streams operates on top of
+byte-oriented transports and thus the packet boundary may not be
 observable.
 
 
-## QSS_TRANSPORT_PARAMETERS Frames
+## QS_TRANSPORT_PARAMETERS Frames
 
-In QUIC Services for Streams, Transport Parameters are exchanged as frames.
+In QUIC on Streams, Transport Parameters are exchanged as frames.
 
-QSS_TRANSPORT_PARAMETERS frames are formatted as shown in
-{{fig-qss-transport-parameters}}.
+QS_TRANSPORT_PARAMETERS frames are formatted as shown in
+{{fig-qs-transport-parameters}}.
 
 ~~~
-QSS_TRANSPORT_PARAMETERS Frame {
+QS_TRANSPORT_PARAMETERS Frame {
   Type (i) = 0x3f5153300d0a0d0a,
   Length (i),
   Transport Parameters (..),
 }
 ~~~
-{: #fig-qss-transport-parameters title="QSS_TRANSPORT_PARAMETERS Frame Format"}
+{: #fig-qs-transport-parameters title="QS_TRANSPORT_PARAMETERS Frame Format"}
 
-QSS_TRANSPORT_PARAMETERS frames contain the following fields:
+QS_TRANSPORT_PARAMETERS frames contain the following fields:
 
 Length:
 
 : A variable-length integer specifying the length of the Transport Parameters
-  field in this QSS_TRANSPORT_PARAMETERS frame.
+  field in this QS_TRANSPORT_PARAMETERS frame.
 
 Transport Parameters:
 
@@ -204,55 +204,55 @@ Transport Parameters:
   {{Section 18 of RFC9000}}.
 
 
-The QSS_TRANSPORT_PARAMETERS frame is the first frame being sent by endpoints.
-Endpoints MUST send the QSS_TRANSPORT_PARAMETERS frame as soon as the underlying
+The QS_TRANSPORT_PARAMETERS frame is the first frame being sent by endpoints.
+Endpoints MUST send the QS_TRANSPORT_PARAMETERS frame as soon as the underlying
 transport becomes available. Note neither endpoint needs to wait for the
 peer's Transport Parameters before sending its own, as Transport Parameters are
 a unilateral declaration of an endpoint's capabilities
 ({{Section 7.4 of RFC9000}}).
 
 If the first frame being received by an endpoint is not a
-QSS_TRANSPORT_PARAMETERS frame, the endpoint MUST close the connection with an
+QS_TRANSPORT_PARAMETERS frame, the endpoint MUST close the connection with an
 error of type TRANSPORT_PARAMETER_ERROR.
 
 The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has been chosen
-so that it can be used to disambiguate QUIC Services for Streams from HTTP/1.1
+so that it can be used to disambiguate QUIC on Streams from HTTP/1.1
 ({{?RFC9112}}) and HTTP/2.
 
 
-## QSS_PING Frames
+## QS_PING Frames
 
-In QUIC Services for Streams, QSS_PING frames allow endpoints to test peer
-reachability above the underlying transport.
+In QUIC on Streams, QS_PING frames allow endpoints to test peer reachability
+above the underlying transport.
 
-QSS_PING frames are formatted as shown in {{fig-qss-ping}}.
+QS_PING frames are formatted as shown in {{fig-qs-ping}}.
 
 ~~~
-QSS_PING Frame {
+QS_PING Frame {
   Type (i) = 0xTBD..0xTBD+1,
   Sequence Number (i),
 }
 ~~~
-{: #fig-qss-ping title="QSS_PING Frame Format"}
+{: #fig-qs-ping title="QS_PING Frame Format"}
 
 Type 0xTBD is used for sending a ping (i.e., request the peer to respond). Type
 0xTBD+1 is used in response.
 
-QSS_PING frames contain the following fields:
+QS_PING frames contain the following fields:
 
 Sequence Number:
 
 : A variable-length integer used to identify the ping.
 
-When sending QSS_PING frames of type 0xTBD, endpoints MUST send monotonically
+When sending QS_PING frames of type 0xTBD, endpoints MUST send monotonically
 increasing values in the Sequence Number field, since that allows the endpoints
 to identify to which ping the peer has responded.
 
-When sending QSS_PING frames of type 0xTBD+1 in response, endpoints MUST echo
-the Sequence Number that they received.
+When sending QS_PING frames of type 0xTBD+1 in response, endpoints MUST echo the
+Sequence Number that they received.
 
-When receiving multiple QSS_PING frames of type 0xTBD before having the chance
-to respond, an endpoint MAY only respond with one QSS_PING frame of type 0xTBD+1
+When receiving multiple QS_PING frames of type 0xTBD before having the chance to
+respond, an endpoint MAY only respond with one QS_PING frame of type 0xTBD+1
 carrying the largest Sequence Number that the endpoint has received.
 
 
@@ -264,14 +264,12 @@ negotiated before use; see {{Section 19.21 of RFC9000}}.
 
 # Transport Parameters
 
-QUIC Services for Streams uses a subset of Transport Parameters defined in
-{{RFC9000}}. Also, one new Transport Parameter specific to QUIC Services for
-Streams is defined.
+QUIC on Streams uses a subset of Transport Parameters defined in {{RFC9000}}.
+Also, one new Transport Parameter specific to QUIC on Streams is defined.
 
 ## Permitted and Forbidden Transport Parameters
 
-In QUIC Services for Streams, use of the following Transport Parameters is
-allowed.
+In QUIC on Streams, use of the following Transport Parameters is allowed.
 
 * max_idle_timeout
 * initial_max_data
@@ -288,11 +286,10 @@ endpoint receives one of the prohibited Transport Parameters, the endpoint MUST
 close the connection with an error of type TRANSPORT_PARAMETER_ERROR.
 
 Endpoints MUST NOT send Transport Parameters that extend QUIC version 1, unless
-they are specified to be compatible with QUIC Services for Streams.
+they are specified to be compatible with QUIC on Streams.
 
 When receiving Transport Parameters not defined in QUIC version 1, receivers
-MUST ignore them unless they are specified to be usable on QUIC Services for
-Streams.
+MUST ignore them unless they are specified to be usable on QUIC on Streams.
 
 
 ## max_frame_size Transport Parameter
@@ -330,9 +327,9 @@ closed immediately.
 TLS 1.3 ({{?RFC8446}}) introduced the concept of early data (also knows as
 0-RTT data).
 
-When using QUIC Services for Streams on top of TLS that supports early data,
-clients MAY use early data when resuming a connection, by reusing certain
-Transport Parameters as defined in {{Section 7.4.1 of RFC9000}}.
+When using QUIC on Streams on top of TLS that supports early data, clients MAY
+use early data when resuming a connection, by reusing certain Transport
+Parameters as defined in {{Section 7.4.1 of RFC9000}}.
 
 Similarly, when accepting early data, the servers MUST send Transport Parameters
 that obey to the restrictions defined in {{Section 7.4.1 of RFC9000}}.
@@ -340,17 +337,17 @@ that obey to the restrictions defined in {{Section 7.4.1 of RFC9000}}.
 
 # Version Agility
 
-Unlike QUIC, QUIC Services for Streams does not define a mechanism for version
+Unlike QUIC, QUIC on Streams does not define a mechanism for version
 negotiation.
 
 In large-scale deployments that require service and protocol version discovery,
-QUIC Services for Streams can and is likely to be used on top of TLS. ALPN
-({{?RFC7301}}) is the preferred mechanism to negotiate between an application
-protocol built on top of this specification and others.
+QUIC on Streams can and is likely to be used on top of TLS. ALPN ({{?RFC7301}})
+is the preferred mechanism to negotiate between an application protocol built on
+top of this specification and others.
 
 When ALPN is unavailable, first 8 bytes exchanged on the transport (i.e., the
-type field of the QSS_TRANSPORT_PARAMETERS frame in the encoded form) can be
-used to identify if QUIC Services for Streams is in use.
+type field of the QS_TRANSPORT_PARAMETERS frame in the encoded form) can be used
+to identify if QUIC on Streams is in use.
 
 
 # Implementation Considerations
@@ -361,8 +358,8 @@ conjunction with a mechanism to request or specify the order in which the
 payload of the QUIC streams are to be delivered.
 
 To switch between QUIC streams with different priorities in a timely manner,
-implementations of QUIC Services for Streams should refrain from building deep
-buffers that contain QUIC frames to be sent in particular order. Rather,
+implementations of QUIC on Streams should refrain from building deep buffers
+that contain QUIC frames to be sent in particular order. Rather,
 endpoints are encouraged to wait for the underlying transport to become
 writable, and each time it becomes writable, write new frames based on the most
 recent prioritization signals.
