@@ -345,11 +345,11 @@ negotiated before use; see {{Section 19.21 of QUIC}}.
 Unlike QUIC, QUIC on Streams does not define a mechanism for version
 negotiation.
 
-In large-scale deployments that require service and protocol version discovery,
-QUIC on Streams can and is likely to be used on top of TLS. The
+In large-scale deployments requiring service and protocol version discovery,
+QUIC on Streams can and is likely to be implemented over TLS. The
 Application-Layer Protocol Negotiation Extension of TLS {{?ALPN=RFC7301}} is the
-preferred mechanism to negotiate between an application protocol built on top of
-this specification and others.
+favored mechanism to negotiate between an application protocol based on this
+specification and others.
 
 When ALPN is unavailable, first 8 bytes exchanged on the transport (i.e., the
 type field of the QS_TRANSPORT_PARAMETERS frame in the encoded form) can be used
