@@ -1270,7 +1270,7 @@ provide the following capabilities:<a href="#section-3.1-1" class="pilcrow">¶</
 <span class="break"></span><dl class="dlParallel" id="section-3.1-2">
           <dt id="section-3.1-2.1">In-order delivery of bytes in both directions:</dt>
           <dd style="margin-left: 1.5em" id="section-3.1-2.2">
-            <p id="section-3.1-2.2.1">Underlying connection <span class="bcp14">MUST</span> provide byte-oriented bi-directional streams that
+            <p id="section-3.1-2.2.1">Underlying connection provides byte-oriented bi-directional streams that
 guarantee in-order delivery; i.e., bytes that were sent in one order become
 available to the receiving side in the same order.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
 </dd>
@@ -1278,22 +1278,29 @@ available to the receiving side in the same order.<a href="#section-3.1-2.2.1" c
 <dt id="section-3.1-2.3">Guaranteed delivery:</dt>
           <dd style="margin-left: 1.5em" id="section-3.1-2.4">
             <p id="section-3.1-2.4.1">If the underlying byte stream is built on top of a lossy network, the
-underlying byte stream <span class="bcp14">MUST</span> recover the bytes lost; e.g., by retransmitting
-them. This requires buffering and reassembly, in order to achieve the first
-bullet point (in-order delivery).<a href="#section-3.1-2.4.1" class="pilcrow">¶</a></p>
+underlying byte stream recovers the bytes lost; e.g., by retransmitting them.
+This requires buffering and reassembly, in order to achieve the first bullet
+point (in-order delivery).<a href="#section-3.1-2.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-3.1-2.5">Confidentially and Integrity:</dt>
+<dt id="section-3.1-2.5">Congestion control:</dt>
           <dd style="margin-left: 1.5em" id="section-3.1-2.6">
-            <p id="section-3.1-2.6.1">Unless used upon endpoints between which tampering or monitoring is a
-non-concern, the underlying byte stream <span class="bcp14">MUST</span> provide confidentially and
-integrity protection.<a href="#section-3.1-2.6.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-2.6.1">When used on a shared network, the underlying byte stream is congestion
+controlled. Implementations of QUIC Services for Streams simply write outgoing
+frames to the underlying byte stream when that byte stream permits to.<a href="#section-3.1-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-2.7">Confidentially and Integrity:</dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-2.8">
+            <p id="section-3.1-2.8.1">Unless used upon endpoints between which tampering or monitoring is a
+non-concern, the underlying byte stream provides confidentially and integrity
+protection.<a href="#section-3.1-2.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-3.1-3">TLS over TCP provides these three capabilities. UNIX socket is an example that
-provides the first two bullet points but not the confidentiallity and integrity
-protection, which is unnecessary when the operating system can be trusted.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">TLS over TCP provides all these capabilities. UNIX socket is an example that
+provides all but not the confidentiallity and integrity protection, which is
+unnecessary when the operating system can be trusted.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
