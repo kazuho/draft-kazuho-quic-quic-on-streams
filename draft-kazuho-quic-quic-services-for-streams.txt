@@ -4,8 +4,8 @@
 
 QUIC                                                              K. Oku
 Internet-Draft                                                    Fastly
-Intended status: Standards Track                        27 November 2023
-Expires: 30 May 2024
+Intended status: Standards Track                        28 November 2023
+Expires: 31 May 2024
 
 
                        QUIC Services for Streams
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 May 2024.
+   This Internet-Draft will expire on 31 May 2024.
 
 Copyright Notice
 
@@ -64,6 +64,7 @@ Table of Contents
    1.  Introduction
    2.  Conventions and Definitions
    3.  The Protocol
+     3.1.  Properties of Underlying Streams
    4.  QUIC Frames
      4.1.  STREAM Frames
      4.2.  QSS_TRANSPORT_PARAMETERS Frames
@@ -139,7 +140,7 @@ Table of Contents
 3.  The Protocol
 
    QUIC Services for Streams can be used on any bi-directional byte
-   stream that is ordered and reliable.
+   stream that is ordered and reliable; for details, see Section 3.1.
 
    QUIC frames are sent directly on top of the bi-directional byte
    stream.
@@ -153,11 +154,36 @@ Table of Contents
    For exchanging the Transport Parameters, a new frame called
    QSS_TRANSPORT_PARAMETERS frame is defined.
 
+3.1.  Properties of Underlying Streams
+
+   QUIC Services for Streams is designed to work on top of underlying
+   streams that provide the following capabilities:
+
+   In-order delivery of bytes in both directions:  Underlying connection
+      MUST provide byte-oriented bi-directional streams that guarantee
+      in-order delivery; i.e., bytes that were sent in one order become
+      available to the receiving side in the same order.
+
+   Guaranteed delivery:  If the underlying byte stream is built on top
+      of a lossy network, the underlying byte stream MUST recover the
+      bytes lost; e.g., by retransmitting them.  This requires buffering
+      and reassembly, in order to achieve the first bullet point (in-
+      order delivery).
+
+   Confidentially and Integrity:  Unless used upon endpoints between
+      which tampering or monitoring is a non-concern, the underlying
+      byte stream MUST provide confidentially and integrity protection.
+
+   TLS over TCP provides these three capabilities.  UNIX socket is an
+   example that provides the first two bullet points but not the
+   confidentiallity and integrity protection, which would be unnecessary
+   when the operating system can be trusted.
+
 4.  QUIC Frames
 
-   In QUIC Services for Streams, the following QUIC frames are used
-   without modifications, as if they were send or received in the
-   application packet number space.
+   In QUIC Services for Streams, the following QUIC frames can be used,
+   as if they were sent or received in the application packet number
+   space:
 
    *  PADDING
 
@@ -181,9 +207,17 @@ Table of Contents
 
    *  CONNECTION_CLOSE
 
-   Use of other frames defined in [RFC9000] is prohibited.  If an
-   endpoint receives one of the prohibited frames, the endpoint MUST
-   close the connection with an error of type FRAME_ENCODING_ERROR.
+   The format and the meaning of these frames are unchanged, with the
+   STREAM frames being an exception.  For the details of the STREAM
+   frames, see Section 4.1.
+
+   Use of other frames defined in [RFC9000] is prohibited.  Namely, ACK
+   frames are not used, because underlying byte stream provides
+   guaranteed delivery.  Use of frames that communicate Connection IDs
+   and those related to path migration is forbidden.
+
+   If an endpoint receives one of the prohibited frames, the endpoint
+   MUST close the connection with an error of type FRAME_ENCODING_ERROR.
 
 4.1.  STREAM Frames
 
@@ -207,11 +241,6 @@ Table of Contents
    In QUIC Services for Streams, Transport Parameters are exchanged as
    frames.
 
-   This frame is the first frame being sent by an endpoint.  If the
-   first frame being received by an endpoint is not a
-   QSS_TRANSPORT_PARAMETERS frame, the endpoint MUST close the
-   connection with an error of type TRANSPORT_PARAMETER_ERROR.
-
    QSS_TRANSPORT_PARAMETERS frames are formatted as shown in Figure 1.
 
    QSS_TRANSPORT_PARAMETERS Frame {
@@ -229,6 +258,17 @@ Table of Contents
 
    Transport Parameters:  The Transport Parameters.  The encoding of the
       payload is as defined in Section 18 of [RFC9000].
+
+   The QSS_TRANSPORT_PARAMETERS frame is the first frame being sent by
+   an endpoint.  Endpoints MUST send the QSS_TRANSPORT_PARAMETERS frame
+   as soon as the underlying byte stream becomes available.  Note
+   neither endpoint needs to wait for the peer's Transport Parameters
+   before sending its own, as Transport Parameters are a unilateral
+   declaration of an endpoint's capabilities (Section 7.4 of [RFC9000]).
+
+   If the first frame being received by an endpoint is not a
+   QSS_TRANSPORT_PARAMETERS frame, the endpoint MUST close the
+   connection with an error of type TRANSPORT_PARAMETER_ERROR.
 
    The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has
    been chosen so that it can be used to disambiguate QUIC Services for

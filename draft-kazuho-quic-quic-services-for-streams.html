@@ -1030,7 +1030,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oku</td>
-<td class="center">Expires 30 May 2024</td>
+<td class="center">Expires 31 May 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1043,12 +1043,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-kazuho-quic-quic-services-for-streams-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-11-27" class="published">27 November 2023</time>
+<time datetime="2023-11-28" class="published">28 November 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-05-30">30 May 2024</time></dd>
+<dd class="expires"><time datetime="2024-05-31">31 May 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1094,7 +1094,7 @@ bi-directional streams such as TLS.<a href="#section-abstract-1" class="pilcrow"
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 31 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1130,7 +1130,12 @@ bi-directional streams such as TLS.<a href="#section-abstract-1" class="pilcrow"
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-the-protocol" class="internal xref">The Protocol</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-the-protocol" class="internal xref">The Protocol</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-properties-of-underlying-st" class="internal xref">Properties of Underlying Streams</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-quic-frames" class="internal xref">QUIC Frames</a></p>
@@ -1248,13 +1253,49 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-the-protocol" class="section-name selfRef">The Protocol</a>
       </h2>
 <p id="section-3-1">QUIC Services for Streams can be used on any bi-directional byte stream that is
-ordered and reliable.<a href="#section-3-1" class="pilcrow">¶</a></p>
+ordered and reliable; for details, see <a href="#stream-properties" class="auto internal xref">Section 3.1</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">QUIC frames are sent directly on top of the bi-directional byte stream.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <p id="section-3-3">The frames are not encrypted. It is the task of the lower layer providing the
 bi-directional byte stream (e.g., TLS) to provide confidentially and integrity.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">QUIC packet headers are not used.<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">For exchanging the Transport Parameters, a new frame called
 QSS_TRANSPORT_PARAMETERS frame is defined.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<div id="stream-properties">
+<section id="section-3.1">
+        <h3 id="name-properties-of-underlying-st">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-properties-of-underlying-st" class="section-name selfRef">Properties of Underlying Streams</a>
+        </h3>
+<p id="section-3.1-1">QUIC Services for Streams is designed to work on top of underlying streams that
+provide the following capabilities:<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-3.1-2">
+          <dt id="section-3.1-2.1">In-order delivery of bytes in both directions:</dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-2.2">
+            <p id="section-3.1-2.2.1">Underlying connection <span class="bcp14">MUST</span> provide byte-oriented bi-directional streams that
+guarantee in-order delivery; i.e., bytes that were sent in one order become
+available to the receiving side in the same order.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-2.3">Guaranteed delivery:</dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-2.4">
+            <p id="section-3.1-2.4.1">If the underlying byte stream is built on top of a lossy network, the
+underlying byte stream <span class="bcp14">MUST</span> recover the bytes lost; e.g., by retransmitting
+them. This requires buffering and reassembly, in order to achieve the first
+bullet point (in-order delivery).<a href="#section-3.1-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-3.1-2.5">Confidentially and Integrity:</dt>
+          <dd style="margin-left: 1.5em" id="section-3.1-2.6">
+            <p id="section-3.1-2.6.1">Unless used upon endpoints between which tampering or monitoring is a
+non-concern, the underlying byte stream <span class="bcp14">MUST</span> provide confidentially and
+integrity protection.<a href="#section-3.1-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-3.1-3">TLS over TCP provides these three capabilities. UNIX socket is an example that
+provides the first two bullet points but not the confidentiallity and integrity
+protection, which would be unnecessary when the operating system can be trusted.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="quic-frames">
@@ -1262,9 +1303,8 @@ QSS_TRANSPORT_PARAMETERS frame is defined.<a href="#section-3-5" class="pilcrow"
       <h2 id="name-quic-frames">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-quic-frames" class="section-name selfRef">QUIC Frames</a>
       </h2>
-<p id="section-4-1">In QUIC Services for Streams, the following QUIC frames are used without
-modifications, as if they were send or received in the application packet number
-space.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">In QUIC Services for Streams, the following QUIC frames can be used, as if they
+were sent or received in the application packet number space:<a href="#section-4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4-2.1">
           <p id="section-4-2.1.1">PADDING<a href="#section-4-2.1.1" class="pilcrow">¶</a></p>
@@ -1300,9 +1340,14 @@ space.<a href="#section-4-1" class="pilcrow">¶</a></p>
           <p id="section-4-2.11.1">CONNECTION_CLOSE<a href="#section-4-2.11.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-4-3">Use of other frames defined in <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> is prohibited. If an endpoint
-receives one of the prohibited frames, the endpoint <span class="bcp14">MUST</span> close the connection
-with an error of type FRAME_ENCODING_ERROR.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-3">The format and the meaning of these frames are unchanged, with the STREAM frames
+being an exception. For the details of the STREAM frames, see <a href="#stream-frames" class="auto internal xref">Section 4.1</a>.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">Use of other frames defined in <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> is prohibited. Namely, ACK frames are
+not used, because underlying byte stream provides guaranteed delivery. Use of
+frames that communicate Connection IDs and those related to path migration is
+forbidden.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">If an endpoint receives one of the prohibited frames, the endpoint <span class="bcp14">MUST</span> close
+the connection with an error of type FRAME_ENCODING_ERROR.<a href="#section-4-5" class="pilcrow">¶</a></p>
 <div id="stream-frames">
 <section id="section-4.1">
         <h3 id="name-stream-frames">
@@ -1326,15 +1371,11 @@ on top of bi-directional streams and the packet boundary is not observable.<a hr
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-qss_transport_parameters-fr" class="section-name selfRef">QSS_TRANSPORT_PARAMETERS Frames</a>
         </h3>
 <p id="section-4.2-1">In QUIC Services for Streams, Transport Parameters are exchanged as frames.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2-2">This frame is the first frame being sent by an endpoint. If the first frame
-being received by an endpoint is not a QSS_TRANSPORT_PARAMETERS frame, the
-endpoint <span class="bcp14">MUST</span> close the connection with an error of type
-TRANSPORT_PARAMETER_ERROR.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.2-3">QSS_TRANSPORT_PARAMETERS frames are formatted as shown in
-<a href="#fig-qss-transport-parameters" class="auto internal xref">Figure 1</a>.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-2">QSS_TRANSPORT_PARAMETERS frames are formatted as shown in
+<a href="#fig-qss-transport-parameters" class="auto internal xref">Figure 1</a>.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <span id="name-qss_transport_parameters-fra"></span><div id="fig-qss-transport-parameters">
 <figure id="figure-1">
-          <div class="alignLeft art-text artwork" id="section-4.2-4.1">
+          <div class="alignLeft art-text artwork" id="section-4.2-3.1">
 <pre>
 QSS_TRANSPORT_PARAMETERS Frame {
   Type (i) = 0x3f5153300d0a0d0a,
@@ -1347,24 +1388,33 @@ QSS_TRANSPORT_PARAMETERS Frame {
 <a href="#name-qss_transport_parameters-fra" class="selfRef">QSS_TRANSPORT_PARAMETERS Frame Format</a>
           </figcaption></figure>
 </div>
-<p id="section-4.2-5">QSS_TRANSPORT_PARAMETERS frames contain the following fields:<a href="#section-4.2-5" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-4.2-6">
-          <dt id="section-4.2-6.1">Length:</dt>
-          <dd style="margin-left: 1.5em" id="section-4.2-6.2">
-            <p id="section-4.2-6.2.1">A variable-length integer specifying the length of the Transport Parameters
-field in this QSS_TRANSPORT_PARAMETERS frame.<a href="#section-4.2-6.2.1" class="pilcrow">¶</a></p>
+<p id="section-4.2-4">QSS_TRANSPORT_PARAMETERS frames contain the following fields:<a href="#section-4.2-4" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-4.2-5">
+          <dt id="section-4.2-5.1">Length:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.2-5.2">
+            <p id="section-4.2-5.2.1">A variable-length integer specifying the length of the Transport Parameters
+field in this QSS_TRANSPORT_PARAMETERS frame.<a href="#section-4.2-5.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
-<dt id="section-4.2-6.3">Transport Parameters:</dt>
-          <dd style="margin-left: 1.5em" id="section-4.2-6.4">
-            <p id="section-4.2-6.4.1">The Transport Parameters. The encoding of the payload is as defined in
-<span><a href="https://rfc-editor.org/rfc/rfc9000#section-18" class="relref">Section 18</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-4.2-6.4.1" class="pilcrow">¶</a></p>
+<dt id="section-4.2-5.3">Transport Parameters:</dt>
+          <dd style="margin-left: 1.5em" id="section-4.2-5.4">
+            <p id="section-4.2-5.4.1">The Transport Parameters. The encoding of the payload is as defined in
+<span><a href="https://rfc-editor.org/rfc/rfc9000#section-18" class="relref">Section 18</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-4.2-5.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-4.2-7">The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has been chosen
+<p id="section-4.2-6">The QSS_TRANSPORT_PARAMETERS frame is the first frame being sent by an endpoint.
+Endpoints <span class="bcp14">MUST</span> send the QSS_TRANSPORT_PARAMETERS frame as soon as the underlying
+byte stream becomes available. Note neither endpoint needs to wait for the
+peer's Transport Parameters before sending its own, as Transport Parameters are
+a unilateral declaration of an endpoint's capabilities
+(<span><a href="https://rfc-editor.org/rfc/rfc9000#section-7.4" class="relref">Section 7.4</a> of [<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>).<a href="#section-4.2-6" class="pilcrow">¶</a></p>
+<p id="section-4.2-7">If the first frame being received by an endpoint is not a
+QSS_TRANSPORT_PARAMETERS frame, the endpoint <span class="bcp14">MUST</span> close the connection with an
+error of type TRANSPORT_PARAMETER_ERROR.<a href="#section-4.2-7" class="pilcrow">¶</a></p>
+<p id="section-4.2-8">The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has been chosen
 so that it can be used to disambiguate QUIC Services for Streams from HTTP/1.1
-(<span>[<a href="#RFC9112" class="cite xref">RFC9112</a>]</span>) and HTTP/2.<a href="#section-4.2-7" class="pilcrow">¶</a></p>
+(<span>[<a href="#RFC9112" class="cite xref">RFC9112</a>]</span>) and HTTP/2.<a href="#section-4.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="qssping-frames">
