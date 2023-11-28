@@ -106,9 +106,13 @@ were sent or received in the application packet number space:
 The format and the meaning of these frames are unchanged, with the STREAM frames
 being an exception. For the details of the STREAM frames, see {{stream-frames}}.
 
-Use of other frames defined in {{RFC9000}} is prohibited. If an endpoint
-receives one of the prohibited frames, the endpoint MUST close the connection
-with an error of type FRAME_ENCODING_ERROR.
+Use of other frames defined in {{RFC9000}} is prohibited. Namely, ACK frames are
+not used, because underlying byte stream provides guaranteed delivery. Use of
+frames that communicate Connection IDs and those related to path migration is
+forbidden.
+
+If an endpoint receives one of the prohibited frames, the endpoint MUST close
+the connection with an error of type FRAME_ENCODING_ERROR.
 
 
 ## STREAM Frames {#stream-frames}
