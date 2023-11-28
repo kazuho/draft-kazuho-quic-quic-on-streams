@@ -76,11 +76,12 @@ Table of Contents
    6.  Closing the Connection
    7.  Using 0-RTT
    8.  Version Agility
-   9.  Security Considerations
-   10. IANA Considerations
-   11. References
-     11.1.  Normative References
-     11.2.  Informative References
+   9.  Implementation Considerations
+   10. Security Considerations
+   11. IANA Considerations
+   12. References
+     12.1.  Normative References
+     12.2.  Informative References
    Acknowledgments
    Author's Address
 
@@ -324,7 +325,8 @@ Table of Contents
 
 4.4.  Extension Frames
 
-   TBD
+   As is the case with QUIC version 1, use of extension frames have to
+   be negotiated before use; see Section 19.21 of [RFC9000].
 
 5.  Transport Parameters
 
@@ -426,17 +428,39 @@ Table of Contents
    encoded form) can be used to identify if QUIC Services for Streams is
    in use.
 
-9.  Security Considerations
+9.  Implementation Considerations
+
+   Like HTTP/3 ([RFC9114]) with Extensible Priorities ([RFC9218]),
+   application protocols built on top of QUIC might use stream
+   multiplexing in conjunction with a mechanism to request or specify
+   the order in which the payload of the QUIC streams are to be
+   delivered.
+
+   To switch between QUIC streams with different priorities in a timely
+   manner, implementations of QUIC Services for Streams should refrain
+   from building deep buffers that contain QUIC frames to be sent in
+   particular order.  Rather, endpoints are encouraged to wait for the
+   underlying transport to become writable, and each time it becomes
+   writable, write new frames based on the most recent prioritization
+   signals.
+
+   Implementations might also observe or tune the values of underlying
+   tranport related to flow and congestion control, in order to minimize
+   the amount of data buffered inside the transport layer without
+   immediately being sent.  Note however that failures to tune these
+   variables might lead to reduced throughput.
+
+10.  Security Considerations
 
    TODO Security
 
-10.  IANA Considerations
+11.  IANA Considerations
 
    TODO
 
-11.  References
+12.  References
 
-11.1.  Normative References
+12.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -456,7 +480,7 @@ Table of Contents
               DOI 10.17487/RFC9000, May 2021,
               <https://www.rfc-editor.org/rfc/rfc9000>.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [h2-stream-limits]
               Thomson, M. and L. Pardue, "Using HTTP/3 Stream Limits in
@@ -484,6 +508,10 @@ Table of Contents
 
    [RFC9114]  Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9114>.
+
+   [RFC9218]  Oku, K. and L. Pardue, "Extensible Prioritization Scheme
+              for HTTP", RFC 9218, DOI 10.17487/RFC9218, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9218>.
 
    [RFC9293]  Eddy, W., Ed., "Transmission Control Protocol (TCP)",
               STD 7, RFC 9293, DOI 10.17487/RFC9293, August 2022,
