@@ -69,19 +69,19 @@ Table of Contents
      4.1.  STREAM Frames
      4.2.  QS_TRANSPORT_PARAMETERS Frames
      4.3.  QS_PING Frames
-     4.4.  Extension Frames
    5.  Transport Parameters
      5.1.  Permitted and Forbidden Transport Parameters
      5.2.  max_frame_size Transport Parameter
    6.  Closing the Connection
    7.  Using 0-RTT
-   8.  Version Agility
-   9.  Implementation Considerations
-   10. Security Considerations
-   11. IANA Considerations
-   12. References
-     12.1.  Normative References
-     12.2.  Informative References
+   8.  Extensions
+   9.  Version Agility
+   10. Implementation Considerations
+   11. Security Considerations
+   12. IANA Considerations
+   13. References
+     13.1.  Normative References
+     13.2.  Informative References
    Acknowledgments
    Author's Address
 
@@ -321,11 +321,6 @@ Table of Contents
    frame of type 0xTBD+1 carrying the largest Sequence Number that the
    endpoint has received.
 
-4.4.  Extension Frames
-
-   As is the case with QUIC version 1, use of extension frames have to
-   be negotiated before use; see Section 19.21 of [RFC9000].
-
 5.  Transport Parameters
 
    QUIC on Streams uses a subset of Transport Parameters defined in
@@ -409,7 +404,19 @@ Table of Contents
    Parameters that obey to the restrictions defined in Section 7.4.1 of
    [RFC9000].
 
-8.  Version Agility
+8.  Extensions
+
+   Not all the extensions of QUIC version 1 can be used.  Each extension
+   have to define its mapping for QUIC on Streams, or explicitly allow
+   the use; see Section 5.1.
+
+   As is the case with QUIC version 1, use of extension frames have to
+   be negotiated before use; see Section 19.21 of [RFC9000].
+
+   This specification defines the mapping of the Unreliable Datagram
+   Extension.
+
+9.  Version Agility
 
    Unlike QUIC, QUIC on Streams does not define a mechanism for version
    negotiation.
@@ -424,7 +431,7 @@ Table of Contents
    (i.e., the type field of the QS_TRANSPORT_PARAMETERS frame in the
    encoded form) can be used to identify if QUIC on Streams is in use.
 
-9.  Implementation Considerations
+10.  Implementation Considerations
 
    Like HTTP/3 ([RFC9114]) with Extensible Priorities ([RFC9218]),
    application protocols built on top of QUIC might use stream
@@ -446,17 +453,17 @@ Table of Contents
    without immediately being sent.  Note however that failures to tune
    these variables might lead to reduced throughput.
 
-10.  Security Considerations
+11.  Security Considerations
 
    TODO Security
 
-11.  IANA Considerations
+12.  IANA Considerations
 
    TODO
 
-12.  References
+13.  References
 
-12.1.  Normative References
+13.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -476,7 +483,7 @@ Table of Contents
               DOI 10.17487/RFC9000, May 2021,
               <https://www.rfc-editor.org/rfc/rfc9000>.
 
-12.2.  Informative References
+13.2.  Informative References
 
    [h2-stream-limits]
               Thomson, M. and L. Pardue, "Using HTTP/3 Stream Limits in
