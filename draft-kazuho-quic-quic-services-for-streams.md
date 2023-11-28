@@ -351,6 +351,26 @@ field of the QSS_TRANSPORT_PARAMETERS frame in the encoded form) can be used to
 identify if QUIC Services for Streams is in use.
 
 
+# Implementation Considerations
+
+Like HTTP/3 ({{?RFC9114}}) with Extensible Priorities ({{?RFC9218}}),
+application protocols built on top of QUIC might use stream multiplexing in
+conjunction with a mechanism to request or specify the order in which the
+payload of the QUIC streams are to be delivered.
+
+To switch between QUIC streams with different priorities in a timely manner,
+implementations of QUIC Services for Streams should refrain from building deep
+buffers that contain QUIC frames to be sent in particular order. Rather,
+endpoints are encouraged to wait for the underlying transport to become
+writable, and each time it becomes writable, write new frames based on the most
+recent prioritization signals.
+
+Implementations might also observe or tune the values of underlying tranport
+related to flow and congestion control, in order to minimize the amount of data
+buffered inside the transport layer without immediately being sent. Note however
+that failures to tune these variables might lead to reduced throughput.
+
+
 # Security Considerations
 
 TODO Security
