@@ -36,7 +36,7 @@ One downside is that QUIC is not as universally accessible as TCP
 occasionally blocked by middleboxes.
 
 Another downside is that QUIC is computationally expensive compared to TLS
-({{?RFC8446}}) over TCP. This is partly because QUIC encrypts each packet which
+({{!RFC8446}}) over TCP. This is partly because QUIC encrypts each packet which
 is smaller than the encryption unit of TLS leading to more overhead, and partly
 because UDP is less optimized in the computing infrastructure.
 
