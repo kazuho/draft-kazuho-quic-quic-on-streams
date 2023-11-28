@@ -202,7 +202,7 @@ Transport Parameters:
   {{Section 18 of RFC9000}}.
 
 
-The QSS_TRANSPORT_PARAMETERS frame is the first frame being sent by an endpoint.
+The QSS_TRANSPORT_PARAMETERS frame is the first frame being sent by endpoints.
 Endpoints MUST send the QSS_TRANSPORT_PARAMETERS frame as soon as the underlying
 byte stream becomes available. Note neither endpoint needs to wait for the
 peer's Transport Parameters before sending its own, as Transport Parameters are
@@ -247,7 +247,7 @@ increasing values in the Sequence Number field, since that allows the endpoints
 to identify to which ping the peer has responded.
 
 When sending QSS_PING frames of type 0xTBD+1 in response, endpoints MUST echo
-the Sequence Number that they have received.
+the Sequence Number that they received.
 
 When receiving multiple QSS_PING frames of type 0xTBD before having the chance
 to respond, an endpoint MAY only respond with one QSS_PING frame of type 0xTBD+1
@@ -279,13 +279,13 @@ allowed.
 * initial_max_streams_bidi
 * initial_max_streams_uni
 
-The definition of these frames are unchanged.
+The definition of these Transport Parameters are unchanged.
 
 Use of other Transport Parameters defined in {{RFC9000}} is prohibited. When an
 endpoint receives one of the prohibited Transport Parameters, the endpoint MUST
 close the connection with an error of type TRANSPORT_PARAMETER_ERROR.
 
-Endpoint MUST NOT send Transport Parameters that extend QUIC version 1, unless
+Endpoints MUST NOT send Transport Parameters that extend QUIC version 1, unless
 they are specified to be compatible with QUIC Services for Streams.
 
 When receiving Transport Parameters not defined in QUIC version 1, receivers
@@ -296,14 +296,14 @@ Streams.
 ## max_frame_size Transport Parameter
 
 The `max_frame_size` Transport Parameter (0xTBD) is a variable-length integer
-value specifying the maximum size of the QUIC frame that the peer can send, in
-the unit of bytes.
+specifying the maximum size of the QUIC frame that the peer can send, in the
+unit of bytes.
 
 The initial value of the `max_frame_size` Transport Parameter is 16384.
 
-The maximum frame size can only be increased by sending the Transport Parameter.
-It cannot be decreased. When receiving a value below the minimum, receivers MUST
-close the connection with an error of type TRANSPORT_PARAMETER_ERROR.
+By sending the Transport Parameter, the maximum frame size can only be
+increased. When receiving a value below the initial value, receivers MUST close
+the connection with an error of type TRANSPORT_PARAMETER_ERROR.
 
 Endpoints MUST NOT send QUIC frames that exceed the maximum declared by the
 peer.
