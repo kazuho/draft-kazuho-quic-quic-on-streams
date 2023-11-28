@@ -358,22 +358,21 @@ to identify if QUIC on Streams is in use.
 
 # Implementation Considerations
 
-Like HTTP/3 with Extensible Priorities {{?HTTP_PRIORITY=RFC9218}}, application
-protocols built on top of QUIC might use stream multiplexing in conjunction with
-a mechanism to request or specify the order in which the payload of the QUIC
-streams are to be delivered.
+Similar to HTTP/3 with Extensible Priorities {{?HTTP_PRIORITY=RFC9218}},
+application protocols using QUIC may employ stream multiplexing along with a
+system to tune the delivery sequence of QUIC streams.
 
-To switch between QUIC streams with different priorities in a timely manner,
-implementations of QUIC on Streams should refrain from building deep buffers
-that contain QUIC frames to be sent in particular order. Rather,
-endpoints are encouraged to wait for the underlying transport to become
-writable, and each time it becomes writable, write new frames based on the most
-recent prioritization signals.
+To alternate between QUIC streams of varying priorities in a timely manner, it
+is advisable for QUIC on Streams implementations to avoid creating deep buffers
+holding QUIC frames. Instead, endpoints should wait for the transport layer to
+be ready for writing. Upon becoming writable, they should write QUIC frames
+according to the latest prioritization signals.
 
-Implementations might also observe or tune the values of underlying transports
-related to flow and congestion control, in order to minimize the amount of data
-buffered inside the transport layer without immediately being sent. Note however
-that failures to tune these variables might lead to reduced throughput.
+Additionally, implementations may consider monitoring or adjusting the flow and
+congestion control parameters of the underlying transport. This approach aims to
+minimize data buffering within the transport layer before transmission. However,
+improper adjustment of these parameters could potentially lead to lower
+throughput.
 
 
 # Security Considerations
