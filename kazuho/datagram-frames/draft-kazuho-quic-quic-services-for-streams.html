@@ -1596,8 +1596,8 @@ negotiated before use; see <span><a href="https://rfc-editor.org/rfc/rfc9000#sec
         <h3 id="name-unreliable-datagram-extensi">
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-unreliable-datagram-extensi" class="section-name selfRef">Unreliable Datagram Extension</a>
         </h3>
-<p id="section-8.1-1">Use of the Unreliable Datagram Extension (<span>[<a href="#RFC9221" class="cite xref">RFC9221</a>]</span>) is possible, with the
-following changes.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-1">Use of the Unreliable Datagram Extension (<span>[<a href="#QUIC_DATAGRAM" class="cite xref">QUIC_DATAGRAM</a>]</span>) is
+possible, with the following changes.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <p id="section-8.1-2">When using the DATAGRAM frame, senders <span class="bcp14">MUST</span> use only the variant of type 0x31
 (i.e., DATAGRAM frame with the Length field). If an endpoint receives a DATAGRAM
 frame of type 0x30 (i.e., DATAGRAM frame without he Length field), the endpoint
@@ -1605,8 +1605,8 @@ frame of type 0x30 (i.e., DATAGRAM frame without he Length field), the endpoint
 <p id="section-8.1-3">Otherwise, the encoding and the semantics of the DATAGRAM frame as well as the
 <code>max_datagram_frame_size</code> Transport Parameter is unchanged. Use of the
 Unreliable Datagram Extension is negotiated using the Transport Parameter.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
-<p id="section-8.1-4">As discussed in <span><a href="https://rfc-editor.org/rfc/rfc9221#section-5" class="relref">Section 5</a> of [<a href="#RFC9221" class="cite xref">RFC9221</a>]</span>, DATAGRAM frames can be dropped if the
-sending side of the transport is blocked by flow or congestion control.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
+<p id="section-8.1-4">As discussed in <span><a href="https://rfc-editor.org/rfc/rfc9221#section-5" class="relref">Section 5</a> of [<a href="#QUIC_DATAGRAM" class="cite xref">QUIC_DATAGRAM</a>]</span>, DATAGRAM frames can be dropped
+if the sending side of the transport is blocked by flow or congestion control.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1674,6 +1674,10 @@ that failures to tune these variables might lead to reduced throughput.<a href="
 <a href="#section-13.1" class="section-number selfRef">13.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="QUIC_DATAGRAM">[QUIC_DATAGRAM]</dt>
+        <dd>
+<span class="refAuthor">Pauly, T.</span>, <span class="refAuthor">Kinnear, E.</span>, and <span class="refAuthor">D. Schinazi</span>, <span class="refTitle">"An Unreliable Datagram Extension to QUIC"</span>, <span class="seriesInfo">RFC 9221</span>, <span class="seriesInfo">DOI 10.17487/RFC9221</span>, <time datetime="2022-03" class="refDate">March 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9221">https://www.rfc-editor.org/rfc/rfc9221</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
@@ -1687,12 +1691,8 @@ that failures to tune these variables might lead to reduced throughput.<a href="
 <span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9000">[RFC9000]</dt>
-        <dd>
-<span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9221">[RFC9221]</dt>
       <dd>
-<span class="refAuthor">Pauly, T.</span>, <span class="refAuthor">Kinnear, E.</span>, and <span class="refAuthor">D. Schinazi</span>, <span class="refTitle">"An Unreliable Datagram Extension to QUIC"</span>, <span class="seriesInfo">RFC 9221</span>, <span class="seriesInfo">DOI 10.17487/RFC9221</span>, <time datetime="2022-03" class="refDate">March 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9221">https://www.rfc-editor.org/rfc/rfc9221</a>&gt;</span>. </dd>
+<span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
