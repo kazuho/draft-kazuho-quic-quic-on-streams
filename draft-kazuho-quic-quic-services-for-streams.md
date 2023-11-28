@@ -32,7 +32,7 @@ recovery.
 However, there are downsides with QUIC.
 
 One downside is that QUIC is not as universally accessible as TCP
-({{?RFC9283}}). This is because QUIC is built on top of UDP, which is
+({{?RFC9293}}). This is because QUIC is built on top of UDP, which is
 occasionally blocked by middleboxes.
 
 Another downside is that QUIC is computationally expensive compared to TLS
