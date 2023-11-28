@@ -157,6 +157,11 @@ Receivers retain the total amount of bytes being received for each stream, and
 when receiving a STREAM frame, uses that value to determine the offset of the
 newly received STREAM frame.
 
+Unlike QUIC version 1, receives do not need to buffer and reassemble the payload
+of each incoming stream. This is because the sender sends the STREAM frames in
+order and the underlying stream guarantees in-order delivery. The payload being
+received can be passed to the application as they arrive.
+
 Use of the Length field is mandated, because QUIC Services for Streams operates
 on top of bi-directional streams and the packet boundary is not observable.
 
