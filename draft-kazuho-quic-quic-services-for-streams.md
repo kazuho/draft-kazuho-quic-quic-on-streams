@@ -256,7 +256,8 @@ carrying the largest Sequence Number that the endpoint has received.
 
 ## Extension Frames
 
-TBD
+As is the case with QUIC version 1, use of extension frames have to be
+negotiated before use; see {{Section 19.21 of RFC9000}}.
 
 
 # Transport Parameters
