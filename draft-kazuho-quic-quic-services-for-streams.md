@@ -258,18 +258,12 @@ respond, an endpoint MAY only respond with one QS_PING frame of type 0xTBD+1
 carrying the largest Sequence Number that the endpoint has received.
 
 
-## Extension Frames
-
-As is the case with QUIC version 1, use of extension frames have to be
-negotiated before use; see {{Section 19.21 of RFC9000}}.
-
-
 # Transport Parameters
 
 QUIC on Streams uses a subset of Transport Parameters defined in {{RFC9000}}.
 Also, one new Transport Parameter specific to QUIC on Streams is defined.
 
-## Permitted and Forbidden Transport Parameters
+## Permitted and Forbidden Transport Parameters {#permitted-tps}
 
 In QUIC on Streams, use of the following Transport Parameters is allowed.
 
@@ -335,6 +329,18 @@ Parameters as defined in {{Section 7.4.1 of RFC9000}}.
 
 Similarly, when accepting early data, the servers MUST send Transport Parameters
 that obey to the restrictions defined in {{Section 7.4.1 of RFC9000}}.
+
+
+# Extensions
+
+Not all the extensions of QUIC version 1 can be used. Each extension have to
+define its mapping for QUIC on Streams, or explicitly allow the use; see
+{{permitted-tps}}.
+
+As is the case with QUIC version 1, use of extension frames have to be
+negotiated before use; see {{Section 19.21 of RFC9000}}.
+
+This specification defines the mapping of the Unreliable Datagram Extension.
 
 
 # Version Agility
