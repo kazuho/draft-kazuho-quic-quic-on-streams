@@ -88,9 +88,8 @@ QSS_TRANSPORT_PARAMETERS frame is defined.
 
 # QUIC Frames
 
-In QUIC Services for Streams, the following QUIC frames are used without
-modifications, as if they were send or received in the application packet number
-space.
+In QUIC Services for Streams, the following QUIC frames can be used, as if they
+were sent or received in the application packet number space:
 
 * PADDING
 * RESET_STREAM
@@ -104,12 +103,15 @@ space.
 * STREAMS_BLOCKED
 * CONNECTION_CLOSE
 
+The format and the meaning of these frames are unchanged, with the STREAM frames
+being an exception. For the details of the STREAM frames, see {{stream-frames}}.
+
 Use of other frames defined in {{RFC9000}} is prohibited. If an endpoint
 receives one of the prohibited frames, the endpoint MUST close the connection
 with an error of type FRAME_ENCODING_ERROR.
 
 
-## STREAM Frames
+## STREAM Frames {#stream-frames}
 
 In this specification, only the 0x0a and 0x0b variants of the STREAM frame are
 allowed (i.e., the frame format that omits the Offset field but retains the
