@@ -1223,9 +1223,9 @@ each packet, which is smaller than the encryption unit of TLS, leading to more
 overhead, and partly because UDP is less optimized within computing
 infrastructures.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Due to these limitations, applications are often served using both QUIC and TCP.
-QUIC is employed with the aim of providing the optimal user experience, while
-TCP acts a fallback for ensuring network reachability and computational
-efficiency as needed.<a href="#section-1-5" class="pilcrow">¶</a></p>
+QUIC is employed to provide the optimal user experience, while TCP acts as a
+fallback for ensuring network reachability and computational efficiency as
+needed.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">One such example is HTTP, which has different bindings for QUIC (HTTP/3
 <span>[<a href="#HTTP3" class="cite xref">HTTP3</a>]</span>) and TCP (HTTP/2 <span>[<a href="#HTTP2" class="cite xref">HTTP2</a>]</span>). Recently, security
 concerns have prompted proposals to revise HTTP/2
