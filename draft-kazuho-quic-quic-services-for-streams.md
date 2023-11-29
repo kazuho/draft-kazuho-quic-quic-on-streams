@@ -40,16 +40,16 @@ each packet, which is smaller than the encryption unit of TLS, leading to more
 overhead, and partly because UDP is less optimized within computing
 infrastructures.
 
-Due to these limitations, applications are often served on top of both QUIC and
-TCP. QUIC's use aims to provide a better user experience, while TCP serves as a
-backstop for network reachability or to provide computational efficiency where
-necessary.
+Due to these limitations, applications are often served using both QUIC and TCP.
+QUIC is employed with the aim of providing the optimal user experience, while
+TCP acts a fallback for ensuring network reachability and computational
+efficiency as needed.
 
-One such example is HTTP. HTTP/3 {{?HTTP3=RFC9114}} runs on top of QUIC. HTTP/2
-{{?HTTP2=RFC9113}} runs on top of TCP. Recently, there have been proposals to
-revise HTTP/2 due to security concerns
-({{?h2-stream-limits=I-D.thomson-httpbis-h2-stream-limits}}), leading to
-questions about the costs of maintaining multiple HTTP versions.
+One such example is HTTP, which has different bindings for QUIC (HTTP/3
+{{?HTTP3=RFC9114}}) and TCP (HTTP/2 {{?HTTP2=RFC9113}}). Recently, security
+concerns have prompted proposals to revise HTTP/2
+({{?h2-stream-limits=I-D.thomson-httpbis-h2-stream-limits}}), which has sparked
+discussions about the costs of maintaining multiple HTTP versions.
 
 Another example is WebTransport, a superset of HTTP. Because HTTP has different
 bindings for QUIC and TCP, WebTransport defines its own extensions for the two
