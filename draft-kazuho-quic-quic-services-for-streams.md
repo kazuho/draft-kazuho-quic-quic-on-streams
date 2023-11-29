@@ -41,9 +41,9 @@ overhead, and partly because UDP is less optimized within computing
 infrastructures.
 
 Due to these limitations, applications are often served using both QUIC and TCP.
-QUIC is employed with the aim of providing the optimal user experience, while
-TCP acts a fallback for ensuring network reachability and computational
-efficiency as needed.
+QUIC is employed to provide the optimal user experience, while TCP acts as a
+fallback for ensuring network reachability and computational efficiency as
+needed.
 
 One such example is HTTP, which has different bindings for QUIC (HTTP/3
 {{?HTTP3=RFC9114}}) and TCP (HTTP/2 {{?HTTP2=RFC9113}}). Recently, security
