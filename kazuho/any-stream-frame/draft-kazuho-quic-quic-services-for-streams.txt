@@ -266,8 +266,8 @@ Table of Contents
    application as it is read from the transport.  This efficiency is due
    to the underlying transport's guarantee of in-order delivery.
 
-   Despite these changes, senders continue to have the capability to
-   interleave STREAM frames from multiple streams.
+   These changes do not impact the senders' capability to interleave
+   STREAM frames from multiple streams.
 
 4.2.  QS_TRANSPORT_PARAMETERS Frames
 
