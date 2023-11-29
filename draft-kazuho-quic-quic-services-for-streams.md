@@ -161,7 +161,7 @@ While the frame format remains unchanged, there are two differences in the
 handling of STREAMS frames between QUIC version 1 and QUIC on Streams.
 
 
-### STREAM frames without the Length Field
+### STREAM Frames without the Length Field
 
 In QUIC on Streams, when a STREAM frame that omits the Length field is used, the
 size of that STREAM frame is determined by the maximum frame size, as regulated
