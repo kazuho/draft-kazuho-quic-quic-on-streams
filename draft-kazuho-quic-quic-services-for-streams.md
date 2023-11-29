@@ -132,7 +132,7 @@ or received in the application packet number space:
 * PADDING
 * RESET_STREAM
 * STOP_SENDING
-* STREAM (0x0a and 0x0b)
+* STREAM
 * MAX_DATA
 * MAX_STREAM_DATA
 * MAX_STREAMS
@@ -141,8 +141,10 @@ or received in the application packet number space:
 * STREAMS_BLOCKED
 * CONNECTION_CLOSE
 
-The format and the meaning of these frames are unchanged, with the STREAM frames
-being an exception. For the details of the STREAM frames, see {{stream-frames}}.
+The frame formats are identical to those in QUIC version 1. Likewise, the
+meaning and requirements for the use of these frames are consistent with QUIC
+version 1, with the exception to the specific changes made to the STREAM frames,
+as detailed in {{stream-frames}}.
 
 Use of other frames defined in QUIC version 1 is prohibited. Namely, ACK frames
 are not used, because the underlying transport guarantees delivery. Use of
@@ -155,26 +157,41 @@ the connection with an error of type FRAME_ENCODING_ERROR.
 
 ## STREAM Frames {#stream-frames}
 
-In this specification, only the 0x0a and 0x0b variants of the STREAM frame are
-allowed (i.e., the frame format that omits the Offset field but retains the
-Length field).
+While the frame format remains unchanged, there are two differences in the
+handling of STREAMS frames between QUIC version 1 and QUIC on Streams.
 
-Senders MUST send stream payload in order, omitting the Offset field of the
-STREAM frames.
 
-Receivers retain the total amount of bytes being received for each stream, and
-when receiving a STREAM frame, uses that value to determine the offset of the
-newly received STREAM frame.
+### Omission of the Length Field
 
-Unlike QUIC version 1, receivers do not need to buffer and reassemble the
-payload of each incoming stream. This is because the sender sends the STREAM
-frames in order and that they will be delivered in-order by the transport. The
-payload being received can be passed to the application as they are read from
-the transport.
+In QUIC on Streams, when a STREAM frame that omits the Length field is used, the
+size of that STREAM frame is determined by the maximum frame size, as regulated
+by the `max_frame_size` Transport Parameter ({{max_frame_size}}).
 
-Use of the Length field is mandated, because QUIC on Streams operates on top of
-byte-oriented transports and thus the packet boundary may not be
-observable.
+This behavior contrasts with that of QUIC version 1, where the absence of the
+Length field implies that the STREAM frame extends to the end of the QUIC packet
+payload.
+
+This variation arises due to the characteristics of the underlying transports of
+QUIC on Streams, which may not have, or provide visibility into, the packet
+boundaries.
+
+
+### Ordering of STREAM frames
+
+For each stream being sent, senders MUST send stream payload in order.
+
+When receiving a STREAM frame that carries a payload not immediately following
+the payload of the previous STREAM frame for the same Stream ID, receivers MUST
+close connection with an error of type PROTOCOL_VIOLATION_ERROR.
+
+This change from QUIC version 1 eliminates the need for implementations to
+buffer and reassemble the stream payload. As a result, the payload being
+received can be directly passed to the application as it is read from the
+transport. This efficiency is due to the underlying transport's guarantee of
+in-order delivery.
+
+These changes do not impact the senders' capability to interleave STREAM frames
+from multiple streams.
 
 
 ## QS_TRANSPORT_PARAMETERS Frames
@@ -288,7 +305,7 @@ When receiving Transport Parameters not defined in QUIC version 1, receivers
 MUST ignore them unless they are specified to be usable on QUIC on Streams.
 
 
-## max_frame_size Transport Parameter
+## max_frame_size Transport Parameter {#max_frame_size}
 
 The `max_frame_size` Transport Parameter (0xTBD) is a variable-length integer
 specifying the maximum size of the QUIC frame that the peer can send, in the
