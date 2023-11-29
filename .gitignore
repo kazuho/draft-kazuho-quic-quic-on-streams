@@ -17,7 +17,7 @@
 /versioned/
 Gemfile.lock
 archive.json
-draft-kazuho-quic-quic-services-for-streams.xml
+draft-kazuho-quic-quic-on-streams.xml
 package-lock.json
 report.xml
 !requirements.txt
