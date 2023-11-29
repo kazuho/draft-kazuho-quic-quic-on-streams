@@ -67,7 +67,7 @@ Table of Contents
      3.1.  Properties of Underlying Transport
    4.  QUIC Frames
      4.1.  STREAM Frames
-       4.1.1.  Omission of the Length Field
+       4.1.1.  STREAM frames without the Length Field
        4.1.2.  Ordering of STREAM frames
      4.2.  QS_TRANSPORT_PARAMETERS Frames
      4.3.  QS_PING Frames
@@ -235,7 +235,7 @@ Table of Contents
    in the handling of STREAMS frames between QUIC version 1 and QUIC on
    Streams.
 
-4.1.1.  Omission of the Length Field
+4.1.1.  STREAM frames without the Length Field
 
    In QUIC on Streams, when a STREAM frame that omits the Length field
    is used, the size of that STREAM frame is determined by the maximum
