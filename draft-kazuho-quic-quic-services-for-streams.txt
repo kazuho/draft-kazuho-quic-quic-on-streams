@@ -4,8 +4,8 @@
 
 QUIC                                                              K. Oku
 Internet-Draft                                                    Fastly
-Intended status: Standards Track                        28 November 2023
-Expires: 31 May 2024
+Intended status: Standards Track                        29 November 2023
+Expires: 1 June 2024
 
 
                             QUIC on Streams
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 May 2024.
+   This Internet-Draft will expire on 1 June 2024.
 
 Copyright Notice
 
@@ -105,16 +105,16 @@ Table of Contents
    encryption unit of TLS, leading to more overhead, and partly because
    UDP is less optimized within computing infrastructures.
 
-   Due to these limitations, applications are often served on top of
-   both QUIC and TCP.  QUIC's use aims to provide a better user
-   experience, while TCP serves as a backstop for network reachability
-   or to provide computational efficiency where necessary.
+   Due to these limitations, applications are often served using both
+   QUIC and TCP.  QUIC is employed with the aim of providing the optimal
+   user experience, while TCP acts a fallback for ensuring network
+   reachability and computational efficiency as needed.
 
-   One such example is HTTP.  HTTP/3 [HTTP3] runs on top of QUIC.
-   HTTP/2 [HTTP2] runs on top of TCP.  Recently, there have been
-   proposals to revise HTTP/2 due to security concerns
-   ([h2-stream-limits]), leading to questions about the costs of
-   maintaining multiple HTTP versions.
+   One such example is HTTP, which has different bindings for QUIC
+   (HTTP/3 [HTTP3]) and TCP (HTTP/2 [HTTP2]).  Recently, security
+   concerns have prompted proposals to revise HTTP/2
+   ([h2-stream-limits]), which has sparked discussions about the costs
+   of maintaining multiple HTTP versions.
 
    Another example is WebTransport, a superset of HTTP.  Because HTTP
    has different bindings for QUIC and TCP, WebTransport defines its own

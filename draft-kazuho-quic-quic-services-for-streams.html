@@ -1030,7 +1030,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oku</td>
-<td class="center">Expires 31 May 2024</td>
+<td class="center">Expires 1 June 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1043,12 +1043,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-kazuho-quic-quic-services-for-streams-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-11-28" class="published">28 November 2023</time>
+<time datetime="2023-11-29" class="published">29 November 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-05-31">31 May 2024</time></dd>
+<dd class="expires"><time datetime="2024-06-01">1 June 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1094,7 +1094,7 @@ bi-directional streams such as TLS.<a href="#section-abstract-1" class="pilcrow"
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 June 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1222,15 +1222,15 @@ as TCP <span>[<a href="#TCP" class="cite xref">TCP</a>]</span>, due to occasiona
 each packet, which is smaller than the encryption unit of TLS, leading to more
 overhead, and partly because UDP is less optimized within computing
 infrastructures.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">Due to these limitations, applications are often served on top of both QUIC and
-TCP. QUIC's use aims to provide a better user experience, while TCP serves as a
-backstop for network reachability or to provide computational efficiency where
-necessary.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">One such example is HTTP. HTTP/3 <span>[<a href="#HTTP3" class="cite xref">HTTP3</a>]</span> runs on top of QUIC. HTTP/2
-<span>[<a href="#HTTP2" class="cite xref">HTTP2</a>]</span> runs on top of TCP. Recently, there have been proposals to
-revise HTTP/2 due to security concerns
-(<span>[<a href="#h2-stream-limits" class="cite xref">h2-stream-limits</a>]</span>), leading to
-questions about the costs of maintaining multiple HTTP versions.<a href="#section-1-6" class="pilcrow">¶</a></p>
+<p id="section-1-5">Due to these limitations, applications are often served using both QUIC and TCP.
+QUIC is employed with the aim of providing the optimal user experience, while
+TCP acts a fallback for ensuring network reachability and computational
+efficiency as needed.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-6">One such example is HTTP, which has different bindings for QUIC (HTTP/3
+<span>[<a href="#HTTP3" class="cite xref">HTTP3</a>]</span>) and TCP (HTTP/2 <span>[<a href="#HTTP2" class="cite xref">HTTP2</a>]</span>). Recently, security
+concerns have prompted proposals to revise HTTP/2
+(<span>[<a href="#h2-stream-limits" class="cite xref">h2-stream-limits</a>]</span>), which has sparked
+discussions about the costs of maintaining multiple HTTP versions.<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7">Another example is WebTransport, a superset of HTTP. Because HTTP has different
 bindings for QUIC and TCP, WebTransport defines its own extensions for the two
 HTTP variants (<span>[<a href="#webtrans-h3" class="cite xref">webtrans-h3</a>]</span>,
