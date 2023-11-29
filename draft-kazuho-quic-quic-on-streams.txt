@@ -9,7 +9,7 @@ Expires: 1 June 2024
 
 
                             QUIC on Streams
-           draft-kazuho-quic-quic-services-for-streams-latest
+                draft-kazuho-quic-quic-on-streams-latest
 
 Abstract
 
@@ -25,8 +25,7 @@ Discussion Venues
    https://mailarchive.ietf.org/arch/browse/quic/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/kazuho/draft-kazuho-quic-quic-services-for-
-   streams.
+   https://github.com/kazuho/draft-kazuho-quic-quic-on-streams.
 
 Status of This Memo
 
