@@ -158,7 +158,7 @@ the connection with an error of type FRAME_ENCODING_ERROR.
 ## STREAM Frames {#stream-frames}
 
 While the frame format remains unchanged, there are two differences in the
-handling of STREAMS frames between QUIC version 1 and QUIC on Streams.
+handling of STREAM frames between QUIC version 1 and QUIC on Streams.
 
 
 ### STREAM Frames without the Length Field
@@ -364,7 +364,7 @@ This specification defines the mapping of the Unreliable Datagram Extension.
 The use of the Unreliable Datagram Extension {{!QUIC_DATAGRAM=RFC9221}} is
 permitted, with one modification:
 
-Similar to STREAMS frames, when employing DATAGRAM frames of type 0x30 (i.e.,
+Similar to STREAM frames, when employing DATAGRAM frames of type 0x30 (i.e.,
 DATAGRAM frames without the Length field), their size is determined by the
 `max_frame_size` Transport Parameter ({{max_frame_size}}).
 
