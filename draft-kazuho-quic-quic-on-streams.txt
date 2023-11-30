@@ -232,7 +232,7 @@ Table of Contents
 4.1.  STREAM Frames
 
    While the frame format remains unchanged, there are two differences
-   in the handling of STREAMS frames between QUIC version 1 and QUIC on
+   in the handling of STREAM frames between QUIC version 1 and QUIC on
    Streams.
 
 4.1.1.  STREAM Frames without the Length Field
@@ -440,8 +440,8 @@ Table of Contents
    The use of the Unreliable Datagram Extension [QUIC_DATAGRAM] is
    permitted, with one modification:
 
-   Similar to STREAMS frames, when employing DATAGRAM frames of type
-   0x30 (i.e., DATAGRAM frames without the Length field), their size is
+   Similar to STREAM frames, when employing DATAGRAM frames of type 0x30
+   (i.e., DATAGRAM frames without the Length field), their size is
    determined by the max_frame_size Transport Parameter (Section 5.2).
 
    Apart from this, the encoding and semantics of the Unreliable
