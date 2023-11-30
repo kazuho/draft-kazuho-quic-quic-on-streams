@@ -1178,6 +1178,11 @@ bi-directional streams such as TLS.<a href="#section-abstract-1" class="pilcrow"
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-extensions" class="internal xref">Extensions</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-unreliable-datagram-extensi" class="internal xref">Unreliable Datagram Extension</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
             <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-version-agility" class="internal xref">Version Agility</a></p>
@@ -1614,6 +1619,24 @@ define its mapping for QUIC on Streams, or explicitly allow the use; see
 <a href="#permitted-tps" class="auto internal xref">Section 5.1</a>.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <p id="section-8-2">As is the case with QUIC version 1, use of extension frames have to be
 negotiated before use; see <span><a href="https://rfc-editor.org/rfc/rfc9000#section-19.21" class="relref">Section 19.21</a> of [<a href="#QUIC" class="cite xref">QUIC</a>]</span>.<a href="#section-8-2" class="pilcrow">¶</a></p>
+<p id="section-8-3">This specification defines the mapping of the Unreliable Datagram Extension.<a href="#section-8-3" class="pilcrow">¶</a></p>
+<div id="unreliable-datagram-extension">
+<section id="section-8.1">
+        <h3 id="name-unreliable-datagram-extensi">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-unreliable-datagram-extensi" class="section-name selfRef">Unreliable Datagram Extension</a>
+        </h3>
+<p id="section-8.1-1">The use of the Unreliable Datagram Extension <span>[<a href="#QUIC_DATAGRAM" class="cite xref">QUIC_DATAGRAM</a>]</span> is
+permitted, with one modification:<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">Similar to STREAMS frames, when employing DATAGRAM frames of type 0x30 (i.e.,
+DATAGRAM frames without the Length field), their size is determined by the
+<code>max_frame_size</code> Transport Parameter (<a href="#max_frame_size" class="auto internal xref">Section 5.2</a>).<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.1-3">Apart from this, the encoding and semantics of the Unreliable Datagram Extension
+remain unchanged. The use of the extension is negotiated via the Transport
+Parameters.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.1-4">As discussed in <span><a href="https://rfc-editor.org/rfc/rfc9221#section-5" class="relref">Section 5</a> of [<a href="#QUIC_DATAGRAM" class="cite xref">QUIC_DATAGRAM</a>]</span>, senders can drop DATAGRAM frames
+if the transport is blocked by flow or congestion control.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="version-agility">
@@ -1682,6 +1705,10 @@ throughput.<a href="#section-10-3" class="pilcrow">¶</a></p>
 <dt id="QUIC">[QUIC]</dt>
         <dd>
 <span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="QUIC_DATAGRAM">[QUIC_DATAGRAM]</dt>
+        <dd>
+<span class="refAuthor">Pauly, T.</span>, <span class="refAuthor">Kinnear, E.</span>, and <span class="refAuthor">D. Schinazi</span>, <span class="refTitle">"An Unreliable Datagram Extension to QUIC"</span>, <span class="seriesInfo">RFC 9221</span>, <span class="seriesInfo">DOI 10.17487/RFC9221</span>, <time datetime="2022-03" class="refDate">March 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9221">https://www.rfc-editor.org/rfc/rfc9221</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>

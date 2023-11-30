@@ -76,6 +76,7 @@ Table of Contents
    6.  Closing the Connection
    7.  Using 0-RTT
    8.  Extensions
+     8.1.  Unreliable Datagram Extension
    9.  Version Agility
    10. Implementation Considerations
    11. Security Considerations
@@ -431,6 +432,26 @@ Table of Contents
    As is the case with QUIC version 1, use of extension frames have to
    be negotiated before use; see Section 19.21 of [QUIC].
 
+   This specification defines the mapping of the Unreliable Datagram
+   Extension.
+
+8.1.  Unreliable Datagram Extension
+
+   The use of the Unreliable Datagram Extension [QUIC_DATAGRAM] is
+   permitted, with one modification:
+
+   Similar to STREAMS frames, when employing DATAGRAM frames of type
+   0x30 (i.e., DATAGRAM frames without the Length field), their size is
+   determined by the max_frame_size Transport Parameter (Section 5.2).
+
+   Apart from this, the encoding and semantics of the Unreliable
+   Datagram Extension remain unchanged.  The use of the extension is
+   negotiated via the Transport Parameters.
+
+   As discussed in Section 5 of [QUIC_DATAGRAM], senders can drop
+   DATAGRAM frames if the transport is blocked by flow or congestion
+   control.
+
 9.  Version Agility
 
    Unlike QUIC, QUIC on Streams does not define a mechanism for version
@@ -481,6 +502,12 @@ Table of Contents
               Multiplexed and Secure Transport", RFC 9000,
               DOI 10.17487/RFC9000, May 2021,
               <https://www.rfc-editor.org/rfc/rfc9000>.
+
+   [QUIC_DATAGRAM]
+              Pauly, T., Kinnear, E., and D. Schinazi, "An Unreliable
+              Datagram Extension to QUIC", RFC 9221,
+              DOI 10.17487/RFC9221, March 2022,
+              <https://www.rfc-editor.org/rfc/rfc9221>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
