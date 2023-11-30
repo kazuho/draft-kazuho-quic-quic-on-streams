@@ -4,12 +4,12 @@
 
 QUIC                                                              K. Oku
 Internet-Draft                                                    Fastly
-Intended status: Standards Track                        28 November 2023
-Expires: 31 May 2024
+Intended status: Standards Track                        30 November 2023
+Expires: 2 June 2024
 
 
                             QUIC on Streams
-           draft-kazuho-quic-quic-services-for-streams-latest
+                draft-kazuho-quic-quic-on-streams-latest
 
 Abstract
 
@@ -25,8 +25,7 @@ Discussion Venues
    https://mailarchive.ietf.org/arch/browse/quic/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/kazuho/draft-kazuho-quic-quic-services-for-
-   streams.
+   https://github.com/kazuho/draft-kazuho-quic-quic-on-streams.
 
 Status of This Memo
 
@@ -43,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 31 May 2024.
+   This Internet-Draft will expire on 2 June 2024.
 
 Copyright Notice
 
@@ -67,6 +66,8 @@ Table of Contents
      3.1.  Properties of Underlying Transport
    4.  QUIC Frames
      4.1.  STREAM Frames
+       4.1.1.  STREAM Frames without the Length Field
+       4.1.2.  Ordering of STREAM frames
      4.2.  QS_TRANSPORT_PARAMETERS Frames
      4.3.  QS_PING Frames
    5.  Transport Parameters
@@ -88,50 +89,48 @@ Table of Contents
 
 1.  Introduction
 
-   QUIC version 1 ([RFC9000]) is a bi-directional, authenticated
-   transport-layer protocol built on top of UDP ([RFC768]).  The
-   protocol provides multiplexed flow-controlled streams without head-
-   of-line blocking as one of its core services, along with low-latency
-   connection establishment and efficient loss recovery.
+   QUIC version 1 [QUIC] is a bi-directional, authenticated transport-
+   layer protocol built on top of UDP [UDP].  The protocol provides
+   multiplexed flow-controlled streams without head-of-line blocking as
+   a core service.  It also offers low-latency connection establishment
+   and efficient loss recovery.
 
-   However, there are downsides with QUIC.
+   However, there are downsides to QUIC.
 
-   One downside is that QUIC is not as universally accessible as TCP
-   ([RFC9293]).  This is because QUIC is built on top of UDP, which is
-   occasionally blocked by middleboxes.
+   One downside is that QUIC, being based on UDP, is not as universally
+   accessible as TCP [TCP], due to occasionally being blocked by
+   middleboxes.
 
-   Another downside is that QUIC is computationally expensive compared
-   to TLS ([RFC8446]) over TCP.  This is partly because QUIC encrypts
-   each packet which is smaller than the encryption unit of TLS leading
-   to more overhead, and partly because UDP is less optimized in the
-   computing infrastructure.
+   Another downside is that QUIC is computationally more expensive
+   compared to TLS [TLS13] over TCP.  This increased cost is partly
+   because QUIC encrypts each packet, which is smaller than the
+   encryption unit of TLS, leading to more overhead, and partly because
+   UDP is less optimized within computing infrastructures.
 
-   Due to these limitations, applications are often served on top of
-   both QUIC and TCP, with the former aiming to provide better user-
-   experience, while the latter being considered as a backstop for
-   network reachability or to provide computational efficiency where
-   necessary.
+   Due to these limitations, applications are often served using both
+   QUIC and TCP.  QUIC is employed to provide the optimal user
+   experience, while TCP acts as a fallback for ensuring network
+   reachability and computational efficiency as needed.
 
-   One such example is HTTP.  HTTP/3 ([RFC9114]) runs on top of QUIC.
-   HTTP/2 ([RFC9113]) runs on top of TCP.  Recently, there have been
-   proposals to revise HTTP/2 due to security concerns
-   ([h2-stream-limits]), which has led people wonder about the cost of
-   maintaining multiple versions of HTTP.
+   One such example is HTTP, which has different bindings for QUIC
+   (HTTP/3 [HTTP3]) and TCP (HTTP/2 [HTTP2]).  Recently, security
+   concerns have prompted proposals to revise HTTP/2
+   ([h2-stream-limits]), which has sparked discussions about the costs
+   of maintaining multiple HTTP versions.
 
-   Another example is WebTransport.  WebTransport is a super set of
-   HTTP, but because HTTP has different bindings for QUIC and TCP,
-   WebTransport defines its own bindings for the two variants of HTTP
-   ([webtrans-h3], [webtrans-h2]).
+   Another example is WebTransport, a superset of HTTP.  Because HTTP
+   has different bindings for QUIC and TCP, WebTransport defines its own
+   extensions for the two HTTP variants ([webtrans-h3], [webtrans-h2]).
 
-   In order to reduce or eliminate the cost of these duplicated efforts
-   to provide services on top of both transport protocols, this document
-   specifies a polyfill that allows application protocols built on top
-   of QUIC to run on transport protocols providing single bi-
+   To reduce or eliminate the costs associated with duplicated efforts
+   in providing services on top of both transport protocols, this
+   document specifies a polyfill that allows application protocols built
+   on QUIC to run on transport protocols that provide single bi-
    directional, byte-oriented stream such as TCP or TLS.
 
-   The polyfill being specified provides a compatibility layer for
-   providing set of the operations (i.e., API) required by QUIC, as
-   specified in Section 2.4 and Section 5.3 of [RFC9000].
+   The specified polyfill provides a compatibility layer for the set of
+   operations (i.e., API) required by QUIC, as specified in Section 2.4
+   and Section 5.3 of [QUIC].
 
 2.  Conventions and Definitions
 
@@ -183,10 +182,11 @@ Table of Contents
 
    TLS over TCP provides all these capabilities.
 
-   UNIX sockets is an example that provides only the first two.
-   Congestion control is not used because UNIX sockets do not work on
-   top of a shared network.  Confidentiallity and integrity protection
-   is considered unnecessary when the operating system can be trusted.
+   UNIX sockets are an example that provides only the first two.
+   Congestion control is not employed, as UNIX sockets do not face a
+   shared bottleneck.  Confidentiality and integrity protection are
+   deemed unnecessary in environments where the operating system is
+   trusted.
 
 4.  QUIC Frames
 
@@ -199,7 +199,7 @@ Table of Contents
 
    *  STOP_SENDING
 
-   *  STREAM (0x0a and 0x0b)
+   *  STREAM
 
    *  MAX_DATA
 
@@ -215,12 +215,14 @@ Table of Contents
 
    *  CONNECTION_CLOSE
 
-   The format and the meaning of these frames are unchanged, with the
-   STREAM frames being an exception.  For the details of the STREAM
-   frames, see Section 4.1.
+   The frame formats are identical to those in QUIC version 1.
+   Likewise, the meaning and requirements for the use of these frames
+   are consistent with QUIC version 1, with the exception to the
+   specific changes made to the STREAM frames, as detailed in
+   Section 4.1.
 
-   Use of other frames defined in [RFC9000] is prohibited.  Namely, ACK
-   frames are not used, because the underlying transport guarantees
+   Use of other frames defined in QUIC version 1 is prohibited.  Namely,
+   ACK frames are not used, because the underlying transport guarantees
    delivery.  Use of frames that communicate Connection IDs and those
    related to path migration is forbidden.
 
@@ -229,26 +231,43 @@ Table of Contents
 
 4.1.  STREAM Frames
 
-   In this specification, only the 0x0a and 0x0b variants of the STREAM
-   frame are allowed (i.e., the frame format that omits the Offset field
-   but retains the Length field).
+   While the frame format remains unchanged, there are two differences
+   in the handling of STREAMS frames between QUIC version 1 and QUIC on
+   Streams.
 
-   Senders MUST send stream payload in order, omitting the Offset field
-   of the STREAM frames.
+4.1.1.  STREAM Frames without the Length Field
 
-   Receivers retain the total amount of bytes being received for each
-   stream, and when receiving a STREAM frame, uses that value to
-   determine the offset of the newly received STREAM frame.
+   In QUIC on Streams, when a STREAM frame that omits the Length field
+   is used, the size of that STREAM frame is determined by the maximum
+   frame size, as regulated by the max_frame_size Transport Parameter
+   (Section 5.2).
 
-   Unlike QUIC version 1, receivers do not need to buffer and reassemble
-   the payload of each incoming stream.  This is because the sender
-   sends the STREAM frames in order and that they will be delivered in-
-   order by the transport.  The payload being received can be passed to
-   the application as they are read from the transport.
+   This behavior contrasts with that of QUIC version 1, where the
+   absence of the Length field implies that the STREAM frame extends to
+   the end of the QUIC packet payload.
 
-   Use of the Length field is mandated, because QUIC on Streams operates
-   on top of byte-oriented transports and thus the packet boundary may
-   not be observable.
+   This variation arises due to the characteristics of the underlying
+   transports of QUIC on Streams, which may not have, or provide
+   visibility into, the packet boundaries.
+
+4.1.2.  Ordering of STREAM frames
+
+   For each stream being sent, senders MUST send stream payload in
+   order.
+
+   When receiving a STREAM frame that carries a payload not immediately
+   following the payload of the previous STREAM frame for the same
+   Stream ID, receivers MUST close connection with an error of type
+   PROTOCOL_VIOLATION_ERROR.
+
+   This change from QUIC version 1 eliminates the need for
+   implementations to buffer and reassemble the stream payload.  As a
+   result, the payload being received can be directly passed to the
+   application as it is read from the transport.  This efficiency is due
+   to the underlying transport's guarantee of in-order delivery.
+
+   These changes do not impact the senders' capability to interleave
+   STREAM frames from multiple streams.
 
 4.2.  QS_TRANSPORT_PARAMETERS Frames
 
@@ -270,14 +289,14 @@ Table of Contents
       Transport Parameters field in this QS_TRANSPORT_PARAMETERS frame.
 
    Transport Parameters:  The Transport Parameters.  The encoding of the
-      payload is as defined in Section 18 of [RFC9000].
+      payload is as defined in Section 18 of [QUIC].
 
    The QS_TRANSPORT_PARAMETERS frame is the first frame being sent by
    endpoints.  Endpoints MUST send the QS_TRANSPORT_PARAMETERS frame as
    soon as the underlying transport becomes available.  Note neither
    endpoint needs to wait for the peer's Transport Parameters before
    sending its own, as Transport Parameters are a unilateral declaration
-   of an endpoint's capabilities (Section 7.4 of [RFC9000]).
+   of an endpoint's capabilities (Section 7.4 of [QUIC]).
 
    If the first frame being received by an endpoint is not a
    QS_TRANSPORT_PARAMETERS frame, the endpoint MUST close the connection
@@ -285,7 +304,7 @@ Table of Contents
 
    The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has
    been chosen so that it can be used to disambiguate QUIC on Streams
-   from HTTP/1.1 ([RFC9112]) and HTTP/2.
+   from HTTP/1.1 [HTTP1] and HTTP/2.
 
 4.3.  QS_PING Frames
 
@@ -324,8 +343,8 @@ Table of Contents
 
 5.  Transport Parameters
 
-   QUIC on Streams uses a subset of Transport Parameters defined in
-   [RFC9000].  Also, one new Transport Parameter specific to QUIC on
+   QUIC on Streams uses a subset of Transport Parameters defined in QUIC
+   version 1.  Also, one new Transport Parameter specific to QUIC on
    Streams is defined.
 
 5.1.  Permitted and Forbidden Transport Parameters
@@ -349,10 +368,10 @@ Table of Contents
 
    The definition of these Transport Parameters are unchanged.
 
-   Use of other Transport Parameters defined in [RFC9000] is prohibited.
-   When an endpoint receives one of the prohibited Transport Parameters,
-   the endpoint MUST close the connection with an error of type
-   TRANSPORT_PARAMETER_ERROR.
+   Use of other Transport Parameters defined in QUIC version 1 is
+   prohibited.  When an endpoint receives one of the prohibited
+   Transport Parameters, the endpoint MUST close the connection with an
+   error of type TRANSPORT_PARAMETER_ERROR.
 
    Endpoints MUST NOT send Transport Parameters that extend QUIC version
    1, unless they are specified to be compatible with QUIC on Streams.
@@ -383,8 +402,8 @@ Table of Contents
 
 6.  Closing the Connection
 
-   As is with QUIC version 1 ([RFC9000]), a connection can be closed
-   either by a CONNECTION_CLOSE frame or by an idle timeout.
+   As is with QUIC version 1, a connection can be closed either by a
+   CONNECTION_CLOSE frame or by an idle timeout.
 
    Unlike QUIC version 1, there is no draining period; once an endpoint
    sends or receives the CONNECTION_CLOSE frame or reaches the idle
@@ -393,17 +412,16 @@ Table of Contents
 
 7.  Using 0-RTT
 
-   TLS 1.3 ([RFC8446]) introduced the concept of early data (also knows
-   as 0-RTT data).
+   TLS 1.3 introduced the concept of early data (also knows as 0-RTT
+   data).
 
    When using QUIC on Streams on top of TLS that supports early data,
    clients MAY use early data when resuming a connection, by reusing
-   certain Transport Parameters as defined in Section 7.4.1 of
-   [RFC9000].
+   certain Transport Parameters as defined in Section 7.4.1 of [QUIC].
 
    Similarly, when accepting early data, the servers MUST send Transport
    Parameters that obey to the restrictions defined in Section 7.4.1 of
-   [RFC9000].
+   [QUIC].
 
 8.  Extensions
 
@@ -412,41 +430,38 @@ Table of Contents
    the use; see Section 5.1.
 
    As is the case with QUIC version 1, use of extension frames have to
-   be negotiated before use; see Section 19.21 of [RFC9000].
+   be negotiated before use; see Section 19.21 of [QUIC].
 
    This specification defines the mapping of the Unreliable Datagram
    Extension.
 
 8.1.  Unreliable Datagram Extension
 
-   Use of the Unreliable Datagram Extension ([QUIC_DATAGRAM]) is
-   possible, with the following changes.
+   The use of the Unreliable Datagram Extension [QUIC_DATAGRAM] is
+   permitted, with one modification:
 
-   When using the DATAGRAM frame, senders MUST use only the variant of
-   type 0x31 (i.e., DATAGRAM frame with the Length field).  If an
-   endpoint receives a DATAGRAM frame of type 0x30 (i.e., DATAGRAM frame
-   without he Length field), the endpoint MUST close the connection with
-   an error of type FRAME_ENCODING_ERROR.
+   Similar to STREAMS frames, when employing DATAGRAM frames of type
+   0x30 (i.e., DATAGRAM frames without the Length field), their size is
+   determined by the max_frame_size Transport Parameter (Section 5.2).
 
-   Otherwise, the encoding and the semantics of the DATAGRAM frame as
-   well as the max_datagram_frame_size Transport Parameter is unchanged.
-   Use of the Unreliable Datagram Extension is negotiated using the
-   Transport Parameter.
+   Apart from this, the encoding and semantics of the Unreliable
+   Datagram Extension remain unchanged.  The use of the extension is
+   negotiated via the Transport Parameters.
 
-   As discussed in Section 5 of [QUIC_DATAGRAM], DATAGRAM frames can be
-   dropped if the sending side of the transport is blocked by flow or
-   congestion control.
+   As discussed in Section 5 of [QUIC_DATAGRAM], senders can drop
+   DATAGRAM frames if the transport is blocked by flow or congestion
+   control.
 
 9.  Version Agility
 
    Unlike QUIC, QUIC on Streams does not define a mechanism for version
    negotiation.
 
-   In large-scale deployments that require service and protocol version
-   discovery, QUIC on Streams can and is likely to be used on top of
-   TLS.  ALPN ([RFC7301]) is the preferred mechanism to negotiate
-   between an application protocol built on top of this specification
-   and others.
+   In large-scale deployments requiring service and protocol version
+   discovery, QUIC on Streams can and is likely to be implemented over
+   TLS.  The Application-Layer Protocol Negotiation Extension of TLS
+   [ALPN] is the favored mechanism to negotiate between an application
+   protocol based on this specification and others.
 
    When ALPN is unavailable, first 8 bytes exchanged on the transport
    (i.e., the type field of the QS_TRANSPORT_PARAMETERS frame in the
@@ -454,25 +469,22 @@ Table of Contents
 
 10.  Implementation Considerations
 
-   Like HTTP/3 ([RFC9114]) with Extensible Priorities ([RFC9218]),
-   application protocols built on top of QUIC might use stream
-   multiplexing in conjunction with a mechanism to request or specify
-   the order in which the payload of the QUIC streams are to be
-   delivered.
+   Similar to HTTP/3 with Extensible Priorities [HTTP_PRIORITY],
+   application protocols using QUIC may employ stream multiplexing along
+   with a system to tune the delivery sequence of QUIC streams.
 
-   To switch between QUIC streams with different priorities in a timely
-   manner, implementations of QUIC on Streams should refrain from
-   building deep buffers that contain QUIC frames to be sent in
-   particular order.  Rather, endpoints are encouraged to wait for the
-   underlying transport to become writable, and each time it becomes
-   writable, write new frames based on the most recent prioritization
-   signals.
+   To alternate between QUIC streams of varying priorities in a timely
+   manner, it is advisable for QUIC on Streams implementations to avoid
+   creating deep buffers holding QUIC frames.  Instead, endpoints should
+   wait for the transport layer to be ready for writing.  Upon becoming
+   writable, they should write QUIC frames according to the latest
+   prioritization signals.
 
-   Implementations might also observe or tune the values of underlying
-   transports related to flow and congestion control, in order to
-   minimize the amount of data buffered inside the transport layer
-   without immediately being sent.  Note however that failures to tune
-   these variables might lead to reduced throughput.
+   Additionally, implementations may consider monitoring or adjusting
+   the flow and congestion control parameters of the underlying
+   transport.  This approach aims to minimize data buffering within the
+   transport layer before transmission.  However, improper adjustment of
+   these parameters could potentially lead to lower throughput.
 
 11.  Security Considerations
 
@@ -485,6 +497,11 @@ Table of Contents
 13.  References
 
 13.1.  Normative References
+
+   [QUIC]     Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
+              Multiplexed and Secure Transport", RFC 9000,
+              DOI 10.17487/RFC9000, May 2021,
+              <https://www.rfc-editor.org/rfc/rfc9000>.
 
    [QUIC_DATAGRAM]
               Pauly, T., Kinnear, E., and D. Schinazi, "An Unreliable
@@ -501,16 +518,16 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-   [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
+   [TLS13]    Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/rfc/rfc8446>.
 
-   [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
-              Multiplexed and Secure Transport", RFC 9000,
-              DOI 10.17487/RFC9000, May 2021,
-              <https://www.rfc-editor.org/rfc/rfc9000>.
-
 13.2.  Informative References
+
+   [ALPN]     Friedl, S., Popov, A., Langley, A., and E. Stephan,
+              "Transport Layer Security (TLS) Application-Layer Protocol
+              Negotiation Extension", RFC 7301, DOI 10.17487/RFC7301,
+              July 2014, <https://www.rfc-editor.org/rfc/rfc7301>.
 
    [h2-stream-limits]
               Thomson, M. and L. Pardue, "Using HTTP/3 Stream Limits in
@@ -519,33 +536,29 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-thomson-
               httpbis-h2-stream-limits-00>.
 
-   [RFC7301]  Friedl, S., Popov, A., Langley, A., and E. Stephan,
-              "Transport Layer Security (TLS) Application-Layer Protocol
-              Negotiation Extension", RFC 7301, DOI 10.17487/RFC7301,
-              July 2014, <https://www.rfc-editor.org/rfc/rfc7301>.
-
-   [RFC768]   Postel, J., "User Datagram Protocol", STD 6, RFC 768,
-              DOI 10.17487/RFC0768, August 1980,
-              <https://www.rfc-editor.org/rfc/rfc768>.
-
-   [RFC9112]  Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+   [HTTP1]    Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
               Ed., "HTTP/1.1", STD 99, RFC 9112, DOI 10.17487/RFC9112,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9112>.
 
-   [RFC9113]  Thomson, M., Ed. and C. Benfield, Ed., "HTTP/2", RFC 9113,
+   [HTTP2]    Thomson, M., Ed. and C. Benfield, Ed., "HTTP/2", RFC 9113,
               DOI 10.17487/RFC9113, June 2022,
               <https://www.rfc-editor.org/rfc/rfc9113>.
 
-   [RFC9114]  Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
+   [HTTP3]    Bishop, M., Ed., "HTTP/3", RFC 9114, DOI 10.17487/RFC9114,
               June 2022, <https://www.rfc-editor.org/rfc/rfc9114>.
 
-   [RFC9218]  Oku, K. and L. Pardue, "Extensible Prioritization Scheme
+   [HTTP_PRIORITY]
+              Oku, K. and L. Pardue, "Extensible Prioritization Scheme
               for HTTP", RFC 9218, DOI 10.17487/RFC9218, June 2022,
               <https://www.rfc-editor.org/rfc/rfc9218>.
 
-   [RFC9293]  Eddy, W., Ed., "Transmission Control Protocol (TCP)",
+   [TCP]      Eddy, W., Ed., "Transmission Control Protocol (TCP)",
               STD 7, RFC 9293, DOI 10.17487/RFC9293, August 2022,
               <https://www.rfc-editor.org/rfc/rfc9293>.
+
+   [UDP]      Postel, J., "User Datagram Protocol", STD 6, RFC 768,
+              DOI 10.17487/RFC0768, August 1980,
+              <https://www.rfc-editor.org/rfc/rfc768>.
 
    [webtrans-h2]
               Frindell, A., Kinnear, E., Pauly, T., Thomson, M.,
