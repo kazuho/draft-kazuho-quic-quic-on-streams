@@ -1,7 +1,7 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2023-11-28T00:21:18.933148+00:00",
-  "repo": "kazuho/draft-kazuho-quic-quic-services-for-streams",
+  "timestamp": "2023-11-30T00:21:34.206496+00:00",
+  "repo": "kazuho/draft-kazuho-quic-quic-on-streams",
   "labels": [
     {
       "name": "bug",
@@ -50,5 +50,79 @@
     }
   ],
   "issues": [],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOKxyMNc5gg2O-",
+      "title": "define mapping of DATAGRAM extension",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/1",
+      "state": "OPEN",
+      "author": "kazuho",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "I'm not fully certain if we want to adopt this, but the pros would be that:\r\n* DATAGRAM frames will be available to any application protocol built on top of QUIC; HTTP/3 does have Capsules as the fallback but other application protocols may not.\r\n* DATAGRAM frames can be sent out of order. Capsules that require in-order delivery within the stream.",
+      "createdAt": "2023-11-28T05:20:06Z",
+      "updatedAt": "2023-11-29T00:51:26Z",
+      "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "baseRefName": "main",
+      "baseRefOid": "52a8edfd56bfbdf10f2507ba948bcd164f7e372d",
+      "headRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "headRefName": "kazuho/datagram-frames",
+      "headRefOid": "1bdfb97acf72ef4f1b2b6e1914d5d15dd4bb12c5",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOKxyMNc5ojvwS",
+          "commit": {
+            "abbreviatedOid": "1bdfb97"
+          },
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-11-29T00:51:25Z",
+          "updatedAt": "2023-11-29T00:51:26Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "If we adopt #2, we can allow 0x30, which would mean that the frame size is max_frame_size bytes.",
+              "createdAt": "2023-11-29T00:51:26Z",
+              "updatedAt": "2023-11-29T00:51:26Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOKxyMNc5gncUu",
+      "title": "allow any STREAM frame",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/2",
+      "state": "OPEN",
+      "author": "kazuho",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "I kind of think that we have made premature optimizations to the STREAM frame design, so this is a different take.\r\n\r\nIn the approach proposed in this PR:\r\n* Any STREAM frame type is allowed.\r\n* Unless the STREAM frame conveys the beginning of the stream, the frame will have the Offset field. This is indeed an overhead of the wire, but considering that minimum `max_frame_size` is 16KB, the overhead will be around 0.02% (i.e., 4/16834=0.0002, assuming an encoded Offset field of 4 bytes), so who cares?\r\n* When the Length field is omitted, size of the stream is `max_frame_size`. Now that we have the TP, we can do this.",
+      "createdAt": "2023-11-29T00:49:30Z",
+      "updatedAt": "2023-11-29T01:00:47Z",
+      "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "baseRefName": "main",
+      "baseRefOid": "bca80c817b62627a907afe4876a75d82177e8553",
+      "headRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "headRefName": "kazuho/any-stream-frame",
+      "headRefOid": "2ccd880192d0d8631a4d79ad9d246e0e18bdcfc4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
