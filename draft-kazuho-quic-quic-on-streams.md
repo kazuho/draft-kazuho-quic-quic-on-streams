@@ -361,20 +361,19 @@ This specification defines the mapping of the Unreliable Datagram Extension.
 
 ## Unreliable Datagram Extension
 
-Use of the Unreliable Datagram Extension ({{!QUIC_DATAGRAM=RFC9221}}) is
-possible, with the following changes.
+The use of the Unreliable Datagram Extension {{!QUIC_DATAGRAM=RFC9221}} is
+permitted, with one modification:
 
-When using the DATAGRAM frame, senders MUST use only the variant of type 0x31
-(i.e., DATAGRAM frame with the Length field). If an endpoint receives a DATAGRAM
-frame of type 0x30 (i.e., DATAGRAM frame without he Length field), the endpoint
-MUST close the connection with an error of type FRAME_ENCODING_ERROR.
+Similar to STREAMS frames, when employing DATAGRAM frames of type 0x30 (i.e.,
+DATAGRAM frames without the Length field), their size is determined by the
+`max_frame_size` Transport Parameter ({{max_frame_size}}).
 
-Otherwise, the encoding and the semantics of the DATAGRAM frame as well as the
-`max_datagram_frame_size` Transport Parameter is unchanged. Use of the
-Unreliable Datagram Extension is negotiated using the Transport Parameter.
+Apart from this, the encoding and semantics of the Unreliable Datagram Extension
+remain unchanged. The use of the extension is negotiated via the Transport
+Parameters.
 
-As discussed in {{Section 5 of QUIC_DATAGRAM}}, DATAGRAM frames can be dropped
-if the sending side of the transport is blocked by flow or congestion control.
+As discussed in {{Section 5 of QUIC_DATAGRAM}}, senders can drop DATAGRAM frames
+if the transport is blocked by flow or congestion control.
 
 
 # Version Agility
