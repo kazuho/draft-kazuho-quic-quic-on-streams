@@ -2,16 +2,16 @@
 
 This is the working area for the individual Internet-Draft, "QUIC on Streams".
 
-* [Editor's Copy](https://kazuho.github.io/draft-kazuho-quic-quic-services-for-streams/#go.draft-kazuho-quic-quic-services-for-streams.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-kazuho-quic-quic-services-for-streams)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-kazuho-quic-quic-services-for-streams)
-* [Compare Editor's Copy to Individual Draft](https://kazuho.github.io/draft-kazuho-quic-quic-services-for-streams/#go.draft-kazuho-quic-quic-services-for-streams.diff)
+* [Editor's Copy](https://kazuho.github.io/draft-kazuho-quic-quic-on-streams/#go.draft-kazuho-quic-quic-on-streams.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-kazuho-quic-quic-on-streams)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-kazuho-quic-quic-on-streams)
+* [Compare Editor's Copy to Individual Draft](https://kazuho.github.io/draft-kazuho-quic-quic-on-streams/#go.draft-kazuho-quic-quic-on-streams.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/kazuho/draft-kazuho-quic-quic-services-for-streams/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
