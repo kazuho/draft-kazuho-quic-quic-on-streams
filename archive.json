@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-30T00:20:06.410230+00:00",
+  "timestamp": "2024-02-01T14:02:07.024401+00:00",
   "repo": "kazuho/draft-kazuho-quic-quic-on-streams",
   "labels": [
     {
@@ -133,25 +133,35 @@
       "id": "PR_kwDOKxyMNc5lU6rC",
       "title": "Add Lucas",
       "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/3",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "LPardue",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-01-29T13:32:25Z",
-      "updatedAt": "2024-01-29T13:32:26Z",
+      "updatedAt": "2024-01-31T06:57:21Z",
       "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
       "baseRefName": "main",
       "baseRefOid": "fdd60437d9deae07fa746506d70c4b083f40e738",
       "headRepository": "LPardue/draft-kazuho-quic-quic-on-streams",
       "headRefName": "patch-1",
       "headRefOid": "10128eba377260ec147d826719414b789df93cb0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2024-01-31T06:57:16Z",
+      "mergedAt": "2024-01-31T06:57:16Z",
+      "mergedBy": "kazuho",
+      "mergeCommit": {
+        "oid": "1ad1627f4ca1a04b61f226c56340f605aaa3fe37"
+      },
+      "comments": [
+        {
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "body": "Thank you!",
+          "createdAt": "2024-01-31T06:57:20Z",
+          "updatedAt": "2024-01-31T06:57:20Z"
+        }
+      ],
       "reviews": []
     }
   ]
