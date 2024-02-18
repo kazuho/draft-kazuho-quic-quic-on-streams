@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-15T00:20:37.642613+00:00",
+  "timestamp": "2024-02-18T00:22:24.261968+00:00",
   "repo": "kazuho/draft-kazuho-quic-quic-on-streams",
   "labels": [
     {
@@ -49,7 +49,48 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 4,
+      "id": "I_kwDOKxyMNc5_cwxL",
+      "title": "remove the offset from STREAM frames",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/issues/4",
+      "state": "OPEN",
+      "author": "marten-seemann",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Because we obviously can on an ordered transport. Also gets rid of the need to check for ordering. ",
+      "createdAt": "2024-02-16T09:55:22Z",
+      "updatedAt": "2024-02-16T11:02:41Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "marten-seemann",
+          "authorAssociation": "NONE",
+          "body": "Similarly for BLOCKED* frames and RESET_STREAM frames.",
+          "createdAt": "2024-02-16T11:02:40Z",
+          "updatedAt": "2024-02-16T11:02:40Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOKxyMNc5_iIsc",
+      "title": "point out that migration is provided by MPTCP",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/issues/5",
+      "state": "OPEN",
+      "author": "kazuho",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "as pointed out in https://mailarchive.ietf.org/arch/msg/quic/tkZyGmV8HelRR9BSpwwbYv6v0qE/.",
+      "createdAt": "2024-02-17T00:05:28Z",
+      "updatedAt": "2024-02-17T00:05:28Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
