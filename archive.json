@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-18T00:22:24.261968+00:00",
+  "timestamp": "2024-02-20T00:20:16.721619+00:00",
   "repo": "kazuho/draft-kazuho-quic-quic-on-streams",
   "labels": [
     {
@@ -62,7 +62,7 @@
       "labels": [],
       "body": "Because we obviously can on an ordered transport. Also gets rid of the need to check for ordering. ",
       "createdAt": "2024-02-16T09:55:22Z",
-      "updatedAt": "2024-02-16T11:02:41Z",
+      "updatedAt": "2024-02-19T00:51:08Z",
       "closedAt": null,
       "comments": [
         {
@@ -71,6 +71,13 @@
           "body": "Similarly for BLOCKED* frames and RESET_STREAM frames.",
           "createdAt": "2024-02-16T11:02:40Z",
           "updatedAt": "2024-02-16T11:02:40Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "body": "Thanks,\r\n\r\nThe approach adopted by the initial draft is to facilitate code reuse between QUIC v1 and QUIC for Streams, by minimize the changes to the frame encoding. We prohibit use of some frames, but otherwise the frame encodings are left unmodified.\r\n\r\nAs stated on the mailing list, I think [the proposal](https://mailarchive.ietf.org/arch/msg/quic/HL_doKGvcBTrByv-69QeY0hJUKY/) by @hlandau to prohibit use of STREAM frames without Length field seems palatable. Because it is just have prohibiting use of some 1-byte frame code points.\r\n\r\nHowever, I have the fear of changing the encoding of each frame, as IMO that would only increase the cost of maintaining the two QUIC stacks (i.e,. QUIC v1 and QUIC on Streams), due to having increased divergence.\r\n\r\nPS. I'm not sure if we can remove the Offset field of BLOCKED* frames, recalling that communicating the moment of getting blocked has been considered a valuable property of those frames. Also, for RESET_STREAM frames, I'm not sure if we want to (or have to) mandate that the final offset being \"sent\" should mean exactly the offset to which a QoS stack has written to the TCP send buffer.",
+          "createdAt": "2024-02-19T00:50:08Z",
+          "updatedAt": "2024-02-19T00:51:08Z"
         }
       ]
     },
