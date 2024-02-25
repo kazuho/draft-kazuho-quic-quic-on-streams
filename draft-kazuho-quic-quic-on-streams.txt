@@ -5,8 +5,8 @@
 QUIC                                                              K. Oku
 Internet-Draft                                                    Fastly
 Intended status: Standards Track                               L. Pardue
-Expires: 3 August 2024                                        Cloudflare
-                                                         31 January 2024
+Expires: 28 August 2024                                       Cloudflare
+                                                        25 February 2024
 
 
                             QUIC on Streams
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 August 2024.
+   This Internet-Draft will expire on 28 August 2024.
 
 Copyright Notice
 
@@ -222,13 +222,36 @@ Table of Contents
    specific changes made to the STREAM frames, as detailed in
    Section 4.1.
 
-   Use of other frames defined in QUIC version 1 is prohibited.  Namely,
-   ACK frames are not used, because the underlying transport guarantees
-   delivery.  Use of frames that communicate Connection IDs and those
-   related to path migration is forbidden.
+   Use of other frames defined in QUIC version 1 is prohibited for
+   various reasons.  ACK frames are not used because the underlying
+   transport guarantees delivery.  Frames related to the cryptographic
+   handshake are not used because an underlying security layer can
+   provide equivalent features.  Use of frames that communicate
+   Connection IDs and those related to path migration is forbidden.
 
-   If an endpoint receives one of the prohibited frames, the endpoint
-   MUST close the connection with an error of type FRAME_ENCODING_ERROR.
+   The full list of prohibited frames is:
+
+   *  PING
+
+   *  ACK
+
+   *  CRYPTO
+
+   *  NEW_TOKEN
+
+   *  NEW_CONNECTION_ID
+
+   *  RETIRE_CONNECTION_ID
+
+   *  PATH_CHALLENGE
+
+   *  PATH_REPONSE
+
+   *  HANDSHAKE_DONE
+
+   Endpoints MUST NOT send prohibited frames.  If an endpoint receives
+   one it MUST close the connection with an error of type
+   FRAME_ENCODING_ERROR.
 
 4.1.  STREAM Frames
 
