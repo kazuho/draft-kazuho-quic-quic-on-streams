@@ -149,13 +149,26 @@ meaning and requirements for the use of these frames are consistent with QUIC
 version 1, with the exception to the specific changes made to the STREAM frames,
 as detailed in {{stream-frames}}.
 
-Use of other frames defined in QUIC version 1 is prohibited. Namely, ACK frames
-are not used, because the underlying transport guarantees delivery. Use of
-frames that communicate Connection IDs and those related to path migration is
-forbidden.
+Use of other frames defined in QUIC version 1 is prohibited for various reasons.
+ACK frames are not used because the underlying transport guarantees delivery.
+Frames related to the cryptographic handshake are not used because an underlying
+security layer can provide equivalent features. Use of frames that communicate
+Connection IDs and those related to path migration is forbidden.
 
-If an endpoint receives one of the prohibited frames, the endpoint MUST close
-the connection with an error of type FRAME_ENCODING_ERROR.
+The full list of prohibited frames is:
+
+* PING
+* ACK
+* CRYPTO
+* NEW_TOKEN
+* NEW_CONNECTION_ID
+* RETIRE_CONNECTION_ID
+* PATH_CHALLENGE
+* PATH_REPONSE
+* HANDSHAKE_DONE
+
+Endpoints MUST NOT send prohibited frames. If an endpoint receives one it MUST
+close the connection with an error of type FRAME_ENCODING_ERROR.
 
 
 ## STREAM Frames {#stream-frames}
