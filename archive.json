@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-25T00:22:17.347077+00:00",
+  "timestamp": "2024-02-27T00:20:40.469434+00:00",
   "repo": "kazuho/draft-kazuho-quic-quic-on-streams",
   "labels": [
     {
@@ -103,6 +103,46 @@
       "updatedAt": "2024-02-17T00:05:28Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 6,
+      "id": "I_kwDOKxyMNc6ATWJe",
+      "title": "Clearly document downsides",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/issues/6",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I received an off-comment list that the downsides of this proposal compared to native QUIC could be more clearly documented.",
+      "createdAt": "2024-02-25T01:37:39Z",
+      "updatedAt": "2024-02-26T16:00:21Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "frochet",
+          "authorAssociation": "NONE",
+          "body": "It could be great to precise that those downsides can be fixed through \"TCPLS extensions on QUIC on streams\", as per our off-list discussion. This would also acknowledge our work, given how close it is to QUIC on streams. Thanks!",
+          "createdAt": "2024-02-26T16:00:20Z",
+          "updatedAt": "2024-02-26T16:00:20Z"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "I_kwDOKxyMNc6AbzC9",
+      "title": "Risks of deadlock due to flow control",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/issues/9",
+      "state": "OPEN",
+      "author": "LPardue",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Roberto Peon highlighted on the list discussion that some streams, like TCP, have flow control that could interfere with control messages required at the QUIC or higher layers. In particular, layered flow controlbut not restricted to that. \r\n\r\nHTTP/2 has some discussion about this in https://www.rfc-editor.org/rfc/rfc9113.html#name-appropriate-use-of-flow-con\r\n\r\nWe need some text that gives due consideration to the matter. Potentially offering some recommendations to higher-level protocols that might add even more stuff on top of QUIC. One proposal from Roberto was `...require always reading all bytes/frames sent on the socket, always.` but we should give a bit more thought to the topic.",
+      "createdAt": "2024-02-26T17:52:36Z",
+      "updatedAt": "2024-02-26T17:52:36Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -190,7 +230,7 @@
       "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/3",
       "state": "MERGED",
       "author": "LPardue",
-      "authorAssociation": "CONTRIBUTOR",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -215,6 +255,76 @@
           "body": "Thank you!",
           "createdAt": "2024-01-31T06:57:20Z",
           "updatedAt": "2024-01-31T06:57:20Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOKxyMNc5n1N_S",
+      "title": "Expand text about prohibited frames",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/7",
+      "state": "CLOSED",
+      "author": "LPardue",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The prohibited frames are implicitly defined. I found while prototyping\r\nthat I had to expand them anyway.\r\n\r\nThis presentation format might help people realise how much can be omitted\r\nfrom an implementation - roughly hald the frames.",
+      "createdAt": "2024-02-25T01:52:51Z",
+      "updatedAt": "2024-02-25T01:56:38Z",
+      "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "baseRefName": "main",
+      "baseRefOid": "ae5462967134b654a9973858f2823f51b6717070",
+      "headRepository": "LPardue/draft-kazuho-quic-quic-on-streams",
+      "headRefName": "expand-prohibition",
+      "headRefOid": "ae5462967134b654a9973858f2823f51b6717070",
+      "closedAt": "2024-02-25T01:53:45Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Sorry, my Github-fu failed me on this, so had to open another",
+          "createdAt": "2024-02-25T01:56:37Z",
+          "updatedAt": "2024-02-25T01:56:37Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOKxyMNc5n1OG9",
+      "title": "Expand text about prohibited frames",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/8",
+      "state": "MERGED",
+      "author": "LPardue",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The prohibited frames are implicitly defined. I found while prototyping\r\nthat I had to expand them anyway.\r\n\r\nThis presentation format might help people realise how much can be omitted\r\nfrom an implementation - roughly hald the frames.",
+      "createdAt": "2024-02-25T01:55:55Z",
+      "updatedAt": "2024-02-25T01:58:07Z",
+      "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "baseRefName": "main",
+      "baseRefOid": "ae5462967134b654a9973858f2823f51b6717070",
+      "headRepository": "LPardue/draft-kazuho-quic-quic-on-streams",
+      "headRefName": "expand-prohibition",
+      "headRefOid": "06b72b11fafec6fdbbd39e930d9d6cb388938112",
+      "closedAt": "2024-02-25T01:57:51Z",
+      "mergedAt": "2024-02-25T01:57:51Z",
+      "mergedBy": "kazuho",
+      "mergeCommit": {
+        "oid": "c3b222bdaec1f7f56cb2fd8b2f9e6a23bede1c12"
+      },
+      "comments": [
+        {
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "body": "Makes perfect sense! Thank you.",
+          "createdAt": "2024-02-25T01:58:06Z",
+          "updatedAt": "2024-02-25T01:58:06Z"
         }
       ],
       "reviews": []
