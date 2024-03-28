@@ -5,8 +5,10 @@
 QUIC                                                              K. Oku
 Internet-Draft                                                    Fastly
 Intended status: Standards Track                               L. Pardue
-Expires: 28 August 2024                                       Cloudflare
-                                                        25 February 2024
+Expires: 29 September 2024                                    Cloudflare
+                                                              J. Iyengar
+                                                                  Fastly
+                                                           28 March 2024
 
 
                             QUIC on Streams
@@ -43,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 August 2024.
+   This Internet-Draft will expire on 29 September 2024.
 
 Copyright Notice
 
@@ -587,16 +589,16 @@ Table of Contents
    [webtrans-h2]
               Frindell, A., Kinnear, E., Pauly, T., Thomson, M.,
               Vasiliev, V., and G. Xie, "WebTransport over HTTP/2", Work
-              in Progress, Internet-Draft, draft-ietf-webtrans-http2-07,
-              23 October 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-webtrans-http2-07>.
+              in Progress, Internet-Draft, draft-ietf-webtrans-http2-08,
+              4 March 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-webtrans-http2-08>.
 
    [webtrans-h3]
               Frindell, A., Kinnear, E., and V. Vasiliev, "WebTransport
               over HTTP/3", Work in Progress, Internet-Draft, draft-
-              ietf-webtrans-http3-08, 23 October 2023,
+              ietf-webtrans-http3-09, 4 March 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-
-              webtrans-http3-08>.
+              webtrans-http3-09>.
 
 Acknowledgments
 
@@ -612,3 +614,8 @@ Authors' Addresses
    Lucas Pardue
    Cloudflare
    Email: lucas@lucaspardue.com
+
+
+   Jana Iyengar
+   Fastly
+   Email: jri.ietf@gmail.com
