@@ -15,6 +15,9 @@ author:
  -  fullname: Lucas Pardue
     organization: Cloudflare
     email: lucas@lucaspardue.com
+ -  fullname: Jana Iyengar
+    organization: Fastly
+    email: jri.ietf@gmail.com
 
 --- abstract
 
