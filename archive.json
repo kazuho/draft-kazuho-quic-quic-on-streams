@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-04-02T00:20:55.268698+00:00",
+  "timestamp": "2024-04-04T00:21:29.325855+00:00",
   "repo": "kazuho/draft-kazuho-quic-quic-on-streams",
   "labels": [
     {
@@ -140,9 +140,17 @@
       "labels": [],
       "body": "Roberto Peon highlighted on the list discussion that some streams, like TCP, have flow control that could interfere with control messages required at the QUIC or higher layers. In particular, layered flow controlbut not restricted to that. \r\n\r\nHTTP/2 has some discussion about this in https://www.rfc-editor.org/rfc/rfc9113.html#name-appropriate-use-of-flow-con\r\n\r\nWe need some text that gives due consideration to the matter. Potentially offering some recommendations to higher-level protocols that might add even more stuff on top of QUIC. One proposal from Roberto was `...require always reading all bytes/frames sent on the socket, always.` but we should give a bit more thought to the topic.",
       "createdAt": "2024-02-26T17:52:36Z",
-      "updatedAt": "2024-02-26T17:52:36Z",
+      "updatedAt": "2024-04-03T07:14:51Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "hlandau",
+          "authorAssociation": "NONE",
+          "body": "My own assumption is that implementations indeed would \"always read all bytes/frames sent on the socket, always\", in which case this isn't an issue. So my question is, is there a valid rationale for an implementation not doing that?\r\n\r\nIn terms of hardening against resource consumption attacks, if an implementation always reads all bytes/frames sent on the socket, every frame sent either\r\n\r\n1. has no effect, or\r\n2. mutates internal data structures of finite size, or\r\n3. adds stream data.\r\n\r\nOnly (3) seems an issue, but that is all governed by QUIC flow control and will result in connection termination if the protocol rules are violated.\r\n\r\nAm I missing something here?\r\n\r\nI suppose an implementation could send an unreasonable volume of PADDING frames, or of expensive-to-process frames like ACK. It seems like it would be OK for an implementation to *rate-limit* the processing of incoming data so long as the rate isn't zero.",
+          "createdAt": "2024-04-03T07:14:50Z",
+          "updatedAt": "2024-04-03T07:14:50Z"
+        }
+      ]
     }
   ],
   "pulls": [
