@@ -5,10 +5,10 @@
 QUIC                                                              K. Oku
 Internet-Draft                                                    Fastly
 Intended status: Standards Track                               L. Pardue
-Expires: 27 September 2024                                    Cloudflare
+Expires: 10 January 2026                                      Cloudflare
                                                               J. Iyengar
                                                                   Fastly
-                                                           26 March 2024
+                                                             9 July 2025
 
 
                             QUIC on Streams
@@ -45,11 +45,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 September 2024.
+   This Internet-Draft will expire on 10 January 2026.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -589,16 +589,16 @@ Table of Contents
    [webtrans-h2]
               Frindell, A., Kinnear, E., Pauly, T., Thomson, M.,
               Vasiliev, V., and G. Xie, "WebTransport over HTTP/2", Work
-              in Progress, Internet-Draft, draft-ietf-webtrans-http2-08,
-              4 March 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-webtrans-http2-08>.
+              in Progress, Internet-Draft, draft-ietf-webtrans-http2-12,
+              7 July 2025, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-webtrans-http2-12>.
 
    [webtrans-h3]
               Frindell, A., Kinnear, E., and V. Vasiliev, "WebTransport
               over HTTP/3", Work in Progress, Internet-Draft, draft-
-              ietf-webtrans-http3-09, 4 March 2024,
+              ietf-webtrans-http3-13, 7 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-
-              webtrans-http3-09>.
+              webtrans-http3-13>.
 
 Acknowledgments
 
