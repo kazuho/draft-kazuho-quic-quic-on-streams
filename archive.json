@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-30T00:26:31.198051+00:00",
+  "timestamp": "2025-07-10T00:29:35.240310+00:00",
   "repo": "kazuho/draft-kazuho-quic-quic-on-streams",
   "labels": [
     {
@@ -149,6 +149,124 @@
           "body": "My own assumption is that implementations indeed would \"always read all bytes/frames sent on the socket, always\", in which case this isn't an issue. So my question is, is there a valid rationale for an implementation not doing that?\r\n\r\nIn terms of hardening against resource consumption attacks, if an implementation always reads all bytes/frames sent on the socket, every frame sent either\r\n\r\n1. has no effect, or\r\n2. mutates internal data structures of finite size, or\r\n3. adds stream data.\r\n\r\nOnly (3) seems an issue, but that is all governed by QUIC flow control and will result in connection termination if the protocol rules are violated.\r\n\r\nAm I missing something here?\r\n\r\nI suppose an implementation could send an unreasonable volume of PADDING frames, or of expensive-to-process frames like ACK. It seems like it would be OK for an implementation to *rate-limit* the processing of incoming data so long as the rate isn't zero.",
           "createdAt": "2024-04-03T07:14:50Z",
           "updatedAt": "2024-04-03T07:14:50Z"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOKxyMNc62AVpE",
+      "title": "Support Datagrams",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/issues/11",
+      "state": "OPEN",
+      "author": "huitema",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Many applications require support of Datagram -- e.g., MoQ. How is that expected to work?",
+      "createdAt": "2025-05-10T02:00:56Z",
+      "updatedAt": "2025-05-13T01:10:22Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "COLLABORATOR",
+          "body": "That's already defined in https://kazuho.github.io/draft-kazuho-quic-quic-on-streams/draft-kazuho-quic-quic-on-streams.html#section-8.1. If you have comments on that text, happy to discuss more",
+          "createdAt": "2025-05-10T02:03:30Z",
+          "updatedAt": "2025-05-10T02:03:30Z"
+        },
+        {
+          "author": "huitema",
+          "authorAssociation": "NONE",
+          "body": "Sorry, I missed that. I suppose there was a discussion about the frame size -- common max for all frames, versus common max for datagrams, effects on multiplexing and flow control, etc.",
+          "createdAt": "2025-05-10T02:06:30Z",
+          "updatedAt": "2025-05-10T02:06:30Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "body": "@huitema \n> I suppose there was a discussion about the frame size -- common max for all frames, versus common max for datagrams, effects on multiplexing and flow control, etc.\n\nWhen the underlying transport is a byte stream, we can no longer rely on packetization to determine how long a frame is. This is indeed a problem for some variants of STREAM frames and DATAGRAM frames that omit the length field.\n\nTo compensate, the draft defines a new transport parameter called `max_frame_size`, which is used to determine how long a frame can be; please see [section 4.1.1](https://kazuho.github.io/draft-kazuho-quic-quic-on-streams/draft-kazuho-quic-quic-on-streams.html#name-stream-frames-without-the-l). The default value is 16KB. Datagram frame also uses this transport parameter (see section 8.1).\n\nRegarding effects on multiplexing and flow control, my gut feeling is that using 16K as the default due to the following reasons:\n* 16K is the default max of TLS records\n* 16K is the default max of HTTP/2 frames\n* QUIC v1 supports datagrams up to 65535 bytes.",
+          "createdAt": "2025-05-13T01:10:21Z",
+          "updatedAt": "2025-05-13T01:10:21Z"
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "I_kwDOKxyMNc62AWEl",
+      "title": "TLS profile",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/issues/12",
+      "state": "OPEN",
+      "author": "huitema",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I understand that QUIC \"on stream\" is designed to run on any stream, but the documentation says \"such as TLS\". It would be nice to have something like a profile for running on top of TLS, or maybe on top of HTTPS/Connect.",
+      "createdAt": "2025-05-10T02:03:38Z",
+      "updatedAt": "2025-05-13T17:43:15Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "LPardue",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Can you explain what you mean by profile? There are sometime specific considerations that need to be made (e.g. when using TLS 0-RTT documented in https://kazuho.github.io/draft-kazuho-quic-quic-on-streams/draft-kazuho-quic-quic-on-streams.html#name-using-0-rtt  , but otherwise there's not much to say about use of the abstraction IMO.\n\nFor instance, the QUIC protocol does not talk about how it could be used with UDP encapsulation like CONNECT-UDP. I'm not sure what we would say here in a profile that isn't already dealt with by the underlying substrate and the considerations people already have to make when using those.",
+          "createdAt": "2025-05-10T02:14:58Z",
+          "updatedAt": "2025-05-10T02:14:58Z"
+        },
+        {
+          "author": "huitema",
+          "authorAssociation": "NONE",
+          "body": "I would like to take the spec, program it, and make sure that I have good chances to interop with another implementations. I can see two useful \"profiles\": TLS1.3 over TCP, and QMUX over HTTPS. \n\nFor QMux/TLS1.3/TCP, we probably do not need much, the whole thing could be a single paragraph. But we need to specify an ALPN (qmux?), and we need to say something about the relation between QUIC frames and TLS records. We may also consider sending the transport parameters as a TLS extension, which would have the same timings as RFC 9000 and might be helpful. Or not.\n\nFor QMUX over HTTPS, we could consider either a basic Connect or web sockets. Not quite my area of expertise, but I assume that if we want interop we need to say something about well known URL, and maybe authentication.",
+          "createdAt": "2025-05-10T04:31:25Z",
+          "updatedAt": "2025-05-10T04:31:25Z"
+        },
+        {
+          "author": "LPardue",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Thanks for the clarification. The nature of these proposals as written avoids some of that complication. This document is not an application protocol in is own right, instead the expectation is that an application mapping would be defined on top it. Much like how we expect people to use QUIC. The concrete example we have is \"HTTP/3 on streams\" in https://www.ietf.org/archive/id/draft-kazuho-httpbis-http3-on-streams-00.html#section-4, which would use a different ALPN than regular HTTP/3.\n\nAssuming a model where ALPN is required to select mapping, then regular old CONNECT could work (yes you can CONNECT directly to a getwway if it wants to let you). A lighter weight model might be to define a specialised CONNECT variant, however I'm not sure that work needs to be right here and now. I'd certainly want to hear stronger motivating use cases. \n\nWrt websockets that seems even further out of scope. People can find lots of weird and wonderful substrates. They do it all the time (my team at the BBC years back built a gQUIC over WebSockets demo)  I'd rather focus on the core multiplexing design in this doc.\n\nI'm sure there's room for improvement on detailing these matters. Also curious to hear what Kazuho thinks",
+          "createdAt": "2025-05-10T04:59:49Z",
+          "updatedAt": "2025-05-10T04:59:49Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "body": "I think I agree with @LPardue that it should be up to each application to determine what encryption substrate or ALPN should be used.\n\nRegarding interop testing, I recall using HTTP/0.9 in QUIC stacks with an ALPN of something like \"hq-27\" indicating the use of QUIC v1 draft 27 as the transport.\n\nIf we are to have an interop of QMux using HTTP/0.9, I agree that we should agree on the ALPN and the TLS version. I'm fine with going with \"hqm-XX\" where XX is the draft version and using TLS/1.3.",
+          "createdAt": "2025-05-13T00:58:13Z",
+          "updatedAt": "2025-05-13T00:58:13Z"
+        },
+        {
+          "author": "huitema",
+          "authorAssociation": "NONE",
+          "body": "HQ meant http/0.9. What would hqm mean? Connect over HTTP 0.9? Or 1.1?(not that much different.) If we mean raw data over TLS 1.3, we should maybe use something else. Like, \"rt-xx\" for raw tls, draft version.",
+          "createdAt": "2025-05-13T04:28:56Z",
+          "updatedAt": "2025-05-13T04:28:56Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "body": "@huitema Ideally, I would just use \"hq,\" because QMux is just about using QUIC over TCP instead of UDP. But unfortunately, ALPN has to be different between TCP-based and UDP-based protocols.\n\nThat is how I think, and why I suggest using \"hqm-xx\" (analogous to \"hq-xx\") for identifying HTTP/0.9 sent over QMux.",
+          "createdAt": "2025-05-13T05:39:27Z",
+          "updatedAt": "2025-05-13T05:39:27Z"
+        },
+        {
+          "author": "huitema",
+          "authorAssociation": "NONE",
+          "body": "I see two applications here. One is \"hq-interop\" over QMux. Something like \"hqm-xx\" would be fine. The other is QMux over HTTP connect, in which case the ALPN in the TLS1.3 header should be a variant of HTTP (probably \"http/1.1\") and the information such as \"use QMUX to do HQM\"  should be passed in the \"path\" argument to CONNECT.",
+          "createdAt": "2025-05-13T06:13:24Z",
+          "updatedAt": "2025-05-13T06:13:24Z"
+        },
+        {
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "body": "> The other is QMux over HTTP connect, in which case the ALPN in the TLS1.3 header should be a variant of HTTP (probably \"http/1.1\") and the information such as \"use QMUX to do HQM\" should be passed in the \"path\" argument to CONNECT.\n\nI'm not sure if I follow. I might be missing something, but ...\n\nThe purpose of the CONNECT method is to establish a TCP connection between the proxy and the server, while tunneling the exact same bytes over HTTP between the proxy and the client. Therefore, when a client using a HTTP CONNECT proxy connects to a service provided on top of QMux, the ALPN should be the same as the one that'd be used when connecting directly using TCP.\n\nTo give an example, if the application is HTTP/0.9 running on top of QMux, the ALPN should be the same (e.g., \"hqm-xx\") regardless of if connecting directly or through a CONNECT tunnel.",
+          "createdAt": "2025-05-13T06:25:35Z",
+          "updatedAt": "2025-05-13T06:25:35Z"
+        },
+        {
+          "author": "huitema",
+          "authorAssociation": "NONE",
+          "body": "OK. Let's start with \"hqm-xx\" for the interop.\nMy next concern is the relation between TLS records and Qmux frames. Is there any? Is it OK to have parts of a Qmux frame carried over several TLS records?",
+          "createdAt": "2025-05-13T17:43:13Z",
+          "updatedAt": "2025-05-13T17:43:13Z"
         }
       ]
     }
@@ -388,6 +506,94 @@
           "body": "",
           "createdAt": "2024-03-28T00:07:27Z",
           "updatedAt": "2024-03-28T00:07:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOKxyMNc6eG9ji",
+      "title": "update github actions",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/13",
+      "state": "MERGED",
+      "author": "kazuho",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "To the head of https://github.com/martinthomson/internet-draft-template (currently at commit 666634c).",
+      "createdAt": "2025-07-09T11:38:41Z",
+      "updatedAt": "2025-07-09T11:38:49Z",
+      "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "baseRefName": "main",
+      "baseRefOid": "ed970c3fb9db7fbd28fdc3b09ba40e0eea079278",
+      "headRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "headRefName": "kazuho/update-actions",
+      "headRefOid": "84610d9ca91ef776c515f7e27ddc78b1211fc6b4",
+      "closedAt": "2025-07-09T11:38:49Z",
+      "mergedAt": "2025-07-09T11:38:49Z",
+      "mergedBy": "kazuho",
+      "mergeCommit": {
+        "oid": "b458108297b98675a15174f5ddc97ca80102613e"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOKxyMNc6eG_dr",
+      "title": "rebranding",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/14",
+      "state": "OPEN",
+      "author": "kazuho",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "QoS is now QMux.",
+      "createdAt": "2025-07-09T11:41:58Z",
+      "updatedAt": "2025-07-09T15:37:52Z",
+      "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "baseRefName": "main",
+      "baseRefOid": "b458108297b98675a15174f5ddc97ca80102613e",
+      "headRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "headRefName": "kazuho/rename-to-qmux",
+      "headRefOid": "e57116b344b268a3eb632cd209f53054451f56d3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOKxyMNc6y76MY",
+          "commit": {
+            "abbreviatedOid": "e57116b"
+          },
+          "author": "LPardue",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-09T15:36:14Z",
+          "updatedAt": "2025-07-09T15:36:14Z",
+          "comments": [
+            {
+              "originalPosition": 166,
+              "body": "nit: the figure anchor still has `qs`. It doesn't really matter but wanted to point it out incase someone cares.",
+              "createdAt": "2025-07-09T15:36:14Z",
+              "updatedAt": "2025-07-09T15:36:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOKxyMNc6y77ga",
+          "commit": {
+            "abbreviatedOid": "e57116b"
+          },
+          "author": "LPardue",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "LGTM modulo nit",
+          "createdAt": "2025-07-09T15:37:52Z",
+          "updatedAt": "2025-07-09T15:37:52Z",
           "comments": []
         }
       ]
