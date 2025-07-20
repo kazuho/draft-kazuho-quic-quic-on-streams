@@ -79,7 +79,7 @@ QUIC}}.
 
 # The Protocol
 
-QMux can be used on any transport that provides bi-directional, byte-oriented
+QMux can be used on any transport that provides a bi-directional, byte-oriented
 stream that is ordered and reliable; for details, see {{transport-properties}}.
 
 QUIC frames are sent directly on top of the transport.
