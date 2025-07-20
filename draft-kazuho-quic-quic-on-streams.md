@@ -8,8 +8,7 @@ keyword: internet-draft
 stand_alone: yes
 pi: [toc, sortrefs, symrefs]
 author:
- -
-    fullname: Kazuho Oku
+ -  fullname: Kazuho Oku
     organization: Fastly
     email: kazuhooku@gmail.com
  -  fullname: Lucas Pardue
@@ -18,6 +17,9 @@ author:
  -  fullname: Jana Iyengar
     organization: Fastly
     email: jri.ietf@gmail.com
+ -  fullname: Eric Kinnear
+    organization: Apple
+    email: ekinnear@apple.com
 
 --- abstract
 
