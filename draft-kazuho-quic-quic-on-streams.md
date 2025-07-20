@@ -114,7 +114,7 @@ Congestion control:
 
 : When used on a shared network, the transport is congestion controlled.
   Implementations of QMux simply write outgoing frames to the transport when
-  that transport permits to.
+  that transport permits.
 
 Confidentially and Integrity:
 
