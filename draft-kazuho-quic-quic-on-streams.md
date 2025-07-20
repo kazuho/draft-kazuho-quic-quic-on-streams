@@ -269,7 +269,7 @@ QX_PING Frame {
   Sequence Number (i),
 }
 ~~~
-{: #fig-qs-ping title="QX_PING Frame Format"}
+{: #fig-qx-ping title="QX_PING Frame Format"}
 
 Type 0xTBD is used for sending a ping (i.e., request the peer to respond). Type
 0xTBD+1 is used in response.
