@@ -5,10 +5,10 @@
 QUIC                                                              K. Oku
 Internet-Draft                                                    Fastly
 Intended status: Standards Track                               L. Pardue
-Expires: 10 January 2026                                      Cloudflare
+Expires: 22 January 2026                                      Cloudflare
                                                               J. Iyengar
                                                                   Fastly
-                                                             9 July 2025
+                                                            21 July 2025
 
 
                                   QMux
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 January 2026.
+   This Internet-Draft will expire on 22 January 2026.
 
 Copyright Notice
 
@@ -145,8 +145,8 @@ Table of Contents
 
 3.  The Protocol
 
-   QMux can be used on any transport that provides bi-directional, byte-
-   oriented stream that is ordered and reliable; for details, see
+   QMux can be used on any transport that provides a bi-directional,
+   byte-oriented stream that is ordered and reliable; for details, see
    Section 3.1.
 
    QUIC frames are sent directly on top of the transport.
@@ -176,7 +176,7 @@ Table of Contents
 
    Congestion control:  When used on a shared network, the transport is
       congestion controlled.  Implementations of QMux simply write
-      outgoing frames to the transport when that transport permits to.
+      outgoing frames to the transport when that transport permits.
 
    Confidentially and Integrity:  Unless used upon endpoints between
       which tampering or monitoring is a non-concern, the transport
@@ -314,7 +314,7 @@ Table of Contents
    Transport Parameters:  The Transport Parameters.  The encoding of the
       payload is as defined in Section 18 of [QUIC].
 
-   The QX_TRANSPORT_PARAMETERS frame is the first frame being sent by
+   The QX_TRANSPORT_PARAMETERS frame is the first frame sent by
    endpoints.  Endpoints MUST send the QX_TRANSPORT_PARAMETERS frame as
    soon as the underlying transport becomes available.  Note neither
    endpoint needs to wait for the peer's Transport Parameters before
@@ -325,7 +325,7 @@ Table of Contents
    QX_TRANSPORT_PARAMETERS frame, the endpoint MUST close the connection
    with an error of type TRANSPORT_PARAMETER_ERROR.
 
-   The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has
+   The frame type (0x3f5153300d0a0d0a; "\xffQMX\r\n\r\n" on wire) has
    been chosen so that it can be used to disambiguate QMux from HTTP/1.1
    [HTTP1] and HTTP/2.
 
