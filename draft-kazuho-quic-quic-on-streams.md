@@ -15,7 +15,7 @@ author:
     organization: Cloudflare
     email: lucas@lucaspardue.com
  -  fullname: Jana Iyengar
-    organization: Fastly
+    organization: Netflix
     email: jri.ietf@gmail.com
  -  fullname: Eric Kinnear
     organization: Apple
