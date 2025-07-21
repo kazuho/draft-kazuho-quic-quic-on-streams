@@ -251,7 +251,7 @@ If the first frame being received by an endpoint is not a
 QX_TRANSPORT_PARAMETERS frame, the endpoint MUST close the connection with an
 error of type TRANSPORT_PARAMETER_ERROR.
 
-The frame type (0x3f5153300d0a0d0a; "\xffQS0\r\n\r\n" on wire) has been chosen
+The frame type (0x3f5153300d0a0d0a; "\xffQMX\r\n\r\n" on wire) has been chosen
 so that it can be used to disambiguate QMux from HTTP/1.1 {{?HTTP1=RFC9112}} and
 HTTP/2.
 
