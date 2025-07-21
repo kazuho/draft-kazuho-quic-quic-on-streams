@@ -216,7 +216,7 @@ from multiple streams.
 In QMux, Transport Parameters are exchanged as frames.
 
 QX_TRANSPORT_PARAMETERS frames are formatted as shown in
-{{fig-qs-transport-parameters}}.
+{{fig-qx-transport-parameters}}.
 
 ~~~
 QX_TRANSPORT_PARAMETERS Frame {
@@ -225,7 +225,7 @@ QX_TRANSPORT_PARAMETERS Frame {
   Transport Parameters (..),
 }
 ~~~
-{: #fig-qs-transport-parameters title="QX_TRANSPORT_PARAMETERS Frame Format"}
+{: #fig-qx-transport-parameters title="QX_TRANSPORT_PARAMETERS Frame Format"}
 
 QX_TRANSPORT_PARAMETERS frames contain the following fields:
 
@@ -261,7 +261,7 @@ HTTP/2.
 In QMux, QX_PING frames allow endpoints to test peer reachability above the
 underlying transport.
 
-QX_PING frames are formatted as shown in {{fig-qs-ping}}.
+QX_PING frames are formatted as shown in {{fig-qx-ping}}.
 
 ~~~
 QX_PING Frame {
