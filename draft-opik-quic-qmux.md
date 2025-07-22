@@ -1,6 +1,6 @@
 ---
 title: "QMux"
-docname: draft-kazuho-quic-quic-on-streams-latest
+docname: draft-opik-quic-qmux-latest
 category: std
 wg: QUIC
 ipr: trust200902
