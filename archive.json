@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-10T00:29:35.240310+00:00",
+  "timestamp": "2025-07-22T00:30:56.689389+00:00",
   "repo": "kazuho/draft-kazuho-quic-quic-on-streams",
   "labels": [
     {
@@ -543,25 +543,35 @@
       "id": "PR_kwDOKxyMNc6eG_dr",
       "title": "rebranding",
       "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/14",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "kazuho",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "QoS is now QMux.",
       "createdAt": "2025-07-09T11:41:58Z",
-      "updatedAt": "2025-07-09T15:37:52Z",
+      "updatedAt": "2025-07-21T14:05:58Z",
       "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
       "baseRefName": "main",
       "baseRefOid": "b458108297b98675a15174f5ddc97ca80102613e",
       "headRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
       "headRefName": "kazuho/rename-to-qmux",
-      "headRefOid": "e57116b344b268a3eb632cd209f53054451f56d3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "headRefOid": "63c64186ff5899bdd236fed47ae2497ac72c4d41",
+      "closedAt": "2025-07-21T14:05:48Z",
+      "mergedAt": "2025-07-21T14:05:48Z",
+      "mergedBy": "kazuho",
+      "mergeCommit": {
+        "oid": "fd76dfa9ad52e818102b6541ee00b160829332ce"
+      },
+      "comments": [
+        {
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "body": "Thank you for the reviews!",
+          "createdAt": "2025-07-21T14:05:58Z",
+          "updatedAt": "2025-07-21T14:05:58Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOKxyMNc6y76MY",
@@ -595,8 +605,136 @@
           "createdAt": "2025-07-09T15:37:52Z",
           "updatedAt": "2025-07-09T15:37:52Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOKxyMNc609X9v",
+          "commit": {
+            "abbreviatedOid": "e57116b"
+          },
+          "author": "ekinnear",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Just silly textual nits",
+          "createdAt": "2025-07-20T11:40:28Z",
+          "updatedAt": "2025-07-20T11:42:36Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nQMux can be used on any transport that provides a bi-directional, byte-oriented\r\n```",
+              "createdAt": "2025-07-20T11:40:28Z",
+              "updatedAt": "2025-07-20T11:42:36Z"
+            },
+            {
+              "originalPosition": 43,
+              "body": "```suggestion\r\n  that transport permits.\r\n```",
+              "createdAt": "2025-07-20T11:40:51Z",
+              "updatedAt": "2025-07-20T11:42:36Z"
+            },
+            {
+              "originalPosition": 166,
+              "body": "Eh, sure, consistency is nice\r\n```suggestion\r\n{: #fig-qx-ping title=\"QX_PING Frame Format\"}\r\n```",
+              "createdAt": "2025-07-20T11:41:28Z",
+              "updatedAt": "2025-07-20T11:42:36Z"
+            },
+            {
+              "originalPosition": 128,
+              "body": "```suggestion\r\nThe QX_TRANSPORT_PARAMETERS frame is the first frame sent by endpoints.\r\n```",
+              "createdAt": "2025-07-20T11:41:42Z",
+              "updatedAt": "2025-07-20T11:42:36Z"
+            },
+            {
+              "originalPosition": 140,
+              "body": "Should we also QS->QX this :) ",
+              "createdAt": "2025-07-20T11:42:08Z",
+              "updatedAt": "2025-07-20T11:42:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOKxyMNc61CXOf",
+          "commit": {
+            "abbreviatedOid": "e57116b"
+          },
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-21T09:45:42Z",
+          "updatedAt": "2025-07-21T09:45:42Z",
+          "comments": [
+            {
+              "originalPosition": 140,
+              "body": "Good point, went with \"\\xffQMX\\r\\n\\r\\n\".",
+              "createdAt": "2025-07-21T09:45:42Z",
+              "updatedAt": "2025-07-21T09:45:43Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOKxyMNc6fu15h",
+      "title": "Update co-authors",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/15",
+      "state": "MERGED",
+      "author": "ekinnear",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Update co-authors",
+      "createdAt": "2025-07-20T11:47:48Z",
+      "updatedAt": "2025-07-20T11:49:55Z",
+      "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "baseRefName": "main",
+      "baseRefOid": "b458108297b98675a15174f5ddc97ca80102613e",
+      "headRepository": "ekinnear/draft-kazuho-quic-quic-on-streams",
+      "headRefName": "author-update",
+      "headRefOid": "0d4f1f75bf7d5a1f88bc4d96c3239a2e644dd8d8",
+      "closedAt": "2025-07-20T11:49:36Z",
+      "mergedAt": "2025-07-20T11:49:36Z",
+      "mergedBy": "kazuho",
+      "mergeCommit": {
+        "oid": "450e62321b67cec544d5a0ab59d95ea5d20ceeb5"
+      },
+      "comments": [
+        {
+          "author": "kazuho",
+          "authorAssociation": "OWNER",
+          "body": "Thank you for the PR. Merged.",
+          "createdAt": "2025-07-20T11:49:55Z",
+          "updatedAt": "2025-07-20T11:49:55Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOKxyMNc6f0GVK",
+      "title": "change Jana's org",
+      "url": "https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/pull/16",
+      "state": "MERGED",
+      "author": "kazuho",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-07-21T09:32:51Z",
+      "updatedAt": "2025-07-21T09:34:52Z",
+      "baseRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "baseRefName": "main",
+      "baseRefOid": "450e62321b67cec544d5a0ab59d95ea5d20ceeb5",
+      "headRepository": "kazuho/draft-kazuho-quic-quic-on-streams",
+      "headRefName": "kazuho-patch-1",
+      "headRefOid": "37208c96a6fe37c3be08dd09b07079cae80c7d31",
+      "closedAt": "2025-07-21T09:34:52Z",
+      "mergedAt": "2025-07-21T09:34:52Z",
+      "mergedBy": "kazuho",
+      "mergeCommit": {
+        "oid": "3aab4ca3991af8a8e7558e4bc5c9398bc17f2835"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
