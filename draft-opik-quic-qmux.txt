@@ -5,16 +5,16 @@
 QUIC                                                              K. Oku
 Internet-Draft                                                    Fastly
 Intended status: Standards Track                               L. Pardue
-Expires: 22 January 2026                                      Cloudflare
+Expires: 24 January 2026                                      Cloudflare
                                                               J. Iyengar
                                                                  Netflix
                                                               E. Kinnear
                                                                    Apple
-                                                            21 July 2025
+                                                            23 July 2025
 
 
                                   QMux
-                draft-kazuho-quic-quic-on-streams-latest
+                      draft-opik-quic-qmux-latest
 
 Abstract
 
@@ -30,7 +30,7 @@ Discussion Venues
    https://mailarchive.ietf.org/arch/browse/quic/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/kazuho/draft-kazuho-quic-quic-on-streams.
+   https://github.com/kazuho/draft-opik-quic-qmux.
 
 Status of This Memo
 
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 January 2026.
+   This Internet-Draft will expire on 24 January 2026.
 
 Copyright Notice
 
