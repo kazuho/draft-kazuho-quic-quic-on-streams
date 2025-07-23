@@ -1,17 +1,17 @@
-# QUIC on Streams
+# QMux
 
-This is the working area for the individual Internet-Draft, "QUIC on Streams".
+This is the working area for the individual Internet-Draft, "QMux".
 
-* [Editor's Copy](https://kazuho.github.io/draft-kazuho-quic-quic-on-streams/#go.draft-kazuho-quic-quic-on-streams.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-kazuho-quic-quic-on-streams)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-kazuho-quic-quic-on-streams)
-* [Compare Editor's Copy to Individual Draft](https://kazuho.github.io/draft-kazuho-quic-quic-on-streams/#go.draft-kazuho-quic-quic-on-streams.diff)
+* [Editor's Copy](https://kazuho.github.io/draft-opik-quic-qmux/#go.draft-opik-quic-qmux.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-opik-quic-qmux)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-opik-quic-qmux)
+* [Compare Editor's Copy to Individual Draft](https://kazuho.github.io/draft-opik-quic-qmux/#go.draft-opik-quic-qmux.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/kazuho/draft-kazuho-quic-quic-on-streams/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/kazuho/draft-opik-quic-qmux/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.

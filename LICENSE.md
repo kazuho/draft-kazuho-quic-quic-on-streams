@@ -1,4 +1,4 @@
 # License
 
 See the
-[guidelines for contributions](https://github.com/kazuho/draft-ietf-quic-quic-on-streams/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/kazuho/draft-opik-quic-qmux/blob/main/CONTRIBUTING.md).
